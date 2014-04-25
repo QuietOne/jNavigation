@@ -1,4 +1,3 @@
-jNavigation
-===========
+#jNavigation
 
 Navigation for jMonkey Engine.
