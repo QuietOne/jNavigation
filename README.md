@@ -6,9 +6,8 @@ Navigation for jMonkey Engine. It will be port for Recast Navigation by Mikko Mo
 Members in this module are used to create mesh data that is then used to create Detour navigation meshes.
 
 The are a large number of possible ways to building navigation mesh data. One of the simple piplines is as follows:
-
-Prepare the input triangle mesh.
 <ol>
+<li>Prepare the input triangle mesh.</li>
 <li>Build a Heightfield.</li>
 <li>Build a CompactHeightfield.</li>
 <li>Build a ContourSet.</li>
