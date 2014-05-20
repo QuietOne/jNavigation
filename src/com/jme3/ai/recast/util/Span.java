@@ -6,7 +6,7 @@ package com.jme3.ai.recast.util;
  * @author Tihomir Radosavljevic
  * @version 0.1
  */
-public class rcSpan {
+public class Span {
 
     /**
      * WARNING: unsigned The area id assigned to the span.
@@ -16,7 +16,7 @@ public class rcSpan {
     /**
      * The next span higher up in column.
      */
-    public rcSpan next;
+    public Span next;
 
     /**
      * WARNING: unsigned The upper limit of the span. [Limit: <=

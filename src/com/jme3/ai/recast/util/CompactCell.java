@@ -15,7 +15,7 @@ package com.jme3.ai.recast.util;
  * @author Tihomir Radosavljevic
  * @version 0.1
  */
-public class rcCompactCell {
+public class CompactCell {
 
 /**
  * WARNING: unsigned

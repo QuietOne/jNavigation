@@ -1,7 +1,7 @@
 package com.jme3.ai.recast;
 
-import com.jme3.ai.recast.util.rcLogCategory;
-import com.jme3.ai.recast.util.rcTimerLabel;
+import com.jme3.ai.recast.util.LogCategory;
+import com.jme3.ai.recast.util.TimerLabel;
 
 /**
  * Provides an interface for optional logging and performance tracking of the
@@ -16,7 +16,7 @@ import com.jme3.ai.recast.util.rcTimerLabel;
  * @author Tihomir Radosavljevic
  * @version 0.1
  */
-public abstract class rcContext {
+public abstract class Context {
 
     /**
      * True if logging is enabled.
@@ -36,7 +36,7 @@ public abstract class rcContext {
      * @return The accumulated time of the timer, or -1 if timers are disabled
      * or the timer has never been started.
      */
-    protected native int doGetAccumulatedTime(rcTimerLabel timerLabel);
+    protected native int doGetAccumulatedTime(TimerLabel timerLabel);
 
     /**
      * WARNING: virtual and input length of message Logs a message.
@@ -44,7 +44,7 @@ public abstract class rcContext {
      * @param logCategory The category of the message
      * @param message The formatted message
      */
-    protected native void doLog(rcLogCategory logCategory, String message);
+    protected native void doLog(LogCategory logCategory, String message);
 
     /**
      * WARNING: virtual Clears all log entries.
@@ -61,14 +61,14 @@ public abstract class rcContext {
      *
      * @param timerLabel The category of timer.
      */
-    protected native void doStartTimer(rcTimerLabel timerLabel);
+    protected native void doStartTimer(TimerLabel timerLabel);
 
     /**
      * WARNING: virtual Stops the specified performance timer.
      *
      * @param timerLabel The category of the timer.
      */
-    protected native void doStopTimer(rcTimerLabel timerLabel);
+    protected native void doStopTimer(TimerLabel timerLabel);
 
     /**
      * Enables or disables logging.
@@ -91,19 +91,19 @@ public abstract class rcContext {
      * @return The accumulated time of the timer, or -1 if timers are disabled
      * or the timer has never been started.
      */
-    public native int getAccumulatedTime(rcTimerLabel timerLabel);
+    public native int getAccumulatedTime(TimerLabel timerLabel);
 
     /**
      * Logs a message.
      *
-     * Example: Where ctx is an instance of rcContext and filepath is a char
-     * array. ctx->log(RC_LOG_ERROR, "buildTiledNavigation: Could not load
+     * Example: Where ctx is an instance of Context and filepath is a char
+ array. ctx->log(RC_LOG_ERROR, "buildTiledNavigation: Could not load
      * '%s'", filepath);
      *
      * @param logCategory The category of the message.
      * @param message The message.
      */
-    public native void log(rcLogCategory logCategory, String message);
+    public native void log(LogCategory logCategory, String message);
 
     /**
      * Clears all log entries.
@@ -119,13 +119,13 @@ public abstract class rcContext {
      * Starts the specified performance timer.
      * @param timerLabel The category of timer.
      */
-    public native void startTimer(rcTimerLabel timerLabel);
+    public native void startTimer(TimerLabel timerLabel);
     
     /**
      * Stops the specified performance timer.
      * @param timerLabel The category of the timer.
      */
-    public native void stopTimer(rcTimerLabel timerLabel);
+    public native void stopTimer(TimerLabel timerLabel);
     
     
 }

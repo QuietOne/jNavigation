@@ -109,4 +109,7 @@ public class Variables {
      */
     public final static char RC_WALKABLE_AREA = 63;
 
+    public final static int RC_MAX_LAYERS = RC_NOT_CONNECTED;
+    public final static int RC_MAX_NEIS = 16;
+
 }

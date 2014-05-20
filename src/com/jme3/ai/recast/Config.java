@@ -22,7 +22,7 @@ package com.jme3.ai.recast;
  * @author Tihomir Radosavljevic
  * @version 0.1
  */
-public class rcConfig {
+public class Config {
 
     /**
      * The maximum bounds of the field's AABB. [(x, y, z)] [Units: wu].

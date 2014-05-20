@@ -6,16 +6,16 @@ package com.jme3.ai.recast.util;
  * @author Tihomir Radosavljevic
  * @version 0.1
  */
-public class rcSpanPool {
+public class SpanPool {
 
     /**
      * Array of spans in the pool.
      */
-    public rcSpan[] items = new rcSpan[Variables.RC_SPANS_PER_POOL];
+    public Span[] items = new Span[Variables.RC_SPANS_PER_POOL];
 
     /**
      * The next span pool.
      */
-    public rcSpanPool next;
+    public SpanPool next;
 
 }

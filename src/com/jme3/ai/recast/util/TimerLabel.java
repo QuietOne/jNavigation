@@ -6,7 +6,7 @@ package com.jme3.ai.recast.util;
  * @author Tihomir Radosavljevic
  * @version 0.1
  */
-public enum rcTimerLabel {
+public enum TimerLabel {
 
     /**
      * The user defined total time of the build.

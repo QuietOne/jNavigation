@@ -15,7 +15,7 @@ package com.jme3.ai.recast.util;
  * @author Tihomir Radosavljevic
  * @version 0.1
  */
-public class rcCompactSpan {
+public class CompactSpan {
 
     /**
      * WARNING: unsigned Packed neighbor connection data.
