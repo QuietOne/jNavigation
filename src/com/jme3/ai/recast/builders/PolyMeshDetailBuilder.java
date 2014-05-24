@@ -14,7 +14,7 @@ public class PolyMeshDetailBuilder implements Builder {
 
     @Override
     public void initializeStructure() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        polyMeshDetail = new PolyMeshDetail();
     }
 
     @Override
@@ -22,9 +22,9 @@ public class PolyMeshDetailBuilder implements Builder {
         //TODO: fix structure building sequenceI
     }
 
-    private native boolean buildPolyMeshDetail(PolyMesh mesh, CompactHeightfield chf, float sampleDist, float sampleMaxError, PolyMeshDetail dmesh);
+    private native boolean rcBuildPolyMeshDetail(PolyMesh mesh, CompactHeightfield chf, float sampleDist, float sampleMaxError, PolyMeshDetail dmesh);
 
-    private native boolean mergePolyMeshDetails(PolyMeshDetail meshes, int nmeshes, PolyMeshDetail mesh);
+    private native boolean rcMergePolyMeshDetails(PolyMeshDetail meshes, int nmeshes, PolyMeshDetail mesh);
 
     public PolyMeshDetail getPolyMeshDetail() {
         return polyMeshDetail;

@@ -13,7 +13,7 @@ public class ContourSetBuilder implements Builder {
 
     @Override
     public void initializeStructure() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        contourSet = new ContourSet();
     }
 
     @Override

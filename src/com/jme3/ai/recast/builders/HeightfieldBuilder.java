@@ -15,7 +15,7 @@ public class HeightfieldBuilder implements Builder {
     @Override
     public void initializeStructure() {
         heightfield = new Heightfield();
-        rcCreateHeightfield(null, 0, 0, null, null, 0, 0);
+        rcCreateHeightfield(heightfield, 0, 0, null, null, 0, 0);
     }
 
     @Override
@@ -23,6 +23,9 @@ public class HeightfieldBuilder implements Builder {
         //TODO: fix structure building sequence
     }
 
+    public void calculateBounds(){
+        rcCalcBounds(null, 0, null, null);
+    }
     private native void rcCalcBounds(float[] verts, int nv, float[] bmin, float[] bmax);
 
     private native void rcCalcGridSize(float[] bmin, float[] bmax, float cs, int w, int h);
