@@ -3,6 +3,7 @@ package com.jme3.ai.recast.structures;
 import com.jme3.math.Vector3f;
 
 /**
+ * Base class for all other Recast structures.
  *
  * @author Tihomir Radosavljevic
  */
@@ -25,49 +26,59 @@ public class BoundedField {
      */
     protected float cellSize;
     /**
-     * Reference to the object in written in C++.
+     * Reference to the native object.
      */
     protected Object structure;
 
     public Vector3f getMaxBound() {
-        return maxBound;
+        return getNativeMaxBound();
     }
+
+    private native Vector3f getNativeMaxBound();
 
     public void setMaxBound(Vector3f maxBound) {
         this.maxBound = maxBound;
+        setMaxBound();
     }
 
+    private native void setMaxBound();
+
     public Vector3f getMinBound() {
-        return minBound;
+        return getNativeMinBound();
     }
+
+    private native Vector3f getNativeMinBound();
 
     public void setMinBound(Vector3f minBound) {
         this.minBound = minBound;
+        setMinBound();
     }
 
+    private native void setMinBound();
+
     public float getCellHeight() {
-        return cellHeight;
+        return getNativeCellHeight();
     }
+
+    private native float getNativeCellHeight();
 
     public void setCellHeight(float cellHeight) {
         this.cellHeight = cellHeight;
+        setCellHeight();
     }
 
+    private native void setCellHeight();
+
     public float getCellSize() {
-        return cellSize;
+        return getNativeCellSize();
     }
+
+    private native float getNativeCellSize();
 
     public void setCellSize(float cellSize) {
         this.cellSize = cellSize;
+        setCellSize();
     }
 
-    public Object getStructure() {
-        return structure;
-    }
-
-    public void setStructure(Object structure) {
-        this.structure = structure;
-    }
-    
-    
+    private native void setCellSize();
 }
