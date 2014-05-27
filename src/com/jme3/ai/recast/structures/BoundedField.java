@@ -31,10 +31,11 @@ public class BoundedField {
     protected Object structure;
 
     public Vector3f getMaxBound() {
-        return getNativeMaxBound();
+        getNativeMaxBound();
+        return maxBound;
     }
 
-    private native Vector3f getNativeMaxBound();
+    private native void getNativeMaxBound();
 
     public void setMaxBound(Vector3f maxBound) {
         this.maxBound = maxBound;
@@ -44,10 +45,11 @@ public class BoundedField {
     private native void setMaxBound();
 
     public Vector3f getMinBound() {
-        return getNativeMinBound();
+        getNativeMinBound();
+        return minBound;
     }
 
-    private native Vector3f getNativeMinBound();
+    private native void getNativeMinBound();
 
     public void setMinBound(Vector3f minBound) {
         this.minBound = minBound;
@@ -57,10 +59,11 @@ public class BoundedField {
     private native void setMinBound();
 
     public float getCellHeight() {
-        return getNativeCellHeight();
+        getNativeCellHeight();
+        return cellHeight;
     }
 
-    private native float getNativeCellHeight();
+    private native void getNativeCellHeight();
 
     public void setCellHeight(float cellHeight) {
         this.cellHeight = cellHeight;
@@ -70,10 +73,11 @@ public class BoundedField {
     private native void setCellHeight();
 
     public float getCellSize() {
-        return getNativeCellSize();
+        getNativeCellSize();
+        return cellSize;
     }
 
-    private native float getNativeCellSize();
+    private native void getNativeCellSize();
 
     public void setCellSize(float cellSize) {
         this.cellSize = cellSize;
