@@ -7,7 +7,7 @@ import com.jme3.ai.recast.structures.ContourSet;
  *
  * @author Tihomir Radosavljevic
  */
-public class ContourSetBuilder implements Builder {
+public class ContourSetBuilder extends Builder {
 
     private ContourSet contourSet;
 
@@ -16,12 +16,11 @@ public class ContourSetBuilder implements Builder {
         contourSet = new ContourSet();
     }
 
-    @Override
-    public void build() {
-        //TODO: fix structure building sequence
+    public boolean buildContours(CompactHeightfield compactHeightfield, float maxError, int maxEdgeLength, int buildFlags){
+        return rcBuildContours(compactHeightfield, maxError, maxEdgeLength, buildFlags);
     }
     
-    private native boolean rcBuildContours(CompactHeightfield chf, float maxError, int maxEdgeLen, ContourSet cset, int buildFlags);
+    private native boolean rcBuildContours(CompactHeightfield chf, float maxError, int maxEdgeLen, int buildFlags);
 
     public ContourSet getContourSet() {
         return contourSet;

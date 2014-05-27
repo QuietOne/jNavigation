@@ -7,7 +7,7 @@ import com.jme3.ai.recast.structures.PolyMesh;
  *
  * @author Tihomir Radosavljevic
  */
-public class PolyMeshBuilder implements Builder {
+public class PolyMeshBuilder extends Builder {
 
     private PolyMesh polyMesh;
 
@@ -15,17 +15,18 @@ public class PolyMeshBuilder implements Builder {
     public void initializeStructure() {
         polyMesh = new PolyMesh();
     }
-
-    @Override
-    public void build() {
-        //TODO: fix structure building sequence
+    
+    public boolean buildPolyMesh(ContourSet contourSet, int numberOfVerticesPerPoly){
+        return rcBuildPolyMesh(contourSet, numberOfVerticesPerPoly);
     }
 
-    private native boolean rcBuildPolyMesh(ContourSet cset, int nvp, PolyMesh mesh);
+    private native boolean rcBuildPolyMesh(ContourSet cset, int nvp);
 
-    private native boolean rcMergePolyMeshes(PolyMesh meshes, int nmeshes, PolyMesh mesh);
-
+    public boolean addPolyMeshes(PolyMesh[] polyMeshes){
+        return rcMergePolyMeshes(polyMeshes);
+    }
     
+    private native boolean rcMergePolyMeshes(PolyMesh[] meshes);
 
     public PolyMesh getPolyMesh() {
         return polyMesh;

@@ -8,7 +8,7 @@ import com.jme3.ai.recast.structures.PolyMeshDetail;
  *
  * @author Tihomir Radosavljevic
  */
-public class PolyMeshDetailBuilder implements Builder {
+public class PolyMeshDetailBuilder extends Builder {
 
     private PolyMeshDetail polyMeshDetail;
 
@@ -17,14 +17,17 @@ public class PolyMeshDetailBuilder implements Builder {
         polyMeshDetail = new PolyMeshDetail();
     }
 
-    @Override
-    public void build() {
-        //TODO: fix structure building sequenceI
+    public boolean buildPolyMeshDetail(PolyMesh polyMesh, CompactHeightfield compactHeightfield, float distance, float maxError){
+        return rcBuildPolyMeshDetail(polyMesh, compactHeightfield, distance, maxError);
     }
+    
+    private native boolean rcBuildPolyMeshDetail(PolyMesh mesh, CompactHeightfield chf, float sampleDist, float sampleMaxError);
 
-    private native boolean rcBuildPolyMeshDetail(PolyMesh mesh, CompactHeightfield chf, float sampleDist, float sampleMaxError, PolyMeshDetail dmesh);
-
-    private native boolean rcMergePolyMeshDetails(PolyMeshDetail meshes, int nmeshes, PolyMeshDetail mesh);
+    public boolean addPolyMeshesDetail(PolyMeshDetail[] polyMeshDetails){
+        return  rcMergePolyMeshDetails(polyMeshDetails);
+    }
+    
+    private native boolean rcMergePolyMeshDetails(PolyMeshDetail[] meshes);
 
     public PolyMeshDetail getPolyMeshDetail() {
         return polyMeshDetail;
