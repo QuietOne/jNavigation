@@ -8,11 +8,9 @@ package com.jme3.ai.recast.structures;
 public class PolyMesh extends BoundedField {
 
     /**
-     * The area id assigned to each polygon. [Length: maxpolys] The standard
-     * build process assigns the value of RC_WALKABLE_AREA to all walkable
-     * polygons. This value can then be changed to meet user requirements.
+     * The area id assigned to each polygon.
      */
-    private String areas;
+    private char[] areas;
     /**
      * The AABB border size used to generate the source data from which the mesh
      * was derived.
@@ -23,103 +21,87 @@ public class PolyMesh extends BoundedField {
      */
     private short[] flags;
     /**
-     * The number of allocated polygons.
-     */
-    private int maxPolygons;
-    /**
      * The number of polygons.
      */
     private int numberOfPolygons;
-    /**
-     * The number of vertices.
-     */
-    private int numberOfVertices;
     /**
      * The maximum number of vertices per polygon.
      */
     private int maximumNumberOfVerticesPerPolygon;
     /**
-     * Polygon and neighbor data.  [Length: maxpolys * 2 * nvp].
+     * Polygon and neighbor data.
      */
     private short[] polygons;
     /**
-     * The mesh vertices. [Form: (x, y, z) * nverts].
+     * The mesh vertices.
      */
     private short[] vertices;
     /**
-     * The region id assigned to each polygon. [Length: maxpolys].
+     * The region id assigned to each polygon.
      */
     private short[] regions;
 
     public PolyMesh() {
-        structure = rcAllocPolyMesh();
-    }
-
-    public String getAreas() {
-        return areas;
-    }
-
-    public void setAreas(String areas) {
-        this.areas = areas;
-    }
-
-    public int getBorderSize() {
-        return borderSize;
-    }
-
-    public void setBorderSize(int borderSize) {
-        this.borderSize = borderSize;
-    }
-
-    public short[] getFlags() {
-        return flags;
-    }
-
-    public void setFlags(short[] flags) {
-        this.flags = flags;
-    }
-
-    public int getMaxPolygons() {
-        return maxPolygons;
-    }
-
-    public void setMaxPolygons(int maxPolygons) {
-        this.maxPolygons = maxPolygons;
-    }
-
-    public int getNumberOfPolygons() {
-        return numberOfPolygons;
-    }
-
-    public void setNumberOfPolygons(int numberOfPolygons) {
-        this.numberOfPolygons = numberOfPolygons;
-    }
-
-    public int getNumberOfVertices() {
-        return numberOfVertices;
-    }
-
-    public void setNumberOfVertices(int numberOfVertices) {
-        this.numberOfVertices = numberOfVertices;
-    }
-
-    public int getMaximumNumberOfVerticesPerPolygon() {
-        return maximumNumberOfVerticesPerPolygon;
-    }
-
-    public void setMaximumNumberOfVerticesPerPolygon(int maximumNumberOfVerticesPerPolygon) {
-        this.maximumNumberOfVerticesPerPolygon = maximumNumberOfVerticesPerPolygon;
-    }
-
-    public short[] getPolygons() {
-        return polygons;
-    }
-
-    public void setPolygons(short[] polygons) {
-        this.polygons = polygons;
+        reference = rcAllocPolyMesh();
     }
 
     private native Object rcAllocPolyMesh();
+
+    public char[] getAreas() {
+        getNativeAreas();
+        return areas;
+    }
+
+    private native void getNativeAreas();
+
+    public int getBorderSize() {
+        getNativeBorderSize();
+        return borderSize;
+    }
+
+    private native void getNativeBorderSize();
+
+    public short[] getFlags() {
+        getNativeFlags();
+        return flags;
+    }
+
+    private native void getNativeFlags();
+
+    public int getNumberOfPolygons() {
+        getNativeNumberOfPolygons();
+        return numberOfPolygons;
+    }
+
+    private native void getNativeNumberOfPolygons();
+
+    public int getMaximumNumberOfVerticesPerPolygon() {
+        getNativeNumberOfPolygons();
+        return maximumNumberOfVerticesPerPolygon;
+    }
+
+    private native void getNativeMaximumNumberOfPolygon();
+
+    public short[] getPolygons() {
+        getNativePolygons();
+        return polygons;
+    }
+
+    private native void getNativePolygons();
+
+    public short[] getVertices() {
+        getNativeVertices();
+        return vertices;
+    }
+
+    private native void getNativeVertices();
+
+    public short[] getRegions() {
+        getNativeRegions();
+        return regions;
+    }
+
+    private native void getNativeRegions();
 
     @Override
     protected void finalize() throws Throwable {
@@ -129,24 +111,9 @@ public class PolyMesh extends BoundedField {
 
     private native void rcFreePolyMesh(PolyMesh polyMesh);
 
-    private native boolean rcCopyPolyMesh(PolyMesh src, PolyMesh dst);
-
-    public short[] getVertices() {
-        return vertices;
+    public boolean copyPolyMesh(PolyMesh destination) {
+        return rcCopyPolyMesh(destination);
     }
 
-    public void setVertices(short[] vertices) {
-        this.vertices = vertices;
-    }
-
-    public short[] getRegions() {
-        return regions;
-    }
-
-    public void setRegions(short[] regions) {
-        this.regions = regions;
-    }
-    
-    
-    //TODO: moving through
+    private native boolean rcCopyPolyMesh(PolyMesh dst);
 }

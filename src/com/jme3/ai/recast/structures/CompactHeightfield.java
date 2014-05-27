@@ -8,20 +8,15 @@ package com.jme3.ai.recast.structures;
 public class CompactHeightfield extends BoundedField {
 
     /**
-     * WARNING: unsigned char*
-     *
-     * Array containing area id data. [Size: spanCount].
+     * Array containing area id data.
      */
-    private String areas;
+    private char[] areas;
     /**
-     * The AABB border size used during the build of the field. (See:
-     * rcConfig::borderSize)
+     * The AABB border size used during the build of the field.
      */
     private int borderSize;
     /**
-     * WARNING: unsigned short*
-     *
-     * Array containing border distance data. [Size: spanCount].
+     * Array containing border distance data.
      */
     private short[] distance;
     /**
@@ -29,31 +24,27 @@ public class CompactHeightfield extends BoundedField {
      */
     private int height;
     /**
-     * WARNING: unsigned short The maximum distance value of any span within the
-     * field.
+     * The maximum distance value of any span within the field.
      */
-    private int maxDistance;
+    private short maxDistance;
     /**
-     * WARNING: unsigned short The maximum region id of any span within the
-     * field.
+     * The maximum region id of any span within the field.
      */
-    private int maxRegions;
+    private short maxRegionID;
     /**
-     * The number of spans in the heightfield.
+     * Array of spans.
      */
-    private int spanCount;
+    private CompactSpan[] spans;
     /**
-     * Array of spans. [Size: spanCount].
+     * Array of cells. [Size: width*height].
      */
-    private CompactSpan spans;
+    private CompactCell[] cells;
     /**
-     * The walkable climb used during the build of the field. (See:
-     * rcConfig::walkableClimb)
+     * The walkable climb used during the build of the field.
      */
     private int walkableClimb;
     /**
-     * The walkable height used during the build of the field. (See:
-     * rcConfig::walkableHeight)
+     * The walkable height used during the build of the field.
      */
     private int walkableHeight;
     /**
@@ -62,98 +53,149 @@ public class CompactHeightfield extends BoundedField {
     private int width;
 
     public CompactHeightfield() {
-        structure = rcAllocCompactHeightField();
+        reference = rcAllocCompactHeightField();
     }
 
     private native Object rcAllocCompactHeightField();
 
-    public String getAreas() {
+    public char[] getAreas() {
+        getNativeAreas();
         return areas;
     }
 
-    public void setAreas(String areas) {
+    private native void getNativeAreas();
+
+    public void setAreas(char[] areas) {
         this.areas = areas;
+        setAreas();
     }
 
+    private native void setAreas();
+
     public int getBorderSize() {
+        getNativeBorderSize();
         return borderSize;
     }
 
+    private native void getNativeBorderSize();
+
     public void setBorderSize(int borderSize) {
         this.borderSize = borderSize;
+        setBorderSize();
     }
 
+    private native void setBorderSize();
+
     public short[] getDistance() {
+        getNativeDistance();
         return distance;
     }
 
+    private native void getNativeDistance();
+
     public void setDistance(short[] dist) {
         this.distance = dist;
+        setDistance();
     }
+
+    private native void setDistance();
 
     public int getHeight() {
         return height;
     }
 
+    private native void getNativeHeight();
+
     public void setHeight(int height) {
         this.height = height;
+        setHeight();
     }
 
-    public int getMaxDistance() {
+    private native void setHeight();
+
+    public short getMaxDistance() {
+        getNativeMaxDistance();
         return maxDistance;
     }
 
-    public void setMaxDistance(int maxDistance) {
+    private native void getNativeMaxDistance();
+
+    public void setMaxDistance(short maxDistance) {
         this.maxDistance = maxDistance;
+        setMaxDistance();
     }
 
-    public int getMaxRegions() {
-        return maxRegions;
+    private native void setMaxDistance();
+
+    public short getMaxRegionID() {
+        getNativeMaxRegionID();
+        return maxRegionID;
     }
 
-    public void setMaxRegions(int maxRegions) {
-        this.maxRegions = maxRegions;
+    private native void getNativeMaxRegionID();
+
+    public void setMaxRegionID(short maxRegionID) {
+        this.maxRegionID = maxRegionID;
+        setMaxRegionID();
     }
 
-    public int getSpanCount() {
-        return spanCount;
-    }
+    private native void setMaxRegionID();
 
-    public void setSpanCount(int spanCount) {
-        this.spanCount = spanCount;
-    }
-
-    public CompactSpan getSpans() {
+    public CompactSpan[] getSpans() {
+        getNativeSpans();
         return spans;
     }
 
-    public void setSpans(CompactSpan spans) {
-        this.spans = spans;
-    }
+    private native void getNativeSpans();
 
     public int getWalkableClimb() {
+        getNativeWalkableClimb();
         return walkableClimb;
     }
 
+    private native void getNativeWalkableClimb();
+
     public void setWalkableClimb(int walkableClimb) {
         this.walkableClimb = walkableClimb;
+        setWalkableClimb();
     }
 
+    private native void setWalkableClimb();
+
     public int getWalkableHeight() {
+        getNativeWalkableHeight();
         return walkableHeight;
     }
 
+    private native void getNativeWalkableHeight();
+
     public void setWalkableHeight(int walkableHeight) {
         this.walkableHeight = walkableHeight;
+        setWalkableHeight();
     }
 
+    private native void setWalkableHeight();
+
     public int getWidth() {
+        getNativeWidth();
         return width;
     }
 
+    private native void getNativeWidth();
+
     public void setWidth(int width) {
         this.width = width;
+        setWidth();
     }
+
+    private native void setWidth();
+
+    public CompactCell[] getCells() {
+        getNativeCells();
+        return cells;
+    }
+
+    private native void getNativeCells();
 
     /**
      * Provides information on the content of a cell column in a compact
@@ -173,20 +215,18 @@ public class CompactHeightfield extends BoundedField {
         private int index;
 
         public int getCount() {
+            getNativeCount();
             return count;
         }
 
-        public void setCount(int count) {
-            this.count = count;
-        }
+        private native void getNativeCount();
 
         public int getIndex() {
+            getNativeIndex();
             return index;
         }
 
-        public void setIndex(int index) {
-            this.index = index;
-        }
+        private native void getNativeIndex();
     }
 
     /**
@@ -213,37 +253,209 @@ public class CompactHeightfield extends BoundedField {
         private int y;
 
         public int getConnection() {
+            getNativeConnection();
             return connection;
         }
 
-        public void setConnection(int connection) {
-            this.connection = connection;
-        }
+        private native void getNativeConnection();
 
         public int getHeight() {
+            getNativeHeight();
             return height;
         }
 
-        public void setHeight(int height) {
-            this.height = height;
-        }
+        private native void getNativeHeight();
 
         public int getRegionID() {
+            getNativeRegionID();
             return regionID;
         }
 
-        public void setRegionID(int regionID) {
-            this.regionID = regionID;
-        }
+        private native void getNativeRegionID();
 
         public int getY() {
+            getNativeY();
             return y;
         }
 
-        public void setY(int y) {
-            this.y = y;
+        private native void getNativeY();
+    }
+
+    /**
+     * Represents a set of heightfield layers.
+     *
+     * @author Tihomir Radosavljevic
+     */
+    public class HeightfieldLayerSet {
+
+        private Object structure;
+        /**
+         * The layers in the set.
+         */
+        private HeightfieldLayer[] layers;
+
+        public HeightfieldLayerSet() {
+            structure = rcAllocHeightfieldLayerset();
         }
 
-        private native void customLoadConnection();
+        private native Object rcAllocHeightfieldLayerset();
+
+        public HeightfieldLayer[] getLayers() {
+            getNativeLayers();
+            return layers;
+        }
+
+        private native void getNativeLayers();
+
+        public void setLayers(HeightfieldLayer[] layers) {
+            this.layers = layers;
+            setLayers();
+        }
+
+        private native void setLayers();
+
+        @Override
+        protected void finalize() throws Throwable {
+            super.finalize();
+            rcFreeHeightfieldLayerSet();
+        }
+
+        private native void rcFreeHeightfieldLayerSet();
+    }
+
+    /**
+     * Represents a heightfield layer within a layer set.
+     *
+     * @author Tihomir Radosavljevic
+     */
+    public class HeightfieldLayer extends BoundedField {
+
+        /**
+         * Area ids. [Size: Same as heights].
+         */
+        private char[] areas;
+        /**
+         * Packed neighbor connection information. [Size: Same as heights].
+         */
+        private char[] connections;
+        /**
+         * The height of the heightfield. (Along the z-axis in cell units.)
+         */
+        private int heightOfHeightfield;
+        /**
+         * The heightfield.
+         *
+         * [Size: (width - borderSize*2) * (h - borderSize*2)].
+         */
+        private char[] heights;
+        /**
+         * The maximum height bounds of usable data. (Along the y-axis.)
+         */
+        private int maxHeight;
+        /**
+         * The minimum height bounds of usable data. (Along the y-axis.)
+         */
+        private int minHeight;
+        /**
+         * The maximum x-bounds of usable data.
+         */
+        private int maxX;
+        /**
+         * The maximum y-bounds of usable data. (Along the z-axis.)
+         */
+        private int maxY;
+        /**
+         * The minimum x-bounds of usable data.
+         */
+        private int minX;
+        /**
+         * The minimum y-bounds of usable data. (Along the z-axis.)
+         */
+        private int minY;
+        /**
+         * The width of the heightfield. (Along the x-axis in cell units.)
+         */
+        private int width;
+        private HeightfieldLayerSet heightfieldLayerSet;
+
+        private HeightfieldLayer(HeightfieldLayerSet heightfieldLayerSet) {
+            this.heightfieldLayerSet = heightfieldLayerSet;
+        }
+
+        public char[] getAreas() {
+            getNativeAreas();
+            return areas;
+        }
+
+        private native void getNativeAreas();
+
+        public char[] getConnections() {
+            getNativeConnections();
+            return connections;
+        }
+
+        private native void getNativeConnections();
+
+        public int getHeightOfHeightfield() {
+            getNativeHeight();
+            return heightOfHeightfield;
+        }
+
+        private native void getNativeHeightOfHeightfield();
+
+        public char[] getHeights() {
+            getNativeHeights();
+            return heights;
+        }
+
+        private native void getNativeHeights();
+
+        public int getMaxHeight() {
+            getNativeMaxHeight();
+            return maxHeight;
+        }
+
+        private native void getNativeMaxHeight();
+
+        public int getMinHeight() {
+            getNativeMinHeight();
+            return minHeight;
+        }
+
+        private native void getNativeMinHeight();
+
+        public int getMaxX() {
+            getNativeMaxX();
+            return maxX;
+        }
+
+        private native void getNativeMaxX();
+
+        public int getMaxY() {
+            return maxY;
+        }
+
+        private native void getNativeMaxY();
+
+        public int getMinX() {
+            getNativeMinX();
+            return minX;
+        }
+
+        private native void getNativeMinX();
+
+        public int getMinY() {
+            getNativeMinY();
+            return minY;
+        }
+
+        private native void getNativeMinY();
+
+        public int getWidth() {
+            getNativeWidth();
+            return width;
+        }
+
+        private native void getNativeWidth();
     }
 }

@@ -5,7 +5,7 @@ package com.jme3.ai.recast.structures;
  *
  * @author Tihomir Radosavljevic
  */
-public class ContourSet {
+public class ContourSet extends BoundedField{
 
     /**
      * The AABB border size used to generate the source data from which the
@@ -15,64 +15,49 @@ public class ContourSet {
     /**
      * An array of the contours in the set. [Size: nconts].
      */
-    private Contour conts;
+    private Contour[] contours;
     /**
      * The height of the set. (Along the z-axis in cell units.)
      */
     private int height;
-    /**
-     * The number of contours in the set.
-     */
-    private int nconts;
     /**
      * The width of the set. (Along the x-axis in cell units.)
      */
     private int width;
 
     public ContourSet() {
+        reference = rcAllocContourSet();
     }
+    
+    private native Object rcAllocContourSet();
 
     public int getBorderSize() {
+        getNativeBorderSize();
         return borderSize;
     }
+    
+    private native void getNativeBorderSize();
 
-    public void setBorderSize(int borderSize) {
-        this.borderSize = borderSize;
+    public Contour[] getContours() {
+        getNativeContours();
+        return contours;
     }
-
-    public Contour getConts() {
-        return conts;
-    }
-
-    public void setConts(Contour conts) {
-        this.conts = conts;
-    }
+    
+    private native void getNativeContours();
 
     public int getHeight() {
+        getNativeHeight();
         return height;
     }
-
-    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public int getNconts() {
-        return nconts;
-    }
-
-    public void setNconts(int nconts) {
-        this.nconts = nconts;
-    }
+    
+    private native void getNativeHeight();
 
     public int getWidth() {
+        getNativeWidth();
         return width;
     }
 
-    public void setWidth(int width) {
-        this.width = width;
-    }
-
-    private native Object rcAllocContourSet();
+    private native void getNativeWidth();
 
     @Override
     protected void finalize() throws Throwable {
@@ -89,19 +74,11 @@ public class ContourSet {
     public class Contour {
 
         /**
-         * WARNING: unsigned char The area id of the contour.
+         * The area id of the contour.
          */
         private char area;
         /**
-         * The number of vertices in the raw contour.
-         */
-        private int numberOfRawVertices;
-        /**
-         * The number of vertices in the simplified contour.
-         */
-        private int numberOfSimplifiedVertices;
-        /**
-         * WARNING: unsigned short The region id of the contour.
+         * The region id of the contour.
          */
         private int regionID;
         /**
@@ -114,54 +91,31 @@ public class ContourSet {
         private int[] simplifiedVertices;
 
         public char getArea() {
+            getNativeArea();
             return area;
         }
-
-        public void setArea(char area) {
-            this.area = area;
-        }
-
-        public int getNumberOfRawVertices() {
-            return numberOfRawVertices;
-        }
-
-        public void setNumberOfRawVertices(int numberOfRawVertices) {
-            this.numberOfRawVertices = numberOfRawVertices;
-        }
-
-        public int getNumberOfSimplifiedVertices() {
-            return numberOfSimplifiedVertices;
-        }
-
-        public void setNumberOfSimplifiedVertices(int numberOfSimplifiedVertices) {
-            this.numberOfSimplifiedVertices = numberOfSimplifiedVertices;
-        }
+        
+        private native void getNativeArea();
 
         public int getRegionID() {
+            getNativeRegionID();
             return regionID;
         }
 
-        public void setRegionID(int regionID) {
-            this.regionID = regionID;
-        }
+        private native void getNativeRegionID();
 
         public int[] getRawVertices() {
+            getNativeRawVertices();
             return rawVertices;
         }
-
-        public void setRawVertices(int[] rawVertices) {
-            this.rawVertices = rawVertices;
-        }
+        
+        private native void getNativeRawVertices();
 
         public int[] getSimplifiedVertices() {
+            getNativeSimplifiedVertices();
             return simplifiedVertices;
         }
-
-        public void setSimplifiedVertices(int[] simplifiedVertices) {
-            this.simplifiedVertices = simplifiedVertices;
-        }
         
-        
-        //TODO: moving through contours
+        private native void getNativeSimplifiedVertices();
     }
 }
