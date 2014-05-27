@@ -10,11 +10,11 @@ import com.jme3.math.Vector3f;
 public class BoundedField {
 
     /**
-     * The maximum bounds in world space. [(x, y, z)].
+     * The maximum bounds in world space.
      */
     protected Vector3f maxBound;
     /**
-     * The minimum bounds in world space. [(x, y, z)].
+     * The minimum bounds in world space.
      */
     protected Vector3f minBound;
     /**
@@ -28,7 +28,7 @@ public class BoundedField {
     /**
      * Reference to the native object.
      */
-    protected Object structure;
+    protected Object reference;
 
     public Vector3f getMaxBound() {
         getNativeMaxBound();
