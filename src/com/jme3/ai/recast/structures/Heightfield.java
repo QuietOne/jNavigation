@@ -1,9 +1,22 @@
 package com.jme3.ai.recast.structures;
 
+import com.jme3.ai.recast.builders.HeightfieldBuilder;
+
 /**
- * A dynamic heightfield representing obstructed space.
+ * A dynamic heightfield representing obstructed space. The grid of a
+ * heightfield is layed out on the xz-plane based on the value of cellSize.
+ * Spans exist within the grid columns with the span min/max values at
+ * increments of cellHeight from the base of the grid. The smallest possible
+ * span size is (cellSize width) * (cellSize depth) * (cellHeight height).
+ * (Which is a single voxel.) Building a heightfield is one of the first steps
+ * in creating a polygon mesh from source geometry. After it is populated, it is
+ * used to build a CompactHeightfield.
+ *
+ * @see HeightfieldBuilder
+ * @see CompactHeightfield
  *
  * @author Tihomir Radosavljevic
+ * @version 1.0
  */
 public class Heightfield extends BoundedField {
 
@@ -14,7 +27,7 @@ public class Heightfield extends BoundedField {
     /**
      * Heightfield of spans (width*height).
      */
-    private Span spans;
+    private Span[] spans;
     /**
      * The width of the heightfield. (Along the x-axis in cell units.)
      */
@@ -22,7 +35,6 @@ public class Heightfield extends BoundedField {
 
     public Heightfield() {
         reference = rcAllocHeightField();
-        spans = new Span(this);
     }
 
     private native Object rcAllocHeightField();
@@ -34,19 +46,12 @@ public class Heightfield extends BoundedField {
 
     private native void getNativeHeight();
 
-    public void setHeight(int height) {
-        this.height = height;
-        setHeight();
-    }
-
-    private native void setHeight();
-
-    public Span getSpans() {
-        getNativeSpan();
+    public Span[] getSpans() {
+        getNativeSpans();
         return spans;
     }
 
-    private native void getNativeSpan();
+    private native void getNativeSpans();
 
     public int getWidth() {
         getNativeWidth();
@@ -54,13 +59,6 @@ public class Heightfield extends BoundedField {
     }
 
     public native void getNativeWidth();
-
-    public void setWidth(int width) {
-        this.width = width;
-        setWidth();
-    }
-
-    private native void setWidth();
 
     @Override
     protected void finalize() throws Throwable {
@@ -91,7 +89,13 @@ public class Heightfield extends BoundedField {
          * The lower limit of the span.
          */
         private int min;
+        /**
+         * Reference to the heightfield that it is attached.
+         */
         private Heightfield heightfield;
+        /**
+         * Reference to its own structure.
+         */
         private Object reference;
 
         private Span(Heightfield heightfield) {
