@@ -5,8 +5,11 @@ import com.jme3.ai.recast.structures.PolyMesh;
 import com.jme3.ai.recast.structures.PolyMeshDetail;
 
 /**
+ * PolyMeshDetailBuilder is class for correct manipulation on PolyMeshDetail
+ * structure.
  *
  * @author Tihomir Radosavljevic
+ * @version 1.0
  */
 public class PolyMeshDetailBuilder extends Builder {
 
@@ -17,18 +20,35 @@ public class PolyMeshDetailBuilder extends Builder {
         polyMeshDetail = new PolyMeshDetail();
     }
 
-    public boolean buildPolyMeshDetail(PolyMesh polyMesh, CompactHeightfield compactHeightfield, float distance, float maxError){
+    /**
+     * 
+     * @param polyMesh
+     * @param compactHeightfield
+     * @param distance
+     * @param maxError
+     * @return 
+     */
+    public boolean buildPolyMeshDetail(PolyMesh polyMesh, CompactHeightfield compactHeightfield, float distance, float maxError) {
         return rcBuildPolyMeshDetail(polyMesh, compactHeightfield, distance, maxError);
     }
-    
+
     private native boolean rcBuildPolyMeshDetail(PolyMesh mesh, CompactHeightfield chf, float sampleDist, float sampleMaxError);
 
-    public boolean addPolyMeshesDetail(PolyMeshDetail[] polyMeshDetails){
-        return  rcMergePolyMeshDetails(polyMeshDetails);
+    /**
+     * 
+     * @param polyMeshDetails
+     * @return 
+     */
+    public boolean addPolyMeshesDetail(PolyMeshDetail[] polyMeshDetails) {
+        return rcMergePolyMeshDetails(polyMeshDetails);
     }
-    
+
     private native boolean rcMergePolyMeshDetails(PolyMeshDetail[] meshes);
 
+    /**
+     * 
+     * @return 
+     */
     public PolyMeshDetail getPolyMeshDetail() {
         return polyMeshDetail;
     }
