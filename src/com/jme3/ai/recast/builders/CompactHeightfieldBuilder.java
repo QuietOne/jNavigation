@@ -7,8 +7,9 @@ import com.jme3.ai.recast.structures.Heightfield;
 import com.jme3.math.Vector3f;
 
 /**
- * CompactHeightfieldBuilder is class for correct manipulation on Heightfield
- * structure. Always use initializeStructure() and buildCompactHeightfield() first.
+ * CompactHeightfieldBuilder is class for correct manipulation on
+ * CompactHeightfield structure. Always use initializeStructure() and
+ * buildCompactHeightfield() first.
  *
  * @author Tihomir Radosavljevic
  * @version 1.0
