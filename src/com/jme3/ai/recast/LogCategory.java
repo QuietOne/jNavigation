@@ -9,50 +9,51 @@ import com.jme3.ai.recast.utils.RecastJNI;
  * Do not make changes to this file unless you know what you are doing--modify
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
-
-
 public final class LogCategory {
-  public final static LogCategory RC_LOG_PROGRESS = new LogCategory("RC_LOG_PROGRESS", RecastJNI.RC_LOG_PROGRESS_get());
-  public final static LogCategory RC_LOG_WARNING = new LogCategory("RC_LOG_WARNING");
-  public final static LogCategory RC_LOG_ERROR = new LogCategory("RC_LOG_ERROR");
 
-  public final int swigValue() {
-    return swigValue;
-  }
+    public final static LogCategory RC_LOG_PROGRESS = new LogCategory("RC_LOG_PROGRESS", RecastJNI.RC_LOG_PROGRESS_get());
+    public final static LogCategory RC_LOG_WARNING = new LogCategory("RC_LOG_WARNING");
+    public final static LogCategory RC_LOG_ERROR = new LogCategory("RC_LOG_ERROR");
 
-  public String toString() {
-    return swigName;
-  }
+    public final int swigValue() {
+        return swigValue;
+    }
 
-  public static LogCategory swigToEnum(int swigValue) {
-    if (swigValue < swigValues.length && swigValue >= 0 && swigValues[swigValue].swigValue == swigValue)
-      return swigValues[swigValue];
-    for (int i = 0; i < swigValues.length; i++)
-      if (swigValues[i].swigValue == swigValue)
-        return swigValues[i];
-    throw new IllegalArgumentException("No enum " + LogCategory.class + " with value " + swigValue);
-  }
+    @Override
+    public String toString() {
+        return swigName;
+    }
 
-  private LogCategory(String swigName) {
-    this.swigName = swigName;
-    this.swigValue = swigNext++;
-  }
+    public static LogCategory swigToEnum(int swigValue) {
+        if (swigValue < swigValues.length && swigValue >= 0 && swigValues[swigValue].swigValue == swigValue) {
+            return swigValues[swigValue];
+        }
+        for (int i = 0; i < swigValues.length; i++) {
+            if (swigValues[i].swigValue == swigValue) {
+                return swigValues[i];
+            }
+        }
+        throw new IllegalArgumentException("No enum " + LogCategory.class + " with value " + swigValue);
+    }
 
-  private LogCategory(String swigName, int swigValue) {
-    this.swigName = swigName;
-    this.swigValue = swigValue;
-    swigNext = swigValue+1;
-  }
+    private LogCategory(String swigName) {
+        this.swigName = swigName;
+        this.swigValue = swigNext++;
+    }
 
-  private LogCategory(String swigName, LogCategory swigEnum) {
-    this.swigName = swigName;
-    this.swigValue = swigEnum.swigValue;
-    swigNext = this.swigValue+1;
-  }
+    private LogCategory(String swigName, int swigValue) {
+        this.swigName = swigName;
+        this.swigValue = swigValue;
+        swigNext = swigValue + 1;
+    }
 
-  private static LogCategory[] swigValues = { RC_LOG_PROGRESS, RC_LOG_WARNING, RC_LOG_ERROR };
-  private static int swigNext = 0;
-  private final int swigValue;
-  private final String swigName;
+    private LogCategory(String swigName, LogCategory swigEnum) {
+        this.swigName = swigName;
+        this.swigValue = swigEnum.swigValue;
+        swigNext = this.swigValue + 1;
+    }
+    private static LogCategory[] swigValues = {RC_LOG_PROGRESS, RC_LOG_WARNING, RC_LOG_ERROR};
+    private static int swigNext = 0;
+    private final int swigValue;
+    private final String swigName;
 }
-

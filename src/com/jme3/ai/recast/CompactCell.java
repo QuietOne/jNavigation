@@ -9,54 +9,52 @@ import com.jme3.ai.recast.utils.RecastJNI;
  * Do not make changes to this file unless you know what you are doing--modify
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
-
-
 public class CompactCell {
-  private long swigCPtr;
-  protected boolean swigCMemOwn;
 
-  public CompactCell(long cPtr, boolean cMemoryOwn) {
-    swigCMemOwn = cMemoryOwn;
-    swigCPtr = cPtr;
-  }
+    private long swigCPtr;
+    protected boolean swigCMemOwn;
 
-  public static long getCPtr(CompactCell obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
-  }
-
-  @Override
-  protected void finalize() {
-    delete();
-  }
-
-  public synchronized void delete() {
-    if (swigCPtr != 0) {
-      if (swigCMemOwn) {
-        swigCMemOwn = false;
-        RecastJNI.delete_rcCompactCell(swigCPtr);
-      }
-      swigCPtr = 0;
+    public CompactCell(long cPtr, boolean cMemoryOwn) {
+        swigCMemOwn = cMemoryOwn;
+        swigCPtr = cPtr;
     }
-  }
 
-  public void setIndex(long value) {
-    RecastJNI.rcCompactCell_index_set(swigCPtr, this, value);
-  }
+    public static long getCPtr(CompactCell obj) {
+        return (obj == null) ? 0 : obj.swigCPtr;
+    }
 
-  public long getIndex() {
-    return RecastJNI.rcCompactCell_index_get(swigCPtr, this);
-  }
+    @Override
+    protected void finalize() {
+        delete();
+    }
 
-  public void setCount(long value) {
-    RecastJNI.rcCompactCell_count_set(swigCPtr, this, value);
-  }
+    public synchronized void delete() {
+        if (swigCPtr != 0) {
+            if (swigCMemOwn) {
+                swigCMemOwn = false;
+                RecastJNI.delete_rcCompactCell(swigCPtr);
+            }
+            swigCPtr = 0;
+        }
+    }
 
-  public long getCount() {
-    return RecastJNI.rcCompactCell_count_get(swigCPtr, this);
-  }
+    public void setIndex(long value) {
+        RecastJNI.rcCompactCell_index_set(swigCPtr, this, value);
+    }
 
-  public CompactCell() {
-    this(RecastJNI.new_rcCompactCell(), true);
-  }
+    public long getIndex() {
+        return RecastJNI.rcCompactCell_index_get(swigCPtr, this);
+    }
 
+    public void setCount(long value) {
+        RecastJNI.rcCompactCell_count_set(swigCPtr, this, value);
+    }
+
+    public long getCount() {
+        return RecastJNI.rcCompactCell_count_get(swigCPtr, this);
+    }
+
+    private CompactCell() {
+        this(RecastJNI.new_rcCompactCell(), true);
+    }
 }

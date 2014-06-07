@@ -33,51 +33,6 @@ public class RecastBuilder {
      return RecastJNI.RC_SPANS_PER_POOL_get();
      }*/
 
-    public static CompactHeightfield allocCompactHeightfield() {
-        long cPtr = RecastJNI.rcAllocCompactHeightfield();
-        return (cPtr == 0) ? null : new CompactHeightfield(cPtr, false);
-    }
-
-    public static void rcFreeCompactHeightfield(CompactHeightfield chf) {
-        RecastJNI.rcFreeCompactHeightfield(CompactHeightfield.getCPtr(chf), chf);
-    }
-
-    public static HeightfieldLayerSet rcAllocHeightfieldLayerSet() {
-        long cPtr = RecastJNI.rcAllocHeightfieldLayerSet();
-        return (cPtr == 0) ? null : new HeightfieldLayerSet(cPtr, false);
-    }
-
-    public static void rcFreeHeightfieldLayerSet(HeightfieldLayerSet lset) {
-        RecastJNI.rcFreeHeightfieldLayerSet(HeightfieldLayerSet.getCPtr(lset), lset);
-    }
-
-    public static ContourSet rcAllocContourSet() {
-        long cPtr = RecastJNI.rcAllocContourSet();
-        return (cPtr == 0) ? null : new ContourSet(cPtr, false);
-    }
-
-    public static void rcFreeContourSet(ContourSet cset) {
-        RecastJNI.rcFreeContourSet(ContourSet.getCPtr(cset), cset);
-    }
-
-    public static PolyMesh rcAllocPolyMesh() {
-        long cPtr = RecastJNI.rcAllocPolyMesh();
-        return (cPtr == 0) ? null : new PolyMesh(cPtr, false);
-    }
-
-    public static void rcFreePolyMesh(PolyMesh pmesh) {
-        RecastJNI.rcFreePolyMesh(PolyMesh.getCPtr(pmesh), pmesh);
-    }
-
-    public static PolyMeshDetail rcAllocPolyMeshDetail() {
-        long cPtr = RecastJNI.rcAllocPolyMeshDetail();
-        return (cPtr == 0) ? null : new PolyMeshDetail(cPtr, false);
-    }
-
-    public static void rcFreePolyMeshDetail(PolyMeshDetail dmesh) {
-        RecastJNI.rcFreePolyMeshDetail(PolyMeshDetail.getCPtr(dmesh), dmesh);
-    }
-
     public static int getRC_BORDER_REG() {
         return RecastJNI.RC_BORDER_REG_get();
     }
@@ -235,7 +190,7 @@ public class RecastBuilder {
         SWIGTYPE_p_float verts = Converter.convertToSWIGTYPE_p_float(vertices);
         int nv = vertices.length;
         SWIGTYPE_p_int tris = Converter.convertToSWIGTYPE_p_int(indices);
-        SWIGTYPE_p_unsigned_char area = Converter.convertTOSWIGTYPE_p_unsigned_char(areas);
+        SWIGTYPE_p_unsigned_char area = Converter.convertToSWIGTYPE_p_unsigned_char(areas);
         RecastJNI.rcMarkWalkableTriangles(Context.getCPtr(ctx), ctx, walkableSlopeAngle, SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_int.getCPtr(tris), nt, SWIGTYPE_p_unsigned_char.getCPtr(area));
     }
 
@@ -244,7 +199,7 @@ public class RecastBuilder {
         int nv = vertices.length;
         SWIGTYPE_p_int tris = Converter.convertToSWIGTYPE_p_int(indices);
         int nt = indices.length / 3;
-        SWIGTYPE_p_unsigned_char area = Converter.convertTOSWIGTYPE_p_unsigned_char(areas);
+        SWIGTYPE_p_unsigned_char area = Converter.convertToSWIGTYPE_p_unsigned_char(areas);
         RecastJNI.rcClearUnwalkableTriangles(Context.getCPtr(ctx), ctx, walkableSlopeAngle, SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_int.getCPtr(tris), nt, SWIGTYPE_p_unsigned_char.getCPtr(area));
     }
 
@@ -264,7 +219,7 @@ public class RecastBuilder {
         int nv = vertices.length;
         SWIGTYPE_p_int tris = Converter.convertToSWIGTYPE_p_int(indices);
         int nt = indices.length / 3;
-        SWIGTYPE_p_unsigned_char area = Converter.convertTOSWIGTYPE_p_unsigned_char(areas);
+        SWIGTYPE_p_unsigned_char area = Converter.convertToSWIGTYPE_p_unsigned_char(areas);
         RecastJNI.rcRasterizeTriangles__SWIG_0(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_int.getCPtr(tris), SWIGTYPE_p_unsigned_char.getCPtr(area), nt, Heightfield.getCPtr(solid), solid, flagMergeThr);
     }
 
@@ -273,7 +228,7 @@ public class RecastBuilder {
         int nv = vertices.length;
         SWIGTYPE_p_int tris = Converter.convertToSWIGTYPE_p_int(indices);
         int nt = indices.length / 3;
-        SWIGTYPE_p_unsigned_char area = Converter.convertTOSWIGTYPE_p_unsigned_char(areas);
+        SWIGTYPE_p_unsigned_char area = Converter.convertToSWIGTYPE_p_unsigned_char(areas);
         RecastJNI.rcRasterizeTriangles__SWIG_1(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_int.getCPtr(tris), SWIGTYPE_p_unsigned_char.getCPtr(area), nt, Heightfield.getCPtr(solid), solid);
     }
 
@@ -323,13 +278,13 @@ public class RecastBuilder {
         FloatArray array = new FloatArray(maxOutVerts);
         SWIGTYPE_p_float outVerts = array.cast();
         int num = RecastJNI.rcOffsetPoly(SWIGTYPE_p_float.getCPtr(verts), nverts, offset, SWIGTYPE_p_float.getCPtr(outVerts), maxOutVerts);
-        Vector3f[] vs = new Vector3f[num];
-        array = new FloatArray(SWIGTYPE_p_float.getCPtr(outVerts),false);
+        array = new FloatArray(SWIGTYPE_p_float.getCPtr(outVerts), false);
         return Converter.convertToVector3f(array, num);
     }
 
-    public static void markCylinderArea(Context ctx, SWIGTYPE_p_float pos, float r, float h, short areaId, CompactHeightfield chf) {
-        RecastJNI.rcMarkCylinderArea(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(pos), r, h, areaId, CompactHeightfield.getCPtr(chf), chf);
+    public static void markCylinderArea(Context ctx, Vector3f position, float radius, float height, short areaId, CompactHeightfield chf) {
+        SWIGTYPE_p_float pos = Converter.convertToSWIGTYPE_p_float(position);
+        RecastJNI.rcMarkCylinderArea(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(pos), radius, height, areaId, CompactHeightfield.getCPtr(chf), chf);
     }
 
     public static boolean buildDistanceField(Context ctx, CompactHeightfield chf) {
@@ -376,8 +331,9 @@ public class RecastBuilder {
         return RecastJNI.rcBuildPolyMesh(Context.getCPtr(ctx), ctx, ContourSet.getCPtr(cset), cset, nvp, PolyMesh.getCPtr(mesh), mesh);
     }
 
-    public static boolean mergePolyMeshes(Context ctx, SWIGTYPE_p_p_rcPolyMesh meshes, int nmeshes, PolyMesh mesh) {
-        return RecastJNI.rcMergePolyMeshes(Context.getCPtr(ctx), ctx, SWIGTYPE_p_p_rcPolyMesh.getCPtr(meshes), nmeshes, PolyMesh.getCPtr(mesh), mesh);
+    public static boolean mergePolyMeshes(Context ctx, PolyMesh polyMesh1, PolyMesh polyMesh2) {
+        SWIGTYPE_p_p_rcPolyMesh meshes = new SWIGTYPE_p_p_rcPolyMesh(PolyMesh.getCPtr(polyMesh1), true);
+        return RecastJNI.rcMergePolyMeshes(Context.getCPtr(ctx), ctx, SWIGTYPE_p_p_rcPolyMesh.getCPtr(meshes), 1, PolyMesh.getCPtr(polyMesh1), polyMesh2);
     }
 
     public static boolean buildPolyMeshDetail(Context ctx, PolyMesh mesh, CompactHeightfield chf, float sampleDist, float sampleMaxError, PolyMeshDetail dmesh) {
@@ -388,8 +344,9 @@ public class RecastBuilder {
         return RecastJNI.rcCopyPolyMesh(Context.getCPtr(ctx), ctx, PolyMesh.getCPtr(src), src, PolyMesh.getCPtr(dst), dst);
     }
 
-    public static boolean mergePolyMeshDetails(Context ctx, SWIGTYPE_p_p_rcPolyMeshDetail meshes, int nmeshes, PolyMeshDetail mesh) {
-        return RecastJNI.rcMergePolyMeshDetails(Context.getCPtr(ctx), ctx, SWIGTYPE_p_p_rcPolyMeshDetail.getCPtr(meshes), nmeshes, PolyMeshDetail.getCPtr(mesh), mesh);
+    public static boolean mergePolyMeshDetails(Context ctx, PolyMeshDetail source, PolyMeshDetail destination) {
+        SWIGTYPE_p_p_rcPolyMeshDetail mesh = new SWIGTYPE_p_p_rcPolyMeshDetail(PolyMeshDetail.getCPtr(source), true);
+        return RecastJNI.rcMergePolyMeshDetails(Context.getCPtr(ctx), ctx, SWIGTYPE_p_p_rcPolyMeshDetail.getCPtr(mesh), 1, PolyMeshDetail.getCPtr(destination), destination);
     }
 
     /*public static void allocSetCustom(SWIGTYPE_p_f_int_enum_rcAllocHint__p_void allocFunc, SWIGTYPE_p_f_p_void__void freeFunc) {

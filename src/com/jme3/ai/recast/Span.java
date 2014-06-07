@@ -4,7 +4,8 @@ import com.jme3.ai.recast.utils.RecastJNI;
 
 /**
  * Class for looking at Heightfield structure.
- * @author tihomir
+ *
+ * @author Tihomir Radosavljevic
  */
 public class Span {
 
@@ -20,6 +21,7 @@ public class Span {
         return (obj == null) ? 0 : obj.swigCPtr;
     }
 
+    @Override
     protected void finalize() {
         delete();
     }
@@ -73,6 +75,6 @@ public class Span {
 
     @Override
     public String toString() {
-        return "Span{ area=" + getArea() +"; minSpanLimit="+getMinSpanLimit()+"; maxSpanLimit="+getMaxSpanLimit()+ '}';
-    }    
+        return "Span{ area=" + getArea() + "; minSpanLimit=" + getMinSpanLimit() + "; maxSpanLimit=" + getMaxSpanLimit() + '}';
+    }
 }

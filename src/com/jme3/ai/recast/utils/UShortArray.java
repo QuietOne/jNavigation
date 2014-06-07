@@ -40,7 +40,7 @@ public class UShortArray {
     this(RecastJNI.new_UShortArray(nelements), true);
   }
 
-  public int getitem(int index) {
+  public int getItem(int index) {
     return RecastJNI.UShortArray_getitem(swigCPtr, this, index);
   }
 

@@ -12,7 +12,7 @@ package com.jme3.ai.recast.utils;
 public class SWIGTYPE_p_p_rcPolyMesh {
   private long swigCPtr;
 
-  protected SWIGTYPE_p_p_rcPolyMesh(long cPtr, boolean futureUse) {
+  public SWIGTYPE_p_p_rcPolyMesh(long cPtr, boolean futureUse) {
     swigCPtr = cPtr;
   }
 
