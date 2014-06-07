@@ -119,16 +119,12 @@ public class Heightfield {
         return RecastJNI.rcHeightfield_ch_get(swigCPtr, this);
     }
 
-    public Span[] getSpans() {
+    public Span getSpans() {
         long cPtr = RecastJNI.rcHeightfield_spans_get(swigCPtr, this);
-        //return (cPtr == 0) ? null : new SWIGTYPE_p_p_rcSpan(cPtr, false);
-        Span[] spans = new Span[getHeight() * getWidth()];
-        for (int i = 0; i < spans.length; i++) {
-            spans[i] = new Span(cPtr, false);
-            //FIXME:
-            cPtr = RecastJNI.rcHeightfield_spans_get(swigCPtr, this);
+        if (cPtr == 0) {
+            return null;
         }
-        return spans;
+        return new Span(cPtr, false);
     }
     /*
      public Span getFreelist() {

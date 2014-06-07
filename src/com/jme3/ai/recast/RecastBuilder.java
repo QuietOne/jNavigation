@@ -4,15 +4,11 @@ import com.jme3.ai.recast.utils.Converter;
 import com.jme3.ai.recast.utils.FloatArray;
 import com.jme3.ai.recast.utils.IntArray;
 import com.jme3.ai.recast.utils.RecastJNI;
-import com.jme3.ai.recast.utils.SWIGTYPE_p_f_int_enum_rcAllocHint__p_void;
-import com.jme3.ai.recast.utils.SWIGTYPE_p_f_p_void__void;
 import com.jme3.ai.recast.utils.SWIGTYPE_p_float;
 import com.jme3.ai.recast.utils.SWIGTYPE_p_int;
 import com.jme3.ai.recast.utils.SWIGTYPE_p_p_rcPolyMesh;
 import com.jme3.ai.recast.utils.SWIGTYPE_p_p_rcPolyMeshDetail;
 import com.jme3.ai.recast.utils.SWIGTYPE_p_unsigned_char;
-import com.jme3.ai.recast.utils.SWIGTYPE_p_unsigned_short;
-import com.jme3.ai.recast.utils.SWIGTYPE_p_void;
 import com.jme3.math.Vector3f;
 
 /**
@@ -36,7 +32,6 @@ public class RecastBuilder {
      public static int getRC_SPANS_PER_POOL() {
      return RecastJNI.RC_SPANS_PER_POOL_get();
      }*/
-
 
     public static CompactHeightfield allocCompactHeightfield() {
         long cPtr = RecastJNI.rcAllocCompactHeightfield();
@@ -114,66 +109,84 @@ public class RecastBuilder {
     public static int getRC_NOT_CONNECTED() {
         return RecastJNI.RC_NOT_CONNECTED_get();
     }
-/*
-    public static float rcSqrt(float x) {
-        return RecastJNI.rcSqrt(x);
-    }
+    /*
+     public static float rcSqrt(float x) {
+     return RecastJNI.rcSqrt(x);
+     }
 
-    public static void rcVcross(SWIGTYPE_p_float dest, SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
-        RecastJNI.rcVcross(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
-    }
+     public static void rcVcross(SWIGTYPE_p_float dest, SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
+     RecastJNI.rcVcross(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
+     }
 
-    public static float rcVdot(SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
-        return RecastJNI.rcVdot(SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
-    }
+     public static float rcVdot(SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
+     return RecastJNI.rcVdot(SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
+     }
 
-    public static void rcVmad(SWIGTYPE_p_float dest, SWIGTYPE_p_float v1, SWIGTYPE_p_float v2, float s) {
-        RecastJNI.rcVmad(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2), s);
-    }
+     public static void rcVmad(SWIGTYPE_p_float dest, SWIGTYPE_p_float v1, SWIGTYPE_p_float v2, float s) {
+     RecastJNI.rcVmad(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2), s);
+     }
 
-    public static void rcVadd(SWIGTYPE_p_float dest, SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
-        RecastJNI.rcVadd(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
-    }
+     public static void rcVadd(SWIGTYPE_p_float dest, SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
+     RecastJNI.rcVadd(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
+     }
 
-    public static void rcVsub(SWIGTYPE_p_float dest, SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
-        RecastJNI.rcVsub(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
-    }
+     public static void rcVsub(SWIGTYPE_p_float dest, SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
+     RecastJNI.rcVsub(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
+     }
 
-    public static void rcVmin(SWIGTYPE_p_float mn, SWIGTYPE_p_float v) {
-        RecastJNI.rcVmin(SWIGTYPE_p_float.getCPtr(mn), SWIGTYPE_p_float.getCPtr(v));
-    }
+     public static void rcVmin(SWIGTYPE_p_float mn, SWIGTYPE_p_float v) {
+     RecastJNI.rcVmin(SWIGTYPE_p_float.getCPtr(mn), SWIGTYPE_p_float.getCPtr(v));
+     }
 
-    public static void rcVmax(SWIGTYPE_p_float mx, SWIGTYPE_p_float v) {
-        RecastJNI.rcVmax(SWIGTYPE_p_float.getCPtr(mx), SWIGTYPE_p_float.getCPtr(v));
-    }
+     public static void rcVmax(SWIGTYPE_p_float mx, SWIGTYPE_p_float v) {
+     RecastJNI.rcVmax(SWIGTYPE_p_float.getCPtr(mx), SWIGTYPE_p_float.getCPtr(v));
+     }
 
-    public static void rcVcopy(SWIGTYPE_p_float dest, SWIGTYPE_p_float v) {
-        RecastJNI.rcVcopy(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v));
-    }
+     public static void rcVcopy(SWIGTYPE_p_float dest, SWIGTYPE_p_float v) {
+     RecastJNI.rcVcopy(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v));
+     }
 
-    public static float rcVdist(SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
-        return RecastJNI.rcVdist(SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
-    }
+     public static float rcVdist(SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
+     return RecastJNI.rcVdist(SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
+     }
 
-    public static float rcVdistSqr(SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
-        return RecastJNI.rcVdistSqr(SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
-    }
+     public static float rcVdistSqr(SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
+     return RecastJNI.rcVdistSqr(SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
+     }
 
-    public static void rcVnormalize(SWIGTYPE_p_float v) {
-        RecastJNI.rcVnormalize(SWIGTYPE_p_float.getCPtr(v));
-    }*/
+     public static void rcVnormalize(SWIGTYPE_p_float v) {
+     RecastJNI.rcVnormalize(SWIGTYPE_p_float.getCPtr(v));
+     }*/
 
-    
-    public static void calculateBounds(SWIGTYPE_p_float verts, int nv, SWIGTYPE_p_float bmin, SWIGTYPE_p_float bmax) {
+    public static Vector3f calculateMinBounds(Vector3f[] vertices) {
+        FloatArray tempMin = new FloatArray(3);
+        FloatArray tempMax = new FloatArray(3);
+        SWIGTYPE_p_float bmin = tempMin.cast();
+        SWIGTYPE_p_float bmax = tempMax.cast();
+        int nv = vertices.length;
+        SWIGTYPE_p_float verts = Converter.convertToSWIGTYPE_p_float(vertices);
         RecastJNI.rcCalcBounds(SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_float.getCPtr(bmin), SWIGTYPE_p_float.getCPtr(bmax));
+        return Converter.convertToVector3f(SWIGTYPE_p_float.getCPtr(bmin));
+    }
+
+    public static Vector3f calculateMaxBounds(Vector3f[] vertices) {
+        FloatArray tempMin = new FloatArray(3);
+        FloatArray tempMax = new FloatArray(3);
+        SWIGTYPE_p_float bmin = tempMin.cast();
+        SWIGTYPE_p_float bmax = tempMax.cast();
+        int nv = vertices.length;
+        SWIGTYPE_p_float verts = Converter.convertToSWIGTYPE_p_float(vertices);
+        RecastJNI.rcCalcBounds(SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_float.getCPtr(bmin), SWIGTYPE_p_float.getCPtr(bmax));
+        return Converter.convertToVector3f(SWIGTYPE_p_float.getCPtr(bmax));
     }
 
     /**
      * Calculating grid size and returning height.
+     *
      * @param minBounds
      * @param maxBounds
      * @param cellSize
-     * @return 
+     * @return
      */
     public static int calculateGridHeight(Vector3f minBounds, Vector3f maxBounds, float cellSize) {
         SWIGTYPE_p_float bmin = Converter.convertToSWIGTYPE_p_float(minBounds);
@@ -187,13 +200,14 @@ public class RecastBuilder {
         RecastJNI.rcCalcGridSize(SWIGTYPE_p_float.getCPtr(bmin), SWIGTYPE_p_float.getCPtr(bmax), cellSize, SWIGTYPE_p_int.getCPtr(w), SWIGTYPE_p_int.getCPtr(h));
         return tempH.getItem(0);
     }
-    
+
     /**
      * Calculating grid size and returning width.
+     *
      * @param minBounds
      * @param maxBounds
      * @param cellSize
-     * @return 
+     * @return
      */
     public static int calculateGridWidth(Vector3f minBounds, Vector3f maxBounds, float cellSize) {
         SWIGTYPE_p_float bmin = Converter.convertToSWIGTYPE_p_float(minBounds);
@@ -209,53 +223,58 @@ public class RecastBuilder {
     }
 
     public static boolean createHeightfield(Context ctx, Heightfield hf, int width, int height, Vector3f minBounds, Vector3f maxBounds, float cs, float ch) {
+        if (hf == null) {
+            throw new NullPointerException("Heightfield must be initialized");
+        }
         SWIGTYPE_p_float bmin = Converter.convertToSWIGTYPE_p_float(minBounds);
         SWIGTYPE_p_float bmax = Converter.convertToSWIGTYPE_p_float(maxBounds);
         return RecastJNI.rcCreateHeightfield(Context.getCPtr(ctx), ctx, Heightfield.getCPtr(hf), hf, width, height, SWIGTYPE_p_float.getCPtr(bmin), SWIGTYPE_p_float.getCPtr(bmax), cs, ch);
     }
 
-    public static void markWalkableTriangles(Context ctx, float walkableSlopeAngle, SWIGTYPE_p_float verts, int nv, SWIGTYPE_p_int tris, int nt, SWIGTYPE_p_unsigned_char areas) {
-        RecastJNI.rcMarkWalkableTriangles(Context.getCPtr(ctx), ctx, walkableSlopeAngle, SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_int.getCPtr(tris), nt, SWIGTYPE_p_unsigned_char.getCPtr(areas));
+    public static void markWalkableTriangles(Context ctx, float walkableSlopeAngle, Vector3f[] vertices, int[] indices, int nt, char[] areas) {
+        SWIGTYPE_p_float verts = Converter.convertToSWIGTYPE_p_float(vertices);
+        int nv = vertices.length;
+        SWIGTYPE_p_int tris = Converter.convertToSWIGTYPE_p_int(indices);
+        SWIGTYPE_p_unsigned_char area = Converter.convertTOSWIGTYPE_p_unsigned_char(areas);
+        RecastJNI.rcMarkWalkableTriangles(Context.getCPtr(ctx), ctx, walkableSlopeAngle, SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_int.getCPtr(tris), nt, SWIGTYPE_p_unsigned_char.getCPtr(area));
     }
 
-    public static void clearUnwalkableTriangles(Context ctx, float walkableSlopeAngle, SWIGTYPE_p_float verts, int nv, SWIGTYPE_p_int tris, int nt, SWIGTYPE_p_unsigned_char areas) {
-        RecastJNI.rcClearUnwalkableTriangles(Context.getCPtr(ctx), ctx, walkableSlopeAngle, SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_int.getCPtr(tris), nt, SWIGTYPE_p_unsigned_char.getCPtr(areas));
+    public static void clearUnwalkableTriangles(Context ctx, float walkableSlopeAngle, Vector3f[] vertices, int[] indices, char[] areas) {
+        SWIGTYPE_p_float verts = Converter.convertToSWIGTYPE_p_float(vertices);
+        int nv = vertices.length;
+        SWIGTYPE_p_int tris = Converter.convertToSWIGTYPE_p_int(indices);
+        int nt = indices.length / 3;
+        SWIGTYPE_p_unsigned_char area = Converter.convertTOSWIGTYPE_p_unsigned_char(areas);
+        RecastJNI.rcClearUnwalkableTriangles(Context.getCPtr(ctx), ctx, walkableSlopeAngle, SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_int.getCPtr(tris), nt, SWIGTYPE_p_unsigned_char.getCPtr(area));
     }
 
-    public static void addSpan(Context ctx, Heightfield hf, int x, int y, int smin, int smax, short area, int flagMergeThr) {
-        RecastJNI.rcAddSpan(Context.getCPtr(ctx), ctx, Heightfield.getCPtr(hf), hf, x, y, smin, smax, area, flagMergeThr);
+    public static void addSpan(Context ctx, Heightfield hf, int x, int y, int minSpanLimit, int maxSpanLimit, short area, int flagMergeThr) {
+        RecastJNI.rcAddSpan(Context.getCPtr(ctx), ctx, Heightfield.getCPtr(hf), hf, x, y, minSpanLimit, maxSpanLimit, area, flagMergeThr);
     }
 
-    public static void rasterizeTriangle(Context ctx, SWIGTYPE_p_float v0, SWIGTYPE_p_float v1, SWIGTYPE_p_float v2, short area, Heightfield solid, int flagMergeThr) {
+    public static void rasterizeTriangle(Context ctx, Vector3f vertex0, Vector3f vertex1, Vector3f vertex2, short area, Heightfield solid, int flagMergeThr) {
+        SWIGTYPE_p_float v0 = Converter.convertToSWIGTYPE_p_float(vertex0);
+        SWIGTYPE_p_float v1 = Converter.convertToSWIGTYPE_p_float(vertex1);
+        SWIGTYPE_p_float v2 = Converter.convertToSWIGTYPE_p_float(vertex2);
         RecastJNI.rcRasterizeTriangle__SWIG_0(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(v0), SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2), area, Heightfield.getCPtr(solid), solid, flagMergeThr);
     }
 
-    public static void rasterizeTriangle(Context ctx, SWIGTYPE_p_float v0, SWIGTYPE_p_float v1, SWIGTYPE_p_float v2, short area, Heightfield solid) {
-        RecastJNI.rcRasterizeTriangle__SWIG_1(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(v0), SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2), area, Heightfield.getCPtr(solid), solid);
+    public static void rasterizeTriangles(Context ctx, Vector3f[] vertices, int[] indices, char[] areas, Heightfield solid, int flagMergeThr) {
+        SWIGTYPE_p_float verts = Converter.convertToSWIGTYPE_p_float(vertices);
+        int nv = vertices.length;
+        SWIGTYPE_p_int tris = Converter.convertToSWIGTYPE_p_int(indices);
+        int nt = indices.length / 3;
+        SWIGTYPE_p_unsigned_char area = Converter.convertTOSWIGTYPE_p_unsigned_char(areas);
+        RecastJNI.rcRasterizeTriangles__SWIG_0(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_int.getCPtr(tris), SWIGTYPE_p_unsigned_char.getCPtr(area), nt, Heightfield.getCPtr(solid), solid, flagMergeThr);
     }
 
-    public static void rasterizeTriangles(Context ctx, SWIGTYPE_p_float verts, int nv, SWIGTYPE_p_int tris, SWIGTYPE_p_unsigned_char areas, int nt, Heightfield solid, int flagMergeThr) {
-        RecastJNI.rcRasterizeTriangles__SWIG_0(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_int.getCPtr(tris), SWIGTYPE_p_unsigned_char.getCPtr(areas), nt, Heightfield.getCPtr(solid), solid, flagMergeThr);
-    }
-
-    public static void rasterizeTriangles(Context ctx, SWIGTYPE_p_float verts, int nv, SWIGTYPE_p_int tris, SWIGTYPE_p_unsigned_char areas, int nt, Heightfield solid) {
-        RecastJNI.rcRasterizeTriangles__SWIG_1(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_int.getCPtr(tris), SWIGTYPE_p_unsigned_char.getCPtr(areas), nt, Heightfield.getCPtr(solid), solid);
-    }
-
-    public static void rasterizeTriangles(Context ctx, SWIGTYPE_p_float verts, int nv, SWIGTYPE_p_unsigned_short tris, SWIGTYPE_p_unsigned_char areas, int nt, Heightfield solid, int flagMergeThr) {
-        RecastJNI.rcRasterizeTriangles__SWIG_2(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_unsigned_short.getCPtr(tris), SWIGTYPE_p_unsigned_char.getCPtr(areas), nt, Heightfield.getCPtr(solid), solid, flagMergeThr);
-    }
-
-    public static void rasterizeTriangles(Context ctx, SWIGTYPE_p_float verts, int nv, SWIGTYPE_p_unsigned_short tris, SWIGTYPE_p_unsigned_char areas, int nt, Heightfield solid) {
-        RecastJNI.rcRasterizeTriangles__SWIG_3(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_unsigned_short.getCPtr(tris), SWIGTYPE_p_unsigned_char.getCPtr(areas), nt, Heightfield.getCPtr(solid), solid);
-    }
-
-    public static void rasterizeTriangles(Context ctx, SWIGTYPE_p_float verts, SWIGTYPE_p_unsigned_char areas, int nt, Heightfield solid, int flagMergeThr) {
-        RecastJNI.rcRasterizeTriangles__SWIG_4(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(verts), SWIGTYPE_p_unsigned_char.getCPtr(areas), nt, Heightfield.getCPtr(solid), solid, flagMergeThr);
-    }
-
-    public static void rasterizeTriangles(Context ctx, SWIGTYPE_p_float verts, SWIGTYPE_p_unsigned_char areas, int nt, Heightfield solid) {
-        RecastJNI.rcRasterizeTriangles__SWIG_5(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(verts), SWIGTYPE_p_unsigned_char.getCPtr(areas), nt, Heightfield.getCPtr(solid), solid);
+    public static void rasterizeTriangles(Context ctx, Vector3f[] vertices, int[] indices, char[] areas, Heightfield solid) {
+        SWIGTYPE_p_float verts = Converter.convertToSWIGTYPE_p_float(vertices);
+        int nv = vertices.length;
+        SWIGTYPE_p_int tris = Converter.convertToSWIGTYPE_p_int(indices);
+        int nt = indices.length / 3;
+        SWIGTYPE_p_unsigned_char area = Converter.convertTOSWIGTYPE_p_unsigned_char(areas);
+        RecastJNI.rcRasterizeTriangles__SWIG_1(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_int.getCPtr(tris), SWIGTYPE_p_unsigned_char.getCPtr(area), nt, Heightfield.getCPtr(solid), solid);
     }
 
     public static void filterLowHangingWalkableObstacles(Context ctx, int walkableClimb, Heightfield solid) {
@@ -286,16 +305,27 @@ public class RecastBuilder {
         return RecastJNI.rcMedianFilterWalkableArea(Context.getCPtr(ctx), ctx, CompactHeightfield.getCPtr(chf), chf);
     }
 
-    public static void markBoxArea(Context ctx, SWIGTYPE_p_float bmin, SWIGTYPE_p_float bmax, short areaId, CompactHeightfield chf) {
+    public static void markBoxArea(Context ctx, Vector3f minBounds, Vector3f maxBounds, short areaId, CompactHeightfield chf) {
+        SWIGTYPE_p_float bmin = Converter.convertToSWIGTYPE_p_float(minBounds);
+        SWIGTYPE_p_float bmax = Converter.convertToSWIGTYPE_p_float(maxBounds);
         RecastJNI.rcMarkBoxArea(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(bmin), SWIGTYPE_p_float.getCPtr(bmax), areaId, CompactHeightfield.getCPtr(chf), chf);
     }
 
-    public static void markConvexPolyArea(Context ctx, SWIGTYPE_p_float verts, int nverts, float hmin, float hmax, short areaId, CompactHeightfield chf) {
-        RecastJNI.rcMarkConvexPolyArea(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(verts), nverts, hmin, hmax, areaId, CompactHeightfield.getCPtr(chf), chf);
+    public static void markConvexPolyArea(Context ctx, Vector3f[] vertices, float minHeight, float maxHeight, short areaId, CompactHeightfield chf) {
+        SWIGTYPE_p_float verts = Converter.convertToSWIGTYPE_p_float(vertices);
+        int nverts = vertices.length;
+        RecastJNI.rcMarkConvexPolyArea(Context.getCPtr(ctx), ctx, SWIGTYPE_p_float.getCPtr(verts), nverts, minHeight, maxHeight, areaId, CompactHeightfield.getCPtr(chf), chf);
     }
 
-    public static int offsetPoly(SWIGTYPE_p_float verts, int nverts, float offset, SWIGTYPE_p_float outVerts, int maxOutVerts) {
-        return RecastJNI.rcOffsetPoly(SWIGTYPE_p_float.getCPtr(verts), nverts, offset, SWIGTYPE_p_float.getCPtr(outVerts), maxOutVerts);
+    public static Vector3f[] offsetPoly(Vector3f[] vertices, float offset, int maxOutVerts) {
+        SWIGTYPE_p_float verts = Converter.convertToSWIGTYPE_p_float(vertices);
+        int nverts = vertices.length;
+        FloatArray array = new FloatArray(maxOutVerts);
+        SWIGTYPE_p_float outVerts = array.cast();
+        int num = RecastJNI.rcOffsetPoly(SWIGTYPE_p_float.getCPtr(verts), nverts, offset, SWIGTYPE_p_float.getCPtr(outVerts), maxOutVerts);
+        Vector3f[] vs = new Vector3f[num];
+        array = new FloatArray(SWIGTYPE_p_float.getCPtr(outVerts),false);
+        return Converter.convertToVector3f(array, num);
     }
 
     public static void markCylinderArea(Context ctx, SWIGTYPE_p_float pos, float r, float h, short areaId, CompactHeightfield chf) {
@@ -362,16 +392,16 @@ public class RecastBuilder {
         return RecastJNI.rcMergePolyMeshDetails(Context.getCPtr(ctx), ctx, SWIGTYPE_p_p_rcPolyMeshDetail.getCPtr(meshes), nmeshes, PolyMeshDetail.getCPtr(mesh), mesh);
     }
 
-    public static void allocSetCustom(SWIGTYPE_p_f_int_enum_rcAllocHint__p_void allocFunc, SWIGTYPE_p_f_p_void__void freeFunc) {
-        RecastJNI.rcAllocSetCustom(SWIGTYPE_p_f_int_enum_rcAllocHint__p_void.getCPtr(allocFunc), SWIGTYPE_p_f_p_void__void.getCPtr(freeFunc));
-    }
+    /*public static void allocSetCustom(SWIGTYPE_p_f_int_enum_rcAllocHint__p_void allocFunc, SWIGTYPE_p_f_p_void__void freeFunc) {
+     RecastJNI.rcAllocSetCustom(SWIGTYPE_p_f_int_enum_rcAllocHint__p_void.getCPtr(allocFunc), SWIGTYPE_p_f_p_void__void.getCPtr(freeFunc));
+     }
 
-    public static SWIGTYPE_p_void alloc(int size, AllocHint hint) {
-        long cPtr = RecastJNI.rcAlloc(size, hint.swigValue());
-        return (cPtr == 0) ? null : new SWIGTYPE_p_void(cPtr, false);
-    }
+     public static SWIGTYPE_p_void alloc(int size, AllocHint hint) {
+     long cPtr = RecastJNI.rcAlloc(size, hint.swigValue());
+     return (cPtr == 0) ? null : new SWIGTYPE_p_void(cPtr, false);
+     }
 
-    public static void free(SWIGTYPE_p_void ptr) {
-        RecastJNI.rcFree(SWIGTYPE_p_void.getCPtr(ptr));
-    }
+     public static void free(SWIGTYPE_p_void ptr) {
+     RecastJNI.rcFree(SWIGTYPE_p_void.getCPtr(ptr));
+     }*/
 }
