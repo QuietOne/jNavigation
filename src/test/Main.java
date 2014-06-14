@@ -1,16 +1,16 @@
 package test;
 
-import com.jme3.ai.recast.Config;
-import com.jme3.ai.recast.Context;
-import com.jme3.ai.recast.Heightfield;
-import com.jme3.ai.recast.RecastBuilder;
-import com.jme3.ai.recast.Span;
+import com.jme3.ai.navigation.recast.Config;
+import com.jme3.ai.navigation.recast.Context;
+import com.jme3.ai.navigation.recast.Heightfield;
+import com.jme3.ai.navigation.recast.RecastBuilder;
+import com.jme3.ai.navigation.recast.Span;
 import com.jme3.math.Vector3f;
 
 /**
  * Testing if everything is working correctly.
  *
- * @author tihomir
+ * @author Tihomir Radosavljevic
  */
 public class Main {
 
