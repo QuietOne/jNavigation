@@ -1,0 +1,181 @@
+package com.jme3.ai.navigation.detour;
+
+import com.jme3.ai.navigation.utils.Converter;
+import com.jme3.ai.navigation.utils.SWIGTYPE_p_float;
+import com.jme3.ai.navigation.utils.RecastJNI;
+import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_char;
+import com.jme3.math.Vector3f;
+
+/**
+ *
+ * @author Tihomir Radosavljevic
+ * @version 0.5
+ */
+public class MeshTile {
+
+    private long swigCPtr;
+    protected boolean swigCMemOwn;
+
+    public MeshTile() {
+        this(RecastJNI.new_dtMeshTile(), true);
+    }
+
+    public MeshTile(long cPtr, boolean cMemoryOwn) {
+        swigCMemOwn = cMemoryOwn;
+        swigCPtr = cPtr;
+    }
+
+    public static long getCPtr(MeshTile obj) {
+        return (obj == null) ? 0 : obj.swigCPtr;
+    }
+
+    @Override
+    protected void finalize() {
+        delete();
+    }
+
+    public synchronized void delete() {
+        if (swigCPtr != 0) {
+            if (swigCMemOwn) {
+                swigCMemOwn = false;
+                RecastJNI.delete_dtMeshTile(swigCPtr);
+            }
+            swigCPtr = 0;
+        }
+    }
+
+    public void setSalt(long value) {
+        RecastJNI.dtMeshTile_salt_set(swigCPtr, this, value);
+    }
+
+    public long getSalt() {
+        return RecastJNI.dtMeshTile_salt_get(swigCPtr, this);
+    }
+
+    public void setLinksFreeList(long value) {
+        RecastJNI.dtMeshTile_linksFreeList_set(swigCPtr, this, value);
+    }
+
+    public long getLinksFreeList() {
+        return RecastJNI.dtMeshTile_linksFreeList_get(swigCPtr, this);
+    }
+
+    public void setHeader(MeshHeader value) {
+        RecastJNI.dtMeshTile_header_set(swigCPtr, this, MeshHeader.getCPtr(value), value);
+    }
+
+    public MeshHeader getHeader() {
+        long cPtr = RecastJNI.dtMeshTile_header_get(swigCPtr, this);
+        return (cPtr == 0) ? null : new MeshHeader(cPtr, false);
+    }
+
+    public void setPolygons(Poly value) {
+        RecastJNI.dtMeshTile_polys_set(swigCPtr, this, Poly.getCPtr(value), value);
+    }
+
+    public Poly getPolygons() {
+        long cPtr = RecastJNI.dtMeshTile_polys_get(swigCPtr, this);
+        return (cPtr == 0) ? null : new Poly(cPtr, false);
+    }
+
+    public void setVertices(float[] vertices) {
+        SWIGTYPE_p_float value = Converter.convertToSWIGTYPE_p_float(vertices);
+        RecastJNI.dtMeshTile_verts_set(swigCPtr, this, SWIGTYPE_p_float.getCPtr(value));
+    }
+
+    public float[] getVertices() {
+        long cPtr = RecastJNI.dtMeshTile_verts_get(swigCPtr, this);
+        return (cPtr == 0) ? null : Converter.convertToFloats(cPtr, getHeader().getVerticesCount());
+    }
+
+    public void setLinks(Link value) {
+        RecastJNI.dtMeshTile_links_set(swigCPtr, this, Link.getCPtr(value), value);
+    }
+
+    public Link getLinks() {
+        long cPtr = RecastJNI.dtMeshTile_links_get(swigCPtr, this);
+        return (cPtr == 0) ? null : new Link(cPtr, false);
+    }
+
+    public void setDetailMeshes(PolyDetail value) {
+        RecastJNI.dtMeshTile_detailMeshes_set(swigCPtr, this, PolyDetail.getCPtr(value), value);
+    }
+
+    public PolyDetail getDetailMeshes() {
+        long cPtr = RecastJNI.dtMeshTile_detailMeshes_get(swigCPtr, this);
+        return (cPtr == 0) ? null : new PolyDetail(cPtr, false);
+    }
+
+    public void setDetailVertices(Vector3f[] detailVertices) {
+        SWIGTYPE_p_float value = Converter.convertToSWIGTYPE_p_float(detailVertices);
+        RecastJNI.dtMeshTile_detailVerts_set(swigCPtr, this, SWIGTYPE_p_float.getCPtr(value));
+    }
+
+    public Vector3f[] getDetailVertices() {
+        long cPtr = RecastJNI.dtMeshTile_detailVerts_get(swigCPtr, this);
+        return (cPtr == 0) ? null : Converter.convertToVector3f(cPtr, getHeader().getDetailVerticesCount());
+    }
+
+    public void setDetailTriangles(char[] detailTriangles) {
+        SWIGTYPE_p_unsigned_char value = Converter.convertToSWIGTYPE_p_unsigned_char(detailTriangles);
+        RecastJNI.dtMeshTile_detailTris_set(swigCPtr, this, SWIGTYPE_p_unsigned_char.getCPtr(value));
+    }
+
+    public char[] getDetailTriangles() {
+        long cPtr = RecastJNI.dtMeshTile_detailTris_get(swigCPtr, this);
+        return (cPtr == 0) ? null : Converter.convertToChars(cPtr, getHeader().getDetailTrianglesCount() * 3);
+    }
+
+    public void setBvTree(BVNode value) {
+        RecastJNI.dtMeshTile_bvTree_set(swigCPtr, this, BVNode.getCPtr(value), value);
+    }
+
+    public BVNode getBvTree() {
+        long cPtr = RecastJNI.dtMeshTile_bvTree_get(swigCPtr, this);
+        return (cPtr == 0) ? null : new BVNode(cPtr, false);
+    }
+
+    public void setOffMeshConnections(OffMeshConnection value) {
+        RecastJNI.dtMeshTile_offMeshCons_set(swigCPtr, this, OffMeshConnection.getCPtr(value), value);
+    }
+
+    public OffMeshConnection getOffMeshConnections() {
+        long cPtr = RecastJNI.dtMeshTile_offMeshCons_get(swigCPtr, this);
+        return (cPtr == 0) ? null : new OffMeshConnection(cPtr, false);
+    }
+
+    public void setData(char[] data) {
+        SWIGTYPE_p_unsigned_char value = Converter.convertToSWIGTYPE_p_unsigned_char(data);
+        RecastJNI.dtMeshTile_data_set(swigCPtr, this, SWIGTYPE_p_unsigned_char.getCPtr(value));
+    }
+
+    public char[] getData() {
+        long cPtr = RecastJNI.dtMeshTile_data_get(swigCPtr, this);
+        return (cPtr == 0) ? null : Converter.convertToChars(cPtr, getDataSize());
+    }
+
+    public void setDataSize(int value) {
+        RecastJNI.dtMeshTile_dataSize_set(swigCPtr, this, value);
+    }
+
+    public int getDataSize() {
+        return RecastJNI.dtMeshTile_dataSize_get(swigCPtr, this);
+    }
+
+    public void setFlags(int value) {
+        RecastJNI.dtMeshTile_flags_set(swigCPtr, this, value);
+    }
+
+    public int getFlags() {
+        return RecastJNI.dtMeshTile_flags_get(swigCPtr, this);
+    }
+
+    public void setNext(MeshTile value) {
+        RecastJNI.dtMeshTile_next_set(swigCPtr, this, MeshTile.getCPtr(value), value);
+    }
+
+    public MeshTile getNext() {
+        long cPtr = RecastJNI.dtMeshTile_next_get(swigCPtr, this);
+        return (cPtr == 0) ? null : new MeshTile(cPtr, false);
+    }
+}
