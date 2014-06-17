@@ -1,4 +1,4 @@
-package test;
+package example;
 
 import com.jme3.ai.navigation.recast.Config;
 import com.jme3.ai.navigation.recast.Context;

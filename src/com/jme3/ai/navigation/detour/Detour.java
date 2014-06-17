@@ -225,19 +225,19 @@ public class Detour {
         RecastJNI.dtRandomPointInConvexPoly(SWIGTYPE_p_float.getCPtr(pts), npts, SWIGTYPE_p_float.getCPtr(areas), s, t, SWIGTYPE_p_float.getCPtr(out));
     }
 
-    public static int getDT_CROWDAGENT_MAX_NEIGHBOURS() {
+    public static int DT_CROWDAGENT_MAX_NEIGHBOURS() {
         return RecastJNI.DT_CROWDAGENT_MAX_NEIGHBOURS_get();
     }
 
-    public static int getDT_CROWDAGENT_MAX_CORNERS() {
+    public static int DT_CROWDAGENT_MAX_CORNERS() {
         return RecastJNI.DT_CROWDAGENT_MAX_CORNERS_get();
     }
 
-    public static int getDT_CROWD_MAX_OBSTAVOIDANCE_PARAMS() {
+    public static int DT_CROWD_MAX_OBSTAVOIDANCE_PARAMS() {
         return RecastJNI.DT_CROWD_MAX_OBSTAVOIDANCE_PARAMS_get();
     }
 
-    public static int getDT_CROWD_MAX_QUERY_FILTER_TYPE() {
+    public static int DT_CROWD_MAX_QUERY_FILTER_TYPE() {
         return RecastJNI.DT_CROWD_MAX_QUERY_FILTER_TYPE_get();
     }
 
@@ -250,39 +250,39 @@ public class Detour {
         RecastJNI.dtFreeCrowd(dtCrowd.getCPtr(ptr), ptr);
     }
 
-    public static int getDT_VERTS_PER_POLYGON() {
+    public static int DT_VERTS_PER_POLYGON() {
         return RecastJNI.DT_VERTS_PER_POLYGON_get();
     }
 
-    public static int getDT_NAVMESH_MAGIC() {
+    public static int DT_NAVMESH_MAGIC() {
         return RecastJNI.DT_NAVMESH_MAGIC_get();
     }
 
-    public static int getDT_NAVMESH_VERSION() {
+    public static int DT_NAVMESH_VERSION() {
         return RecastJNI.DT_NAVMESH_VERSION_get();
     }
 
-    public static int getDT_NAVMESH_STATE_MAGIC() {
+    public static int DT_NAVMESH_STATE_MAGIC() {
         return RecastJNI.DT_NAVMESH_STATE_MAGIC_get();
     }
 
-    public static int getDT_NAVMESH_STATE_VERSION() {
+    public static int DT_NAVMESH_STATE_VERSION() {
         return RecastJNI.DT_NAVMESH_STATE_VERSION_get();
     }
 
-    public static int getDT_EXT_LINK() {
+    public static int DT_EXT_LINK() {
         return RecastJNI.DT_EXT_LINK_get();
     }
 
-    public static long getDT_NULL_LINK() {
+    public static long DT_NULL_LINK() {
         return RecastJNI.DT_NULL_LINK_get();
     }
 
-    public static long getDT_OFFMESH_CON_BIDIR() {
+    public static long DT_OFFMESH_CON_BIDIR() {
         return RecastJNI.DT_OFFMESH_CON_BIDIR_get();
     }
 
-    public static int getDT_MAX_AREAS() {
+    public static int DT_MAX_AREAS() {
         return RecastJNI.DT_MAX_AREAS_get();
     }
 
@@ -316,7 +316,7 @@ public class Detour {
         RecastJNI.dtFreeNavMeshQuery(NavMeshQuery.getCPtr(query), query);
     }
 
-    public static int getDT_NULL_IDX() {
+    public static int DT_NULL_IDX() {
         return RecastJNI.DT_NULL_IDX_get();
     }
 
@@ -329,11 +329,11 @@ public class Detour {
         RecastJNI.dtFreeObstacleAvoidanceDebugData(dtObstacleAvoidanceDebugData.getCPtr(ptr), ptr);
     }
 
-    public static int getDT_MAX_PATTERN_DIVS() {
+    public static int DT_MAX_PATTERN_DIVS() {
         return RecastJNI.DT_MAX_PATTERN_DIVS_get();
     }
 
-    public static int getDT_MAX_PATTERN_RINGS() {
+    public static int DT_MAX_PATTERN_RINGS() {
         return RecastJNI.DT_MAX_PATTERN_RINGS_get();
     }
 
@@ -371,47 +371,47 @@ public class Detour {
         RecastJNI.dtFreeProximityGrid(dtProximityGrid.getCPtr(ptr), ptr);
     }
 
-    public static long getDT_FAILURE() {
+    public static long DT_FAILURE() {
         return RecastJNI.DT_FAILURE_get();
     }
 
-    public static long getDT_SUCCESS() {
+    public static long DT_SUCCESS() {
         return RecastJNI.DT_SUCCESS_get();
     }
 
-    public static long getDT_IN_PROGRESS() {
+    public static long DT_IN_PROGRESS() {
         return RecastJNI.DT_IN_PROGRESS_get();
     }
 
-    public static long getDT_STATUS_DETAIL_MASK() {
+    public static long DT_STATUS_DETAIL_MASK() {
         return RecastJNI.DT_STATUS_DETAIL_MASK_get();
     }
 
-    public static long getDT_WRONG_MAGIC() {
+    public static long DT_WRONG_MAGIC() {
         return RecastJNI.DT_WRONG_MAGIC_get();
     }
 
-    public static long getDT_WRONG_VERSION() {
+    public static long DT_WRONG_VERSION() {
         return RecastJNI.DT_WRONG_VERSION_get();
     }
 
-    public static long getDT_OUT_OF_MEMORY() {
+    public static long DT_OUT_OF_MEMORY() {
         return RecastJNI.DT_OUT_OF_MEMORY_get();
     }
 
-    public static long getDT_INVALID_PARAM() {
+    public static long DT_INVALID_PARAM() {
         return RecastJNI.DT_INVALID_PARAM_get();
     }
 
-    public static long getDT_BUFFER_TOO_SMALL() {
+    public static long DT_BUFFER_TOO_SMALL() {
         return RecastJNI.DT_BUFFER_TOO_SMALL_get();
     }
 
-    public static long getDT_OUT_OF_NODES() {
+    public static long DT_OUT_OF_NODES() {
         return RecastJNI.DT_OUT_OF_NODES_get();
     }
 
-    public static long getDT_PARTIAL_RESULT() {
+    public static long DT_PARTIAL_RESULT() {
         return RecastJNI.DT_PARTIAL_RESULT_get();
     }
 
@@ -444,23 +444,23 @@ public class Detour {
         RecastJNI.dtFreeTileCache(TileCache.getCPtr(tc), tc);
     }
 
-    public static int getDT_TILECACHE_MAGIC() {
+    public static int DT_TILECACHE_MAGIC() {
         return RecastJNI.DT_TILECACHE_MAGIC_get();
     }
 
-    public static int getDT_TILECACHE_VERSION() {
+    public static int DT_TILECACHE_VERSION() {
         return RecastJNI.DT_TILECACHE_VERSION_get();
     }
 
-    public static short getDT_TILECACHE_NULL_AREA() {
+    public static short DT_TILECACHE_NULL_AREA() {
         return RecastJNI.DT_TILECACHE_NULL_AREA_get();
     }
 
-    public static short getDT_TILECACHE_WALKABLE_AREA() {
+    public static short DT_TILECACHE_WALKABLE_AREA() {
         return RecastJNI.DT_TILECACHE_WALKABLE_AREA_get();
     }
 
-    public static int getDT_TILECACHE_NULL_IDX() {
+    public static int DT_TILECACHE_NULL_IDX() {
         return RecastJNI.DT_TILECACHE_NULL_IDX_get();
     }
 
