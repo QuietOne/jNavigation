@@ -13,6 +13,7 @@ import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_char;
 import com.jme3.math.Vector3f;
 
 /**
+ * Class for all Recast builds.
  *
  * @author Tihomir Radosavljevic
  * @version 0.5
@@ -213,6 +214,24 @@ public class RecastBuilder {
     public static boolean createHeightfield(Context ctx, Heightfield hf, int width, int height, Vector3f minBounds, Vector3f maxBounds, float cs, float ch) {
         SWIGTYPE_p_float bmin = Converter.convertToSWIGTYPE_p_float(minBounds);
         SWIGTYPE_p_float bmax = Converter.convertToSWIGTYPE_p_float(maxBounds);
+        return RecastJNI.rcCreateHeightfield(Context.getCPtr(ctx), ctx, Heightfield.getCPtr(hf), hf, width, height, SWIGTYPE_p_float.getCPtr(bmin), SWIGTYPE_p_float.getCPtr(bmax), cs, ch);
+    }
+
+    /**
+     * Initializes a new heightfield.
+     *
+     * @param ctx The build context to use during the operation.
+     * @param hf The allocated heightfield to initialize.
+     * @param config
+     * @return
+     */
+    public static boolean createHeightfield(Context ctx, Heightfield hf, Config config) {
+        SWIGTYPE_p_float bmin = Converter.convertToSWIGTYPE_p_float(config.getMinBounds());
+        SWIGTYPE_p_float bmax = Converter.convertToSWIGTYPE_p_float(config.getMaxBounds());
+        int width = config.getWidth();
+        int height = config.getHeight();
+        float cs = config.getCellSize();
+        float ch = config.getCellHeight();
         return RecastJNI.rcCreateHeightfield(Context.getCPtr(ctx), ctx, Heightfield.getCPtr(hf), hf, width, height, SWIGTYPE_p_float.getCPtr(bmin), SWIGTYPE_p_float.getCPtr(bmax), cs, ch);
     }
 
