@@ -1,5 +1,8 @@
 package com.jme3.ai.navigation.detour;
 
+import com.jme3.ai.navigation.recast.PolyMesh;
+import com.jme3.ai.navigation.recast.PolyMeshDetail;
+import com.jme3.ai.navigation.tilecache.TileFlags;
 import com.jme3.ai.navigation.utils.Converter;
 import com.jme3.ai.navigation.utils.IntArray;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_float;
@@ -14,6 +17,18 @@ import com.jme3.ai.navigation.utils.SWIGTYPE_p_p_dtMeshTile;
 import com.jme3.math.Vector3f;
 
 /**
+ * A navigation mesh based on tiles of convex polygons.
+ *
+ * The navigation mesh consists of one or more tiles defining three primary
+ * types of structural data:
+ *
+ * A polygon mesh which defines most of the navigation graph. (See PolyMesh for
+ * its structure.) A detail mesh used for determining surface height on the
+ * polygon mesh. (See PolyMeshDetail for its structure.) Off-mesh connections,
+ * which define custom point-to-point edges within the navigation graph.
+ *
+ * @see PolyMesh
+ * @see PolyMeshDetail
  *
  * @author Tihomir Radosavljevic
  * @version 1.0
@@ -66,6 +81,25 @@ public class NavMesh {
         return (cPtr == 0) ? null : new NavMeshParams(cPtr, false);
     }
 
+    /**
+     * Adds a tile to the navigation mesh. The add operation will fail if the
+     * data is in the wrong format, the allocated tile space is full, or there
+     * is a tile already at the specified reference.
+     *
+     * The lastRef parameter is used to restore a tile with the same tile
+     * reference it had previously used. In this case the PolyRef's for the tile
+     * will be restored to the same values they were before the tile was
+     * removed.
+     *
+     * @param data Data for the new tile mesh.
+     * @param flags Tile flags
+     * @see TileFlags
+     * @param lastRef The desired reference for the tile. (When reloading a
+     * tile.) [opt] [Default: 0]
+     * @param result The tile reference. (If the tile was succesfully added.)
+     * [opt]
+     * @return The status flags for the operation.
+     */
     public long addTile(char[] data, int flags, long lastRef, int[] result) {
         SWIGTYPE_p_unsigned_char value = Converter.convertToSWIGTYPE_p_unsigned_char(data);
         int dataSize = data.length;
@@ -78,6 +112,12 @@ public class NavMesh {
         return RecastJNI.dtNavMesh_removeTile(swigCPtr, this, ref, SWIGTYPE_p_p_unsigned_char.getCPtr(data), SWIGTYPE_p_int.getCPtr(dataSize));
     }
 
+    /**
+     * Calculates the tile grid location X for the specified world position.
+     *
+     * @param position The world position for the query.
+     * @return The tile's x-location.
+     */
     public int calculateTileLocationX(Vector3f position) {
         SWIGTYPE_p_float pos = Converter.convertToSWIGTYPE_p_float(position);
         SWIGTYPE_p_int tx = new IntArray(1).cast();
@@ -87,6 +127,12 @@ public class NavMesh {
         return a.getItem(0);
     }
 
+    /**
+     * Calculates the tile grid location Y for the specified world position.
+     *
+     * @param position The world position for the query.
+     * @return The tile's y-location.
+     */
     public int calculateTileLocationY(Vector3f position) {
         SWIGTYPE_p_float pos = Converter.convertToSWIGTYPE_p_float(position);
         SWIGTYPE_p_int tx = new IntArray(1).cast();
@@ -184,6 +230,16 @@ public class NavMesh {
         return RecastJNI.dtNavMesh_encodePolyId(swigCPtr, this, salt, it, ip);
     }
 
+    /**
+     * Decodes a standard polygon reference.
+     *
+     * Note This function is generally meant for internal use only.
+     *
+     * @param ref The polygon reference to decode.
+     * @param salt The tile's salt value.
+     * @param it The index of the tile.
+     * @param ip The index of the polygon within the tile.
+     */
     public void decodePolyId(long ref, SWIGTYPE_p_unsigned_int salt, SWIGTYPE_p_unsigned_int it, SWIGTYPE_p_unsigned_int ip) {
         RecastJNI.dtNavMesh_decodePolyId(swigCPtr, this, ref, SWIGTYPE_p_unsigned_int.getCPtr(salt), SWIGTYPE_p_unsigned_int.getCPtr(it), SWIGTYPE_p_unsigned_int.getCPtr(ip));
     }
