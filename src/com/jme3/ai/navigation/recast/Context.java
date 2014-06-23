@@ -40,7 +40,7 @@ public class Context {
         this(RecastJNI.new_rcContext__SWIG_0(state), true);
     }
 
-    public Context(long cPtr, boolean cMemoryOwn) {
+    protected Context(long cPtr, boolean cMemoryOwn) {
         swigCMemOwn = cMemoryOwn;
         swigCPtr = cPtr;
     }

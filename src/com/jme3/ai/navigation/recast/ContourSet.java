@@ -32,7 +32,7 @@ public class ContourSet {
         swigCMemOwn = (swigCPtr == 0) ? false : true;
     }
 
-    public ContourSet(long cPtr, boolean cMemoryOwn) {
+    protected ContourSet(long cPtr, boolean cMemoryOwn) {
         swigCMemOwn = cMemoryOwn;
         swigCPtr = cPtr;
     }
@@ -56,38 +56,42 @@ public class ContourSet {
         }
     }
 
+//    /**
+//     * - not done yet
+//     *
+//     * @param value An array of the contours in the set.
+//     */
+//    public void setContours(Contour value) {
+//        RecastJNI.rcContourSet_conts_set(swigCPtr, this, Contour.getCPtr(value), value);
+//    }
     /**
-     * - not done yet
-     *
-     * @param value An array of the contours in the set.
-     */
-    public void setContours(Contour value) {
-        RecastJNI.rcContourSet_conts_set(swigCPtr, this, Contour.getCPtr(value), value);
-    }
-
-    /**
-     * - not done yet
      *
      * @return An array of the contours in the set.
      */
-    public Contour getContours() {
+    public Contour[] getContours() {
         long cPtr = RecastJNI.rcContourSet_conts_get(swigCPtr, this);
-        return (cPtr == 0) ? null : new Contour(cPtr, false);
+        if (cPtr == 0) {
+            return null;
+        }
+        Contour[] contours = new Contour[getNumberOfContours()];
+        for (int i = 0; i < contours.length; i++) {
+            contours[i] = new Contour(cPtr + i, false);
+        }
+        return contours;
     }
 
-    /**
-     *
-     * @param value The number of contours in the set.
-     */
-    public void setNumberOfContours(int value) {
-        RecastJNI.rcContourSet_nconts_set(swigCPtr, this, value);
-    }
-
+//    /**
+//     *
+//     * @param value The number of contours in the set.
+//     */
+//    public void setNumberOfContours(int value) {
+//        RecastJNI.rcContourSet_nconts_set(swigCPtr, this, value);
+//    }
     /**
      *
      * @return The number of contours in the set.
      */
-    public int getNumberOfContours() {
+    protected int getNumberOfContours() {
         return RecastJNI.rcContourSet_nconts_get(swigCPtr, this);
     }
 

@@ -8,6 +8,7 @@ import com.jme3.ai.navigation.recast.Heightfield;
 import com.jme3.ai.navigation.recast.PolyMesh;
 import com.jme3.ai.navigation.recast.PolyMeshDetail;
 import com.jme3.ai.navigation.recast.RecastBuilder;
+import com.jme3.ai.navigation.recast.Span;
 import com.jme3.math.Vector3f;
 
 /**
@@ -48,8 +49,9 @@ public class BuildingNavMeshExample {
 
         // Step 2. Rasterize input polygon soup.
 
-        //context is needed for loging that is not yet supported in native library. It must not be null.
+        //context is needed for logging that is not yet supported in native library. It must not be null.
         Context context = new Context();
+
         // Allocate voxel heightfield where we rasterize our input data to.
         Heightfield heightfield = new Heightfield();
 
@@ -70,6 +72,9 @@ public class BuildingNavMeshExample {
         RecastBuilder.filterLedgeSpans(context, height, height, heightfield);
         RecastBuilder.filterWalkableLowHeightSpans(context, height, heightfield);
 
+        for (Span span : heightfield.getSpans()) {
+            System.out.println(span);
+        }
 
         // Step 4. Partition walkable surface to simple regions.
         // Compact the heightfield so that it is faster to handle from now on.

@@ -16,11 +16,9 @@ import com.jme3.ai.navigation.utils.SWIGTYPE_p_void;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_short;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_float;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_char;
-import com.jme3.ai.navigation.utils.SWIGTYPE_p_f_int_enum_dtAllocHint__p_void;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_short;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_p_dtTileCacheLayer;
 import com.jme3.ai.navigation.utils.RecastJNI;
-import com.jme3.ai.navigation.utils.SWIGTYPE_p_f_p_void__void;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_int;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_p_unsigned_char;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_int;
@@ -31,10 +29,6 @@ import com.jme3.ai.navigation.utils.SWIGTYPE_p_int;
  * @version 1.0
  */
 public class Detour {
-
-    public static void AllocSetCustom(SWIGTYPE_p_f_int_enum_dtAllocHint__p_void allocFunc, SWIGTYPE_p_f_p_void__void freeFunc) {
-        RecastJNI.dtAllocSetCustom(SWIGTYPE_p_f_int_enum_dtAllocHint__p_void.getCPtr(allocFunc), SWIGTYPE_p_f_p_void__void.getCPtr(freeFunc));
-    }
 
     public static SWIGTYPE_p_void Alloc(int size, dtAllocHint hint) {
         long cPtr = RecastJNI.dtAlloc(size, hint.swigValue());

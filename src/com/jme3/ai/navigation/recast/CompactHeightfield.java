@@ -48,7 +48,7 @@ public class CompactHeightfield {
         swigCMemOwn = (swigCPtr == 0) ? false : true;
     }
 
-    public CompactHeightfield(long cPtr, boolean cMemoryOwn) {
+    protected CompactHeightfield(long cPtr, boolean cMemoryOwn) {
         swigCMemOwn = cMemoryOwn;
         swigCPtr = cPtr;
     }
@@ -73,15 +73,16 @@ public class CompactHeightfield {
     }
 
     /**
-     * 
-     * @param value The width of the heightfield. (Along the x-axis in cell units.)
+     *
+     * @param value The width of the heightfield. (Along the x-axis in cell
+     * units.)
      */
     public void setWidth(int value) {
         RecastJNI.rcCompactHeightfield_width_set(swigCPtr, this, value);
     }
 
     /**
-     * 
+     *
      * @return The width of the heightfield. (Along the x-axis in cell units.)
      */
     public int getWidth() {
@@ -105,19 +106,18 @@ public class CompactHeightfield {
         return RecastJNI.rcCompactHeightfield_height_get(swigCPtr, this);
     }
 
-    /**
-     *
-     * @param spanCount The number of spans in the heightfield.
-     */
-    public void setSpanCount(int spanCount) {
-        RecastJNI.rcCompactHeightfield_spanCount_set(swigCPtr, this, spanCount);
-    }
-
+//    /**
+//     *
+//     * @param spanCount The number of spans in the heightfield.
+//     */
+//    protected void setSpanCount(int spanCount) {
+//        RecastJNI.rcCompactHeightfield_spanCount_set(swigCPtr, this, spanCount);
+//    }
     /**
      *
      * @return The number of spans in the heightfield.
      */
-    public int getSpanCount() {
+    protected int getSpanCount() {
         return RecastJNI.rcCompactHeightfield_spanCount_get(swigCPtr, this);
     }
 
@@ -284,42 +284,54 @@ public class CompactHeightfield {
         return RecastJNI.rcCompactHeightfield_ch_get(swigCPtr, this);
     }
 
+//    /**
+//     * -not done yet
+//     *
+//     * @param value Array of cells.
+//     */
+//    public void setCells(CompactCell value) {
+//        RecastJNI.rcCompactHeightfield_cells_set(swigCPtr, this, CompactCell.getCPtr(value), value);
+//    }
     /**
-     * -not done yet
-     *
-     * @param value Array of cells.
-     */
-    public void setCells(CompactCell value) {
-        RecastJNI.rcCompactHeightfield_cells_set(swigCPtr, this, CompactCell.getCPtr(value), value);
-    }
-
-    /**
-     * -not done yet
      *
      * @return Array of cells.
      */
-    public CompactCell getCells() {
+    public CompactCell[] getCells() {
         long cPtr = RecastJNI.rcCompactHeightfield_cells_get(swigCPtr, this);
-        return (cPtr == 0) ? null : new CompactCell(cPtr, false);
+        if (cPtr == 0) {
+            return null;
+        }
+        int length = getHeight() * getWidth();
+        CompactCell[] compactCells = new CompactCell[length];
+        for (int i = 0; i < length; i++) {
+            compactCells[i] = new CompactCell(cPtr + i, false);
+        }
+        return compactCells;
     }
 
+//    /**
+//     * -not done yet
+//     *
+//     * @param value Array of spans.
+//     */
+//    public void setSpans(CompactSpan value) {
+//        RecastJNI.rcCompactHeightfield_spans_set(swigCPtr, this, CompactSpan.getCPtr(value), value);
+//    }
     /**
-     * -not done yet
-     *
-     * @param value Array of spans.
-     */
-    public void setSpans(CompactSpan value) {
-        RecastJNI.rcCompactHeightfield_spans_set(swigCPtr, this, CompactSpan.getCPtr(value), value);
-    }
-
-    /**
-     * -not done yet
      *
      * @return Array of spans.
      */
-    public CompactSpan getSpans() {
+    public CompactSpan[] getSpans() {
         long cPtr = RecastJNI.rcCompactHeightfield_spans_get(swigCPtr, this);
-        return (cPtr == 0) ? null : new CompactSpan(cPtr, false);
+        if (cPtr == 0) {
+            return null;
+        }
+        CompactSpan[] compactSpans = new CompactSpan[getSpanCount()];
+        for (int i = 0; i < compactSpans.length; i++) {
+            compactSpans[i] = new CompactSpan(cPtr + i, false);
+
+        }
+        return compactSpans;
     }
 
     /**

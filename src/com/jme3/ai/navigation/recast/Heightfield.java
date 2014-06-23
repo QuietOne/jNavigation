@@ -40,7 +40,7 @@ public class Heightfield {
         swigCMemOwn = (swigCPtr == 0) ? false : true;
     }
 
-    public Heightfield(long cPtr, boolean cMemoryOwn) {
+    protected Heightfield(long cPtr, boolean cMemoryOwn) {
         swigCMemOwn = cMemoryOwn;
         swigCPtr = cPtr;
     }
@@ -178,15 +178,16 @@ public class Heightfield {
      *
      * @return Heightfield of spans (width*height).
      */
-    public Span getSpans() {
+    public Span[] getSpans() {
         long cPtr = RecastJNI.rcHeightfield_spans_get(swigCPtr, this);
         if (cPtr == 0) {
             return null;
         }
-        return new Span(cPtr, false);
+        int length = getHeight() * getWidth();
+        Span[] spans = new Span[length];
+        for (int i = 0; i < length; i++) {
+            spans[i] = new Span(cPtr + i, false);
+        }
+        return spans;
     }
-//    public Span getFreelist() {
-//        long cPtr = RecastJNI.rcHeightfield_freelist_get(swigCPtr, this);
-//        return (cPtr == 0) ? null : new Span(cPtr, false);
-//    }
 }

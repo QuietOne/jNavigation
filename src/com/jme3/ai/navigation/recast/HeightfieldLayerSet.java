@@ -21,7 +21,7 @@ public class HeightfieldLayerSet {
         swigCMemOwn = (swigCPtr == 0) ? false : true;
     }
 
-    public HeightfieldLayerSet(long cPtr, boolean cMemoryOwn) {
+    protected HeightfieldLayerSet(long cPtr, boolean cMemoryOwn) {
         swigCMemOwn = cMemoryOwn;
         swigCPtr = cPtr;
     }
@@ -45,38 +45,42 @@ public class HeightfieldLayerSet {
         }
     }
 
+//    /**
+//     * -not done yet
+//     *
+//     * @param value The layers in the set.
+//     */
+//    public void setLayers(HeightfieldLayer value) {
+//        RecastJNI.rcHeightfieldLayerSet_layers_set(swigCPtr, this, HeightfieldLayer.getCPtr(value), value);
+//    }
     /**
-     * -not done yet
-     *
-     * @param value The layers in the set.
-     */
-    public void setLayers(HeightfieldLayer value) {
-        RecastJNI.rcHeightfieldLayerSet_layers_set(swigCPtr, this, HeightfieldLayer.getCPtr(value), value);
-    }
-
-    /**
-     * - not done yet
      *
      * @return The layers in the set.
      */
-    public HeightfieldLayer getLayers() {
+    public HeightfieldLayer[] getLayers() {
         long cPtr = RecastJNI.rcHeightfieldLayerSet_layers_get(swigCPtr, this);
-        return (cPtr == 0) ? null : new HeightfieldLayer(cPtr, false);
+        if (cPtr == 0) {
+            return null;
+        }
+        HeightfieldLayer[] heightfieldLayers = new HeightfieldLayer[getNumberOfLayers()];
+        for (int i = 0; i < heightfieldLayers.length; i++) {
+            heightfieldLayers[i] = new HeightfieldLayer(cPtr + i, false);
+        }
+        return heightfieldLayers;
     }
 
-    /**
-     *
-     * @param value The number of layers in the set.
-     */
-    public void setNumberOfLayers(int value) {
-        RecastJNI.rcHeightfieldLayerSet_nlayers_set(swigCPtr, this, value);
-    }
-
+//    /**
+//     *
+//     * @param value The number of layers in the set.
+//     */
+//    public void setNumberOfLayers(int value) {
+//        RecastJNI.rcHeightfieldLayerSet_nlayers_set(swigCPtr, this, value);
+//    }
     /**
      *
      * @return The number of layers in the set.
      */
-    public int getNumberOfLayers() {
+    protected int getNumberOfLayers() {
         return RecastJNI.rcHeightfieldLayerSet_nlayers_get(swigCPtr, this);
     }
 }

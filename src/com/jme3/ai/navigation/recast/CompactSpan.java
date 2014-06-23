@@ -24,7 +24,7 @@ public class CompactSpan {
     /**
      * Internal use only.
      */
-    public CompactSpan(long cPtr, boolean cMemoryOwn) {
+    protected CompactSpan(long cPtr, boolean cMemoryOwn) {
         swigCMemOwn = cMemoryOwn;
         swigCPtr = cPtr;
     }

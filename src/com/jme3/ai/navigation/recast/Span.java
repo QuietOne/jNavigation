@@ -13,11 +13,10 @@ public class Span {
     private long swigCPtr;
     protected boolean swigCMemOwn;
 
-    public Span() {
-        this(RecastJNI.new_rcSpan(), true);
-    }
-
-    public Span(long cPtr, boolean cMemoryOwn) {
+    /**
+     * Internal use only.
+     */
+    protected Span(long cPtr, boolean cMemoryOwn) {
         swigCMemOwn = cMemoryOwn;
         swigCPtr = cPtr;
     }

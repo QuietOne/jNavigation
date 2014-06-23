@@ -22,7 +22,7 @@ public class CompactCell {
     /**
      * Internal use only.
      */
-    public CompactCell(long cPtr, boolean cMemoryOwn) {
+    protected CompactCell(long cPtr, boolean cMemoryOwn) {
         swigCMemOwn = cMemoryOwn;
         swigCPtr = cPtr;
     }
