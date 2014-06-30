@@ -40,6 +40,11 @@ public class Converter {
         return fs;
     }
 
+    public static float convertToFloat(long pointer) {
+        FloatArray array = new FloatArray(pointer, true);
+        return array.getItem(0);
+    }
+
     public static SWIGTYPE_p_unsigned_short convertToSWIGTYPE_p_unsigned_short(Vector3f v) {
         UShortArray array = new UShortArray(3);
         array.setItem(0, (short) v.x);
@@ -165,10 +170,10 @@ public class Converter {
     }
 
     public static SWIGTYPE_p_unsigned_int convertToSWIGTYPE_p_unsigned_int(int[] ints) {
-        IntArray ia = new IntArray(ints.length);
+        UIntArray ia = new UIntArray(ints.length);
         for (int i = 0; i < ints.length; i++) {
             ia.setItem(i, ints[i]);
         }
-        return null;
+        return ia.cast();
     }
 }

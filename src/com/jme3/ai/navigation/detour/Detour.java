@@ -1,6 +1,5 @@
 package com.jme3.ai.navigation.detour;
 
-import com.jme3.ai.navigation.crowd.dtAllocHint;
 import com.jme3.ai.navigation.crowd.dtCrowd;
 import com.jme3.ai.navigation.crowd.dtObstacleAvoidanceDebugData;
 import com.jme3.ai.navigation.crowd.dtObstacleAvoidanceQuery;
@@ -12,8 +11,8 @@ import com.jme3.ai.navigation.tilecache.TileCacheContourSet;
 import com.jme3.ai.navigation.tilecache.TileCacheLayer;
 import com.jme3.ai.navigation.tilecache.TileCacheLayerHeader;
 import com.jme3.ai.navigation.tilecache.TileCachePolyMesh;
-import com.jme3.ai.navigation.utils.SWIGTYPE_p_void;
-import com.jme3.ai.navigation.utils.SWIGTYPE_p_short;
+import com.jme3.ai.navigation.utils.Converter;
+import com.jme3.ai.navigation.utils.FloatArray;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_float;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_char;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_short;
@@ -22,6 +21,7 @@ import com.jme3.ai.navigation.utils.RecastJNI;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_int;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_p_unsigned_char;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_int;
+import com.jme3.math.Vector3f;
 
 /**
  *
@@ -30,195 +30,212 @@ import com.jme3.ai.navigation.utils.SWIGTYPE_p_int;
  */
 public class Detour {
 
-    public static SWIGTYPE_p_void Alloc(int size, dtAllocHint hint) {
-        long cPtr = RecastJNI.dtAlloc(size, hint.swigValue());
-        return (cPtr == 0) ? null : new SWIGTYPE_p_void(cPtr, false);
-    }
-    /*
-     public static void dtFree(SWIGTYPE_p_void ptr) {
-     RecastJNI.dtFree(SWIGTYPE_p_void.getCPtr(ptr));
-     }
-
-     public static float dtSqrt(float x) {
-     return RecastJNI.dtSqrt(x);
-     }
-
-     public static void dtVcross(SWIGTYPE_p_float dest, SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
-     RecastJNI.dtVcross(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
-     }
-
-     public static float dtVdot(SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
-     return RecastJNI.dtVdot(SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
-     }
-
-     public static void dtVmad(SWIGTYPE_p_float dest, SWIGTYPE_p_float v1, SWIGTYPE_p_float v2, float s) {
-     RecastJNI.dtVmad(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2), s);
-     }
-
-     public static void dtVlerp(SWIGTYPE_p_float dest, SWIGTYPE_p_float v1, SWIGTYPE_p_float v2, float t) {
-     RecastJNI.dtVlerp(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2), t);
-     }
-
-     public static void dtVadd(SWIGTYPE_p_float dest, SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
-     RecastJNI.dtVadd(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
-     }
-
-     public static void dtVsub(SWIGTYPE_p_float dest, SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
-     RecastJNI.dtVsub(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
-     }
-
-     public static void dtVscale(SWIGTYPE_p_float dest, SWIGTYPE_p_float v, float t) {
-     RecastJNI.dtVscale(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(v), t);
-     }
-
-     public static void dtVmin(SWIGTYPE_p_float mn, SWIGTYPE_p_float v) {
-     RecastJNI.dtVmin(SWIGTYPE_p_float.getCPtr(mn), SWIGTYPE_p_float.getCPtr(v));
-     }
-
-     public static void dtVmax(SWIGTYPE_p_float mx, SWIGTYPE_p_float v) {
-     RecastJNI.dtVmax(SWIGTYPE_p_float.getCPtr(mx), SWIGTYPE_p_float.getCPtr(v));
-     }
-
-     public static void dtVset(SWIGTYPE_p_float dest, float x, float y, float z) {
-     RecastJNI.dtVset(SWIGTYPE_p_float.getCPtr(dest), x, y, z);
-     }
-
-     public static void dtVcopy(SWIGTYPE_p_float dest, SWIGTYPE_p_float a) {
-     RecastJNI.dtVcopy(SWIGTYPE_p_float.getCPtr(dest), SWIGTYPE_p_float.getCPtr(a));
-     }
-
-     public static float dtVlen(SWIGTYPE_p_float v) {
-     return RecastJNI.dtVlen(SWIGTYPE_p_float.getCPtr(v));
-     }
-
-     public static float dtVlenSqr(SWIGTYPE_p_float v) {
-     return RecastJNI.dtVlenSqr(SWIGTYPE_p_float.getCPtr(v));
-     }
-
-     public static float dtVdist(SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
-     return RecastJNI.dtVdist(SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
-     }
-
-     public static float dtVdistSqr(SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
-     return RecastJNI.dtVdistSqr(SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
-     }
-
-     public static float dtVdist2D(SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
-     return RecastJNI.dtVdist2D(SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
-     }
-
-     public static float dtVdist2DSqr(SWIGTYPE_p_float v1, SWIGTYPE_p_float v2) {
-     return RecastJNI.dtVdist2DSqr(SWIGTYPE_p_float.getCPtr(v1), SWIGTYPE_p_float.getCPtr(v2));
-     }
-
-     public static void dtVnormalize(SWIGTYPE_p_float v) {
-     RecastJNI.dtVnormalize(SWIGTYPE_p_float.getCPtr(v));
-     }
-
-     public static boolean dtVequal(SWIGTYPE_p_float p0, SWIGTYPE_p_float p1) {
-     return RecastJNI.dtVequal(SWIGTYPE_p_float.getCPtr(p0), SWIGTYPE_p_float.getCPtr(p1));
-     }
-
-     public static float dtVdot2D(SWIGTYPE_p_float u, SWIGTYPE_p_float v) {
-     return RecastJNI.dtVdot2D(SWIGTYPE_p_float.getCPtr(u), SWIGTYPE_p_float.getCPtr(v));
-     }
-
-     public static float dtVperp2D(SWIGTYPE_p_float u, SWIGTYPE_p_float v) {
-     return RecastJNI.dtVperp2D(SWIGTYPE_p_float.getCPtr(u), SWIGTYPE_p_float.getCPtr(v));
-     }*/
-
-    public static float dtTriArea2D(SWIGTYPE_p_float a, SWIGTYPE_p_float b, SWIGTYPE_p_float c) {
-        return RecastJNI.dtTriArea2D(SWIGTYPE_p_float.getCPtr(a), SWIGTYPE_p_float.getCPtr(b), SWIGTYPE_p_float.getCPtr(c));
+    /**
+     * Derives the signed xz-plane area of the triangle ABC, or the relationship
+     * of line AB to point C. The vertices are projected onto the xz-plane, so
+     * the y-values are ignored.
+     *
+     * This is a low cost function than can be used for various purposes. Its
+     * main purpose is for point/line relationship testing.
+     *
+     * In all cases: A value of zero indicates that all vertices are collinear
+     * or represent the same point. (On the xz-plane.)
+     *
+     * When used for point/line relationship tests, AB usually represents a line
+     * against which the C point is to be tested. In this case:
+     *
+     * A positive value indicates that point C is to the left of line AB,
+     * looking from A toward B. A negative value indicates that point C is to
+     * the right of lineAB, looking from A toward B.
+     *
+     * When used for evaluating a triangle:
+     *
+     * The absolute value of the return value is two times the area of the
+     * triangle when it is projected onto the xz-plane.
+     *
+     * A positive return value indicates:
+     *
+     * The vertices are wrapped in the normal Detour wrap direction. The
+     * triangle's 3D face normal is in the general up direction. A negative
+     * return value indicates:
+     *
+     * The vertices are reverse wrapped. (Wrapped opposite the normal Detour
+     * wrap direction.) The triangle's 3D face normal is in the general down
+     * direction.
+     *
+     * @param a Vertex A.
+     * @param b Vertex B.
+     * @param c Vertex C.
+     * @return The signed xz-plane area of the triangle.
+     */
+    public static float dtTriArea2D(Vector3f a, Vector3f b, Vector3f c) {
+        SWIGTYPE_p_float aa = Converter.convertToSWIGTYPE_p_float(a);
+        SWIGTYPE_p_float bb = Converter.convertToSWIGTYPE_p_float(b);
+        SWIGTYPE_p_float cc = Converter.convertToSWIGTYPE_p_float(c);
+        return RecastJNI.dtTriArea2D(SWIGTYPE_p_float.getCPtr(aa), SWIGTYPE_p_float.getCPtr(bb), SWIGTYPE_p_float.getCPtr(cc));
     }
 
-    public static boolean dtOverlapQuantBounds(SWIGTYPE_p_unsigned_short amin, SWIGTYPE_p_unsigned_short amax, SWIGTYPE_p_unsigned_short bmin, SWIGTYPE_p_unsigned_short bmax) {
+    /**
+     * Determines if two axis-aligned bounding boxes overlap.
+     *
+     * @see Detour#areBoundsOverlaping(com.jme3.math.Vector3f,
+     * com.jme3.math.Vector3f, com.jme3.math.Vector3f, com.jme3.math.Vector3f)
+     *
+     * @param aMinBounds Minimum bounds of box A.
+     * @param aMaxBounds Maximum bounds of box A
+     * @param bMinBounds Minimum bounds of box B.
+     * @param bMaxBounds Maximum bounds of box B.
+     * @return True if the two AABB's overlap.
+     */
+    public static boolean areQuantBoundsOverlaping(Vector3f aMinBounds, Vector3f aMaxBounds, Vector3f bMinBounds, Vector3f bMaxBounds) {
+        SWIGTYPE_p_unsigned_short amin = Converter.convertToSWIGTYPE_p_unsigned_short(aMinBounds);
+        SWIGTYPE_p_unsigned_short amax = Converter.convertToSWIGTYPE_p_unsigned_short(aMaxBounds);
+        SWIGTYPE_p_unsigned_short bmin = Converter.convertToSWIGTYPE_p_unsigned_short(bMinBounds);
+        SWIGTYPE_p_unsigned_short bmax = Converter.convertToSWIGTYPE_p_unsigned_short(bMaxBounds);
         return RecastJNI.dtOverlapQuantBounds(SWIGTYPE_p_unsigned_short.getCPtr(amin), SWIGTYPE_p_unsigned_short.getCPtr(amax), SWIGTYPE_p_unsigned_short.getCPtr(bmin), SWIGTYPE_p_unsigned_short.getCPtr(bmax));
     }
 
-    public static boolean dtOverlapBounds(SWIGTYPE_p_float amin, SWIGTYPE_p_float amax, SWIGTYPE_p_float bmin, SWIGTYPE_p_float bmax) {
+    /**
+     * Determines if two axis-aligned bounding boxes overlap.
+     *
+     * @see Detour#areQuantBoundsOverlaping(com.jme3.math.Vector3f,
+     * com.jme3.math.Vector3f, com.jme3.math.Vector3f, com.jme3.math.Vector3f)
+     *
+     * @param aMinBounds Minimum bounds of box A.
+     * @param aMaxBounds Maximum bounds of box A
+     * @param bMinBounds Minimum bounds of box B.
+     * @param bMaxBounds Maximum bounds of box B.
+     * @return True if the two AABB's overlap.
+     */
+    public static boolean areBoundsOverlaping(Vector3f aMinBounds, Vector3f aMaxBounds, Vector3f bMinBounds, Vector3f bMaxBounds) {
+        SWIGTYPE_p_float amin = Converter.convertToSWIGTYPE_p_float(aMinBounds);
+        SWIGTYPE_p_float amax = Converter.convertToSWIGTYPE_p_float(aMaxBounds);
+        SWIGTYPE_p_float bmin = Converter.convertToSWIGTYPE_p_float(bMinBounds);
+        SWIGTYPE_p_float bmax = Converter.convertToSWIGTYPE_p_float(bMaxBounds);
         return RecastJNI.dtOverlapBounds(SWIGTYPE_p_float.getCPtr(amin), SWIGTYPE_p_float.getCPtr(amax), SWIGTYPE_p_float.getCPtr(bmin), SWIGTYPE_p_float.getCPtr(bmax));
     }
 
-    public static void dtClosestPtPointTriangle(SWIGTYPE_p_float closest, SWIGTYPE_p_float p, SWIGTYPE_p_float a, SWIGTYPE_p_float b, SWIGTYPE_p_float c) {
-        RecastJNI.dtClosestPtPointTriangle(SWIGTYPE_p_float.getCPtr(closest), SWIGTYPE_p_float.getCPtr(p), SWIGTYPE_p_float.getCPtr(a), SWIGTYPE_p_float.getCPtr(b), SWIGTYPE_p_float.getCPtr(c));
+    /**
+     * Derives the closest point on a triangle from the specified reference
+     * point.
+     *
+     * @param p The reference point from which to test.
+     * @param a Vertex A of triangle ABC.
+     * @param b Vertex B of triangle ABC.
+     * @param c Vertex C of triangle ABC.
+     * @return
+     */
+    public static Vector3f closestPtPointTriangle(Vector3f referencePoint, Vector3f a, Vector3f b, Vector3f c) {
+        SWIGTYPE_p_float p = Converter.convertToSWIGTYPE_p_float(referencePoint);
+        SWIGTYPE_p_float aa = Converter.convertToSWIGTYPE_p_float(a);
+        SWIGTYPE_p_float bb = Converter.convertToSWIGTYPE_p_float(b);
+        SWIGTYPE_p_float cc = Converter.convertToSWIGTYPE_p_float(c);
+        SWIGTYPE_p_float closest = new FloatArray(3).cast();
+        RecastJNI.dtClosestPtPointTriangle(SWIGTYPE_p_float.getCPtr(closest), SWIGTYPE_p_float.getCPtr(p), SWIGTYPE_p_float.getCPtr(aa), SWIGTYPE_p_float.getCPtr(bb), SWIGTYPE_p_float.getCPtr(cc));
+        return Converter.convertToVector3f(SWIGTYPE_p_float.getCPtr(closest));
     }
 
-    public static boolean dtClosestHeightPointTriangle(SWIGTYPE_p_float p, SWIGTYPE_p_float a, SWIGTYPE_p_float b, SWIGTYPE_p_float c, SWIGTYPE_p_float h) {
-        return RecastJNI.dtClosestHeightPointTriangle(SWIGTYPE_p_float.getCPtr(p), SWIGTYPE_p_float.getCPtr(a), SWIGTYPE_p_float.getCPtr(b), SWIGTYPE_p_float.getCPtr(c), SWIGTYPE_p_float.getCPtr(h));
+    /**
+     * Derives the y-axis height of the closest point on the triangle from the
+     * specified reference point.
+     *
+     * @param referencePoint The reference point from which to test.
+     * @param a Vertex A of triangle ABC.
+     * @param b Vertex B of triangle ABC.
+     * @param c Vertex C of triangle ABC.
+     * @return The resulting height.
+     */
+    public static float closestHeightPointTriangle(Vector3f referencePoint, Vector3f a, Vector3f b, Vector3f c) {
+        SWIGTYPE_p_float p = Converter.convertToSWIGTYPE_p_float(referencePoint);
+        SWIGTYPE_p_float aa = Converter.convertToSWIGTYPE_p_float(a);
+        SWIGTYPE_p_float bb = Converter.convertToSWIGTYPE_p_float(b);
+        SWIGTYPE_p_float cc = Converter.convertToSWIGTYPE_p_float(c);
+        SWIGTYPE_p_float h = new FloatArray(1).cast();
+        RecastJNI.dtClosestHeightPointTriangle(SWIGTYPE_p_float.getCPtr(p), SWIGTYPE_p_float.getCPtr(aa), SWIGTYPE_p_float.getCPtr(bb), SWIGTYPE_p_float.getCPtr(cc), SWIGTYPE_p_float.getCPtr(h));
+        return Converter.convertToFloat(SWIGTYPE_p_float.getCPtr(h));
     }
 
-    public static boolean dtIntersectSegmentPoly2D(SWIGTYPE_p_float p0, SWIGTYPE_p_float p1, SWIGTYPE_p_float verts, int nverts, SWIGTYPE_p_float tmin, SWIGTYPE_p_float tmax, SWIGTYPE_p_int segMin, SWIGTYPE_p_int segMax) {
-        return RecastJNI.dtIntersectSegmentPoly2D(SWIGTYPE_p_float.getCPtr(p0), SWIGTYPE_p_float.getCPtr(p1), SWIGTYPE_p_float.getCPtr(verts), nverts, SWIGTYPE_p_float.getCPtr(tmin), SWIGTYPE_p_float.getCPtr(tmax), SWIGTYPE_p_int.getCPtr(segMin), SWIGTYPE_p_int.getCPtr(segMax));
-    }
-
-    public static boolean dtIntersectSegSeg2D(SWIGTYPE_p_float ap, SWIGTYPE_p_float aq, SWIGTYPE_p_float bp, SWIGTYPE_p_float bq, SWIGTYPE_p_float s, SWIGTYPE_p_float t) {
-        return RecastJNI.dtIntersectSegSeg2D(SWIGTYPE_p_float.getCPtr(ap), SWIGTYPE_p_float.getCPtr(aq), SWIGTYPE_p_float.getCPtr(bp), SWIGTYPE_p_float.getCPtr(bq), SWIGTYPE_p_float.getCPtr(s), SWIGTYPE_p_float.getCPtr(t));
-    }
-
-    public static boolean dtPointInPolygon(SWIGTYPE_p_float pt, SWIGTYPE_p_float verts, int nverts) {
+//    public static boolean dtIntersectSegmentPoly2D(SWIGTYPE_p_float p0, SWIGTYPE_p_float p1, SWIGTYPE_p_float verts, int nverts, SWIGTYPE_p_float tmin, SWIGTYPE_p_float tmax, SWIGTYPE_p_int segMin, SWIGTYPE_p_int segMax) {
+//        return RecastJNI.dtIntersectSegmentPoly2D(SWIGTYPE_p_float.getCPtr(p0), SWIGTYPE_p_float.getCPtr(p1), SWIGTYPE_p_float.getCPtr(verts), nverts, SWIGTYPE_p_float.getCPtr(tmin), SWIGTYPE_p_float.getCPtr(tmax), SWIGTYPE_p_int.getCPtr(segMin), SWIGTYPE_p_int.getCPtr(segMax));
+//    }
+//    public static boolean dtIntersectSegSeg2D(SWIGTYPE_p_float ap, SWIGTYPE_p_float aq, SWIGTYPE_p_float bp, SWIGTYPE_p_float bq, SWIGTYPE_p_float s, SWIGTYPE_p_float t) {
+//        return RecastJNI.dtIntersectSegSeg2D(SWIGTYPE_p_float.getCPtr(ap), SWIGTYPE_p_float.getCPtr(aq), SWIGTYPE_p_float.getCPtr(bp), SWIGTYPE_p_float.getCPtr(bq), SWIGTYPE_p_float.getCPtr(s), SWIGTYPE_p_float.getCPtr(t));
+//    }
+    /**
+     * Determines if the specified point is inside the convex polygon on the
+     * xz-plane. All points are projected onto the xz-plane, so the y-values are
+     * ignored.
+     *
+     * @param point The point to check.
+     * @param polygon The polygon vertices.
+     * @return True if the point is inside the polygon.
+     */
+    public static boolean isPointInPolygon(Vector3f point, Vector3f[] polygon) {
+        SWIGTYPE_p_float pt = Converter.convertToSWIGTYPE_p_float(point);
+        SWIGTYPE_p_float verts = Converter.convertToSWIGTYPE_p_float(polygon);
+        int nverts = polygon.length;
+        if (nverts < 3) {
+            throw new RuntimeException("The number of vertices must be greater or equal than 3");
+        }
         return RecastJNI.dtPointInPolygon(SWIGTYPE_p_float.getCPtr(pt), SWIGTYPE_p_float.getCPtr(verts), nverts);
     }
 
-    public static boolean dtDistancePtPolyEdgesSqr(SWIGTYPE_p_float pt, SWIGTYPE_p_float verts, int nverts, SWIGTYPE_p_float ed, SWIGTYPE_p_float et) {
-        return RecastJNI.dtDistancePtPolyEdgesSqr(SWIGTYPE_p_float.getCPtr(pt), SWIGTYPE_p_float.getCPtr(verts), nverts, SWIGTYPE_p_float.getCPtr(ed), SWIGTYPE_p_float.getCPtr(et));
-    }
-
-    public static float dtDistancePtSegSqr2D(SWIGTYPE_p_float pt, SWIGTYPE_p_float p, SWIGTYPE_p_float q, SWIGTYPE_p_float t) {
-        return RecastJNI.dtDistancePtSegSqr2D(SWIGTYPE_p_float.getCPtr(pt), SWIGTYPE_p_float.getCPtr(p), SWIGTYPE_p_float.getCPtr(q), SWIGTYPE_p_float.getCPtr(t));
-    }
-
-    public static void dtCalcPolyCenter(SWIGTYPE_p_float tc, SWIGTYPE_p_unsigned_short idx, int nidx, SWIGTYPE_p_float verts) {
+//    public static boolean dtDistancePtPolyEdgesSqr(SWIGTYPE_p_float pt, SWIGTYPE_p_float verts, int nverts, SWIGTYPE_p_float ed, SWIGTYPE_p_float et) {
+//        return RecastJNI.dtDistancePtPolyEdgesSqr(SWIGTYPE_p_float.getCPtr(pt), SWIGTYPE_p_float.getCPtr(verts), nverts, SWIGTYPE_p_float.getCPtr(ed), SWIGTYPE_p_float.getCPtr(et));
+//    }
+//
+//    public static float dtDistancePtSegSqr2D(SWIGTYPE_p_float pt, SWIGTYPE_p_float p, SWIGTYPE_p_float q, SWIGTYPE_p_float t) {
+//        return RecastJNI.dtDistancePtSegSqr2D(SWIGTYPE_p_float.getCPtr(pt), SWIGTYPE_p_float.getCPtr(p), SWIGTYPE_p_float.getCPtr(q), SWIGTYPE_p_float.getCPtr(t));
+//    }
+    /**
+     * Derives the centroid of a convex polygon. Note: not sure if implemented
+     * correctly.
+     *
+     * @param indices The polygon indices.
+     * @param vertices The polygon vertices. [(x, y, z) * vertCount]
+     * @return The centroid of the polgyon.
+     */
+    public static Vector3f calculatePolyCenter(short[] indices, Vector3f[] vertices) {
+        FloatArray array = new FloatArray(3);
+        SWIGTYPE_p_float tc = array.cast();
+        SWIGTYPE_p_unsigned_short idx = Converter.convertToSWIGTYPE_p_unsigned_short(indices);
+        int nidx = indices.length;
+        SWIGTYPE_p_float verts = Converter.convertToSWIGTYPE_p_float(vertices);
         RecastJNI.dtCalcPolyCenter(SWIGTYPE_p_float.getCPtr(tc), SWIGTYPE_p_unsigned_short.getCPtr(idx), nidx, SWIGTYPE_p_float.getCPtr(verts));
+        return Converter.convertToVector3f(SWIGTYPE_p_float.getCPtr(tc));
     }
 
-    public static boolean dtOverlapPolyPoly2D(SWIGTYPE_p_float polya, int npolya, SWIGTYPE_p_float polyb, int npolyb) {
+    /**
+     * Determines if the two convex polygons overlap on the xz-plane. All
+     * vertices are projected onto the xz-plane, so the y-values are ignored.
+     *
+     * @param aPoly Polygon A vertices.
+     * @param bPoly Polygon B vertices.
+     * @return True if the two polygons overlap.
+     */
+    public static boolean arePoly2DOverlaping(Vector3f[] aPoly, Vector3f[] bPoly) {
+        SWIGTYPE_p_float polya = Converter.convertToSWIGTYPE_p_float(aPoly);
+        int npolya = aPoly.length;
+        SWIGTYPE_p_float polyb = Converter.convertToSWIGTYPE_p_float(bPoly);
+        int npolyb = bPoly.length;
         return RecastJNI.dtOverlapPolyPoly2D(SWIGTYPE_p_float.getCPtr(polya), npolya, SWIGTYPE_p_float.getCPtr(polyb), npolyb);
     }
 
-    public static long dtNextPow2(long v) {
-        return RecastJNI.dtNextPow2(v);
-    }
-
-    public static long dtIlog2(long v) {
-        return RecastJNI.dtIlog2(v);
-    }
-
-    public static int dtAlign4(int x) {
-        return RecastJNI.dtAlign4(x);
-    }
-
-    public static int dtOppositeTile(int side) {
-        return RecastJNI.dtOppositeTile(side);
-    }
-
-    public static void dtSwapByte(SWIGTYPE_p_unsigned_char a, SWIGTYPE_p_unsigned_char b) {
-        RecastJNI.dtSwapByte(SWIGTYPE_p_unsigned_char.getCPtr(a), SWIGTYPE_p_unsigned_char.getCPtr(b));
-    }
-
-    public static void dtSwapEndian(SWIGTYPE_p_unsigned_short v) {
-        RecastJNI.dtSwapEndian__SWIG_0(SWIGTYPE_p_unsigned_short.getCPtr(v));
-    }
-
-    public static void dtSwapEndian(SWIGTYPE_p_short v) {
-        RecastJNI.dtSwapEndian__SWIG_1(SWIGTYPE_p_short.getCPtr(v));
-    }
-
-    public static void dtSwapEndian(SWIGTYPE_p_unsigned_int v) {
-        RecastJNI.dtSwapEndian__SWIG_2(SWIGTYPE_p_unsigned_int.getCPtr(v));
-    }
-
-    public static void dtSwapEndian(SWIGTYPE_p_int v) {
-        RecastJNI.dtSwapEndian__SWIG_3(SWIGTYPE_p_int.getCPtr(v));
-    }
-
-    public static void dtSwapEndian(SWIGTYPE_p_float v) {
-        RecastJNI.dtSwapEndian__SWIG_4(SWIGTYPE_p_float.getCPtr(v));
-    }
-
-    public static void dtRandomPointInConvexPoly(SWIGTYPE_p_float pts, int npts, SWIGTYPE_p_float areas, float s, float t, SWIGTYPE_p_float out) {
-        RecastJNI.dtRandomPointInConvexPoly(SWIGTYPE_p_float.getCPtr(pts), npts, SWIGTYPE_p_float.getCPtr(areas), s, t, SWIGTYPE_p_float.getCPtr(out));
-    }
-
+//    public static long dtNextPow2(long v) {
+//        return RecastJNI.dtNextPow2(v);
+//    }
+//    public static long dtIlog2(long v) {
+//        return RecastJNI.dtIlog2(v);
+//    }
+//    public static int dtAlign4(int x) {
+//        return RecastJNI.dtAlign4(x);
+//    }
+//    public static int dtOppositeTile(int side) {
+//        return RecastJNI.dtOppositeTile(side);
+//    }
+//    public static void dtRandomPointInConvexPoly(SWIGTYPE_p_float pts, int npts, SWIGTYPE_p_float areas, float s, float t, SWIGTYPE_p_float out) {
+//        RecastJNI.dtRandomPointInConvexPoly(SWIGTYPE_p_float.getCPtr(pts), npts, SWIGTYPE_p_float.getCPtr(areas), s, t, SWIGTYPE_p_float.getCPtr(out));
+//    }
     public static int DT_CROWDAGENT_MAX_NEIGHBOURS() {
         return RecastJNI.DT_CROWDAGENT_MAX_NEIGHBOURS_get();
     }
@@ -278,15 +295,6 @@ public class Detour {
 
     public static int DT_MAX_AREAS() {
         return RecastJNI.DT_MAX_AREAS_get();
-    }
-
-    public static NavMesh dtAllocNavMesh() {
-        long cPtr = RecastJNI.dtAllocNavMesh();
-        return (cPtr == 0) ? null : new NavMesh(cPtr, false);
-    }
-
-    public static void dtFreeNavMesh(NavMesh navmesh) {
-        RecastJNI.dtFreeNavMesh(NavMesh.getCPtr(navmesh), navmesh);
     }
 
     public static boolean dtCreateNavMeshData(NavMeshCreateParams params, SWIGTYPE_p_p_unsigned_char outData, SWIGTYPE_p_int outDataSize) {

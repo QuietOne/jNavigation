@@ -39,7 +39,8 @@ public class NavMesh {
     protected boolean swigCMemOwn;
 
     public NavMesh() {
-        this(RecastJNI.new_dtNavMesh(), true);
+        swigCPtr = RecastJNI.dtAllocNavMesh();
+        swigCMemOwn = (swigCPtr == 0) ? false : true;
     }
 
     public NavMesh(long cPtr, boolean cMemoryOwn) {
@@ -60,7 +61,7 @@ public class NavMesh {
         if (swigCPtr != 0) {
             if (swigCMemOwn) {
                 swigCMemOwn = false;
-                RecastJNI.delete_dtNavMesh(swigCPtr);
+                RecastJNI.dtFreeNavMesh(swigCPtr, this);
             }
             swigCPtr = 0;
         }
