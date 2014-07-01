@@ -1,6 +1,6 @@
 package com.jme3.ai.navigation.recast;
 
-import com.jme3.ai.navigation.detour.Detour;
+import com.jme3.ai.navigation.detour.DetourBuilder;
 import com.jme3.ai.navigation.utils.Converter;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_float;
 import com.jme3.ai.navigation.utils.RecastJNI;
@@ -416,24 +416,24 @@ public class Config {
     }
 
     /**
-     * If the mesh data is to be used to construct a Detour navigation mesh,
+     * If the mesh data is to be used to construct a DetourBuilder navigation mesh,
      * then the upper limit is limited to smaller than DT_VERTS_PER_POLYGON.
      *
      * @param value The maximum number of vertices allowed for polygons
      * generated during the contour to polygon conversion process. [Limit: >= 3]
-     * @see Detour#DT_VERTS_PER_POLYGON()
+     * @see DetourBuilder#DT_VERTS_PER_POLYGON()
      */
     public void setMaxVerticesPerPoly(int value) {
         RecastJNI.rcConfig_maxVertsPerPoly_set(swigCPtr, this, value);
     }
 
     /**
-     * If the mesh data is to be used to construct a Detour navigation mesh,
+     * If the mesh data is to be used to construct a DetourBuilder navigation mesh,
      * then the upper limit is limited to smaller than DT_VERTS_PER_POLYGON.
      *
      * @return The maximum number of vertices allowed for polygons generated
      * during the contour to polygon conversion process. [Limit: >= 3]
-     * @see Detour#DT_VERTS_PER_POLYGON()
+     * @see DetourBuilder#DT_VERTS_PER_POLYGON()
      */
     public int getMaxVerticesPerPoly() {
         return RecastJNI.rcConfig_maxVertsPerPoly_get(swigCPtr, this);

@@ -1,6 +1,6 @@
 package com.jme3.ai.navigation.recast;
 
-import com.jme3.ai.navigation.detour.Detour;
+import com.jme3.ai.navigation.detour.DetourBuilder;
 import com.jme3.ai.navigation.utils.Converter;
 import com.jme3.ai.navigation.utils.FloatArray;
 import com.jme3.ai.navigation.utils.IntArray;
@@ -773,10 +773,10 @@ public class RecastBuilder {
 
     /**
      * Builds a polygon mesh from the provided contours. If the mesh data is to
-     * be used to construct a Detour navigation mesh, then the upper limit must
+     * be used to construct a DetourBuilder navigation mesh, then the upper limit must
      * be retricted to smaller than DT_VERTS_PER_POLYGON.
      *
-     * @see Detour#DT_VERTS_PER_POLYGON()
+     * @see DetourBuilder#DT_VERTS_PER_POLYGON()
      *
      * @param ctx The build context to use during the operation.
      * @param cset A fully built contour set.
