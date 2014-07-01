@@ -2,6 +2,11 @@ package com.jme3.ai.navigation.detour;
 
 import com.jme3.ai.navigation.utils.RecastJNI;
 
+/**
+ *
+ * @author Tihomir Radosavljevic
+ * @version 0.5
+ */
 public class NodePool {
 
     private long swigCPtr;

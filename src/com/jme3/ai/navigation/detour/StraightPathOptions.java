@@ -25,6 +25,7 @@ import com.jme3.ai.navigation.utils.RecastJNI;
  * @version 1.0
  */
 public final class StraightPathOptions {
+
     /**
      * Add a vertex at every polygon edge crossing where area changes.
      */

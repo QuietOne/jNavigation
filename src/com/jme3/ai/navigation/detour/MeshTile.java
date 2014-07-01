@@ -77,13 +77,13 @@ public class MeshTile {
         return RecastJNI.dtMeshTile_salt_get(swigCPtr, this);
     }
 
-    /**
-     *
-     * @param value Index to the next free link.
-     */
-    public void setLinksFreeList(long value) {
-        RecastJNI.dtMeshTile_linksFreeList_set(swigCPtr, this, value);
-    }
+//    /**
+//     *
+//     * @param value Index to the next free link.
+//     */
+//    public void setLinksFreeList(long value) {
+//        RecastJNI.dtMeshTile_linksFreeList_set(swigCPtr, this, value);
+//    }
 
     /**
      *

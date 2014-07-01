@@ -13,6 +13,7 @@ import com.jme3.ai.navigation.tilecache.TileCacheLayerHeader;
 import com.jme3.ai.navigation.tilecache.TileCachePolyMesh;
 import com.jme3.ai.navigation.utils.Converter;
 import com.jme3.ai.navigation.utils.FloatArray;
+import com.jme3.ai.navigation.utils.IntArray;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_float;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_char;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_short;
@@ -21,6 +22,7 @@ import com.jme3.ai.navigation.utils.RecastJNI;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_int;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_p_unsigned_char;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_int;
+import com.jme3.ai.navigation.utils.UCharArray;
 import com.jme3.math.Vector3f;
 
 /**
@@ -28,7 +30,7 @@ import com.jme3.math.Vector3f;
  * @author Tihomir Radosavljevic
  * @version 1.0
  */
-public class Detour {
+public class DetourBuilder {
 
     /**
      * Derives the signed xz-plane area of the triangle ABC, or the relationship
@@ -55,13 +57,13 @@ public class Detour {
      *
      * A positive return value indicates:
      *
-     * The vertices are wrapped in the normal Detour wrap direction. The
+     * The vertices are wrapped in the normal DetourBuilder wrap direction. The
      * triangle's 3D face normal is in the general up direction. A negative
      * return value indicates:
      *
-     * The vertices are reverse wrapped. (Wrapped opposite the normal Detour
-     * wrap direction.) The triangle's 3D face normal is in the general down
-     * direction.
+     * The vertices are reverse wrapped. (Wrapped opposite the normal
+     * DetourBuilder wrap direction.) The triangle's 3D face normal is in the
+     * general down direction.
      *
      * @param a Vertex A.
      * @param b Vertex B.
@@ -78,7 +80,7 @@ public class Detour {
     /**
      * Determines if two axis-aligned bounding boxes overlap.
      *
-     * @see Detour#areBoundsOverlaping(com.jme3.math.Vector3f,
+     * @see DetourBuilder#areBoundsOverlaping(com.jme3.math.Vector3f,
      * com.jme3.math.Vector3f, com.jme3.math.Vector3f, com.jme3.math.Vector3f)
      *
      * @param aMinBounds Minimum bounds of box A.
@@ -98,7 +100,7 @@ public class Detour {
     /**
      * Determines if two axis-aligned bounding boxes overlap.
      *
-     * @see Detour#areQuantBoundsOverlaping(com.jme3.math.Vector3f,
+     * @see DetourBuilder#areQuantBoundsOverlaping(com.jme3.math.Vector3f,
      * com.jme3.math.Vector3f, com.jme3.math.Vector3f, com.jme3.math.Vector3f)
      *
      * @param aMinBounds Minimum bounds of box A.
@@ -297,8 +299,24 @@ public class Detour {
         return RecastJNI.DT_MAX_AREAS_get();
     }
 
-    public static boolean dtCreateNavMeshData(NavMeshCreateParams params, SWIGTYPE_p_p_unsigned_char outData, SWIGTYPE_p_int outDataSize) {
-        return RecastJNI.dtCreateNavMeshData(NavMeshCreateParams.getCPtr(params), params, SWIGTYPE_p_p_unsigned_char.getCPtr(outData), SWIGTYPE_p_int.getCPtr(outDataSize));
+    /**
+     * Note: not sure if it works correctly.
+     *
+     * Builds navigation mesh tile data from the provided tile creation data.
+     * The output data array is allocated using the detour allocator (Alloc()).
+     * The method used to free the memory will be determined by how the tile is
+     * added to the navigation mesh.
+     *
+     * @param params Tile creation data.
+     * @return The resulting tile data.
+     */
+    public static char[] createNavMeshData(NavMeshCreateParams params) {
+        SWIGTYPE_p_p_unsigned_char outData = null;
+        SWIGTYPE_p_int outDataSize = new IntArray(1).cast();
+        if (RecastJNI.dtCreateNavMeshData(NavMeshCreateParams.getCPtr(params), params, SWIGTYPE_p_p_unsigned_char.getCPtr(outData), SWIGTYPE_p_int.getCPtr(outDataSize))) {
+            return null;
+        }
+        return Converter.convertToChars(SWIGTYPE_p_p_unsigned_char.getCPtr(outData), Converter.convertToInt(SWIGTYPE_p_int.getCPtr(outDataSize)));
     }
 
     public static boolean dtNavMeshHeaderSwapEndian(SWIGTYPE_p_unsigned_char data, int dataSize) {
