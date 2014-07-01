@@ -8,7 +8,7 @@ import com.jme3.math.Vector3f;
 /**
  *
  * @author Tihomir Radosavljevic
- * @version 0.5
+ * @version 1.0
  */
 public class TileCacheParams {
 

@@ -42,10 +42,18 @@ public class CompressedTile {
         }
     }
 
+    /**
+     *
+     * @param value Counter describing modifications to the tile.
+     */
     public void setSalt(long value) {
         RecastJNI.dtCompressedTile_salt_set(swigCPtr, this, value);
     }
 
+    /**
+     *
+     * @return Counter describing modifications to the tile. F
+     */
     public long getSalt() {
         return RecastJNI.dtCompressedTile_salt_get(swigCPtr, this);
     }

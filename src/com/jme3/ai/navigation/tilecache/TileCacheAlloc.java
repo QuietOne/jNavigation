@@ -4,6 +4,7 @@ import com.jme3.ai.navigation.utils.SWIGTYPE_p_void;
 import com.jme3.ai.navigation.utils.RecastJNI;
 
 /**
+ * Note: all native functions are virtual.
  *
  * @author Tihomir Radosavljevic
  * @version 0.5
