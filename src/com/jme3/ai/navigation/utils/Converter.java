@@ -3,7 +3,8 @@ package com.jme3.ai.navigation.utils;
 import com.jme3.math.Vector3f;
 
 /**
- * Class for converting types from C++ types to one that are used by jME.
+ * Class for converting types from C++ types to one that are used by jME, and
+ * some helper function used to get data from some jME structures.
  *
  * @author Tihomir Radosavljevic
  * @version 1.0
@@ -21,6 +22,14 @@ public class Converter {
         array.setItem(1, v.y);
         array.setItem(2, v.z);
         return array.cast();
+    }
+    
+    public static int[] convertToInts(short[] shorts){
+        int[] ints = new int[shorts.length];
+        for (int i = 0; i < shorts.length; i++) {
+            ints[i] = shorts[i];
+        }
+        return ints;
     }
 
     public static SWIGTYPE_p_float convertToSWIGTYPE_p_float(float[] v) {

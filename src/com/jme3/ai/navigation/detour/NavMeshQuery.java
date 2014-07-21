@@ -1,5 +1,6 @@
 package com.jme3.ai.navigation.detour;
 
+import com.jme3.ai.navigation.utils.Converter;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_bool;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_float;
 import com.jme3.ai.navigation.utils.RecastJNI;
@@ -7,6 +8,7 @@ import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_char;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_int;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_int;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_f___float;
+import com.jme3.math.Vector3f;
 
 /**
  *
@@ -19,9 +21,10 @@ public class NavMeshQuery {
     protected boolean swigCMemOwn;
 
     public NavMeshQuery() {
-        this(RecastJNI.new_dtNavMeshQuery(), true);
+        swigCPtr = RecastJNI.dtAllocNavMeshQuery();
+        swigCMemOwn = (swigCPtr == 0) ? false : true;
     }
-    
+
     public NavMeshQuery(long cPtr, boolean cMemoryOwn) {
         swigCMemOwn = cMemoryOwn;
         swigCPtr = cPtr;
@@ -40,11 +43,11 @@ public class NavMeshQuery {
         if (swigCPtr != 0) {
             if (swigCMemOwn) {
                 swigCMemOwn = false;
-                RecastJNI.delete_dtNavMeshQuery(swigCPtr);
+                RecastJNI.dtFreeNavMeshQuery(swigCPtr, this);
             }
             swigCPtr = 0;
         }
-    }  
+    }
 
     public long init(NavMesh nav, int maxNodes) {
         return RecastJNI.dtNavMeshQuery_init(swigCPtr, this, NavMesh.getCPtr(nav), nav, maxNodes);
@@ -123,12 +126,16 @@ public class NavMeshQuery {
         return RecastJNI.dtNavMeshQuery_findRandomPointAroundCircle(swigCPtr, this, startRef, SWIGTYPE_p_float.getCPtr(centerPos), maxRadius, QueryFilter.getCPtr(filter), filter, SWIGTYPE_p_f___float.getCPtr(frand), SWIGTYPE_p_unsigned_int.getCPtr(randomRef), SWIGTYPE_p_float.getCPtr(randomPt));
     }
 
-    public long closestPointOnPoly(long ref, SWIGTYPE_p_float pos, SWIGTYPE_p_float closest, SWIGTYPE_p_bool posOverPoly) {
-        return RecastJNI.dtNavMeshQuery_closestPointOnPoly(swigCPtr, this, ref, SWIGTYPE_p_float.getCPtr(pos), SWIGTYPE_p_float.getCPtr(closest), SWIGTYPE_p_bool.getCPtr(posOverPoly));
+    public Status closestPointOnPoly(Poly poly, Vector3f position, SWIGTYPE_p_float closest, SWIGTYPE_p_bool posOverPoly) {
+        long ref = Poly.getCPtr(poly);
+        SWIGTYPE_p_float pos = Converter.convertToSWIGTYPE_p_float(position);
+        long status = RecastJNI.dtNavMeshQuery_closestPointOnPoly(swigCPtr, this, ref, SWIGTYPE_p_float.getCPtr(pos), SWIGTYPE_p_float.getCPtr(closest), SWIGTYPE_p_bool.getCPtr(posOverPoly));
+        return new Status(status);
     }
 
-    public long closestPointOnPolyBoundary(long ref, SWIGTYPE_p_float pos, SWIGTYPE_p_float closest) {
-        return RecastJNI.dtNavMeshQuery_closestPointOnPolyBoundary(swigCPtr, this, ref, SWIGTYPE_p_float.getCPtr(pos), SWIGTYPE_p_float.getCPtr(closest));
+    public Status closestPointOnPolyBoundary(long ref, SWIGTYPE_p_float pos, SWIGTYPE_p_float closest) {
+        long status = RecastJNI.dtNavMeshQuery_closestPointOnPolyBoundary(swigCPtr, this, ref, SWIGTYPE_p_float.getCPtr(pos), SWIGTYPE_p_float.getCPtr(closest));
+        return new Status(status);
     }
 
     public long getPolyHeight(long ref, SWIGTYPE_p_float pos, SWIGTYPE_p_float height) {

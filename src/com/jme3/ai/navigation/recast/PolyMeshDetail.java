@@ -6,6 +6,7 @@ import com.jme3.ai.navigation.utils.RecastJNI;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_char;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_int;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Mesh;
 
 /**
  * Contains triangle meshes that represent detailed height data associated with
@@ -38,7 +39,7 @@ public class PolyMeshDetail {
         swigCMemOwn = (swigCPtr == 0) ? false : true;
     }
 
-    public PolyMeshDetail(long cPtr, boolean cMemoryOwn) {
+    protected PolyMeshDetail(long cPtr, boolean cMemoryOwn) {
         swigCMemOwn = cMemoryOwn;
         swigCPtr = cPtr;
     }
@@ -251,5 +252,16 @@ public class PolyMeshDetail {
      */
     public int getNumberOfTriangles() {
         return RecastJNI.rcPolyMeshDetail_ntris_get(swigCPtr, this);
+    }
+
+    /**
+     * Visual representation of mesh. Created for debugging purposes.
+     *
+     * @return
+     */
+    public Mesh createVisualMesh() {
+        Mesh mesh = new Mesh();
+
+        return mesh;
     }
 }

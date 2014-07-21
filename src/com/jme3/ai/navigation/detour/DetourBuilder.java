@@ -22,7 +22,6 @@ import com.jme3.ai.navigation.utils.RecastJNI;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_int;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_p_unsigned_char;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_int;
-import com.jme3.ai.navigation.utils.UCharArray;
 import com.jme3.math.Vector3f;
 
 /**
@@ -319,21 +318,40 @@ public class DetourBuilder {
         return Converter.convertToChars(SWIGTYPE_p_p_unsigned_char.getCPtr(outData), Converter.convertToInt(SWIGTYPE_p_int.getCPtr(outDataSize)));
     }
 
-    public static boolean dtNavMeshHeaderSwapEndian(SWIGTYPE_p_unsigned_char data, int dataSize) {
-        return RecastJNI.dtNavMeshHeaderSwapEndian(SWIGTYPE_p_unsigned_char.getCPtr(data), dataSize);
+    /**
+     * Swaps the endianess of the tile data's header.
+     *
+     * @see MeshHeader
+     * @param data The tile data array.
+     * @return
+     */
+    public static char[] navMeshHeaderSwapEndian(char[] data) {
+        SWIGTYPE_p_unsigned_char datas = Converter.convertToSWIGTYPE_p_unsigned_char(data);
+        int dataSize = data.length;
+        if (RecastJNI.dtNavMeshHeaderSwapEndian(SWIGTYPE_p_unsigned_char.getCPtr(datas), dataSize)) {
+            return null;
+        }
+        return Converter.convertToChars(datas, dataSize);
     }
 
-    public static boolean dtNavMeshDataSwapEndian(SWIGTYPE_p_unsigned_char data, int dataSize) {
-        return RecastJNI.dtNavMeshDataSwapEndian(SWIGTYPE_p_unsigned_char.getCPtr(data), dataSize);
-    }
-
-    public static NavMeshQuery dtAllocNavMeshQuery() {
-        long cPtr = RecastJNI.dtAllocNavMeshQuery();
-        return (cPtr == 0) ? null : new NavMeshQuery(cPtr, false);
-    }
-
-    public static void dtFreeNavMeshQuery(NavMeshQuery query) {
-        RecastJNI.dtFreeNavMeshQuery(NavMeshQuery.getCPtr(query), query);
+    /**
+     * Swaps endianess of the tile data. Warning This function assumes that the
+     * header is in the correct endianess already. Call
+     * navMeshHeaderSwapEndian() first on the data if the data is expected to be
+     * in wrong endianess to start with. Call navMeshHeaderSwapEndian() after
+     * the data has been swapped if converting from native to foreign endianess.
+     *
+     * @see DetourBuilder#navMeshHeaderSwapEndian(char[])
+     * @param data The tile data array.
+     * @return
+     */
+    public static char[] navMeshDataSwapEndian(char[] data) {
+        SWIGTYPE_p_unsigned_char datas = Converter.convertToSWIGTYPE_p_unsigned_char(data);
+        int dataSize = data.length;
+        if (RecastJNI.dtNavMeshDataSwapEndian(SWIGTYPE_p_unsigned_char.getCPtr(datas), dataSize)) {
+            return null;
+        }
+        return Converter.convertToChars(datas, dataSize);
     }
 
     public static int DT_NULL_IDX() {
@@ -435,21 +453,7 @@ public class DetourBuilder {
         return RecastJNI.DT_PARTIAL_RESULT_get();
     }
 
-    public static boolean dtStatusSucceed(long status) {
-        return RecastJNI.dtStatusSucceed(status);
-    }
-
-    public static boolean dtStatusFailed(long status) {
-        return RecastJNI.dtStatusFailed(status);
-    }
-
-    public static boolean dtStatusInProgress(long status) {
-        return RecastJNI.dtStatusInProgress(status);
-    }
-
-    public static boolean dtStatusDetail(long status, long detail) {
-        return RecastJNI.dtStatusDetail(status, detail);
-    }
+    
 
     public static int MAX_TOUCHED_TILES() {
         return RecastJNI.DT_MAX_TOUCHED_TILES_get();

@@ -37,7 +37,7 @@ public class Config {
         this(RecastJNI.new_rcConfig(), true);
     }
 
-    public Config(long cPtr, boolean cMemoryOwn) {
+    protected Config(long cPtr, boolean cMemoryOwn) {
         swigCMemOwn = cMemoryOwn;
         swigCPtr = cPtr;
     }

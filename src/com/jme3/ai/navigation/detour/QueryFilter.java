@@ -58,6 +58,14 @@ public class QueryFilter {
         }
     }
 
+    /**
+     * Returns true if the polygon can be visited. (I.e. Is traversable.)
+     *
+     * @param ref The reference id of the polygon test.
+     * @param tile The tile containing the polygon.
+     * @param poly The polygon to test.
+     * @return
+     */
     public boolean passFilter(long ref, MeshTile tile, Poly poly) {
         return RecastJNI.dtQueryFilter_passFilter(swigCPtr, this, ref, MeshTile.getCPtr(tile), tile, Poly.getCPtr(poly), poly);
     }
@@ -95,22 +103,50 @@ public class QueryFilter {
         return RecastJNI.dtQueryFilter_getAreaCost(swigCPtr, this, i);
     }
 
+    /**
+     * Sets the traversal cost of the area.
+     *
+     * @param i The id of the area.
+     * @param cost The new cost of traversing the area.
+     */
     public void setAreaCost(int i, float cost) {
         RecastJNI.dtQueryFilter_setAreaCost(swigCPtr, this, i, cost);
     }
 
+    /**
+     * Any polygons that include one or more of these flags will be included in
+     * the operation.
+     *
+     * @return Returns the include flags for the filter.
+     */
     public int getIncludeFlags() {
         return RecastJNI.dtQueryFilter_getIncludeFlags(swigCPtr, this);
     }
 
+    /**
+     * Sets the include flags for the filter.
+     *
+     * @param flags The new flags.
+     */
     public void setIncludeFlags(int flags) {
         RecastJNI.dtQueryFilter_setIncludeFlags(swigCPtr, this, flags);
     }
 
+    /**
+     * Any polygons that include one ore more of these flags will be excluded
+     * from the operation.
+     *
+     * @return Returns the exclude flags for the filter.
+     */
     public int getExcludeFlags() {
         return RecastJNI.dtQueryFilter_getExcludeFlags(swigCPtr, this);
     }
 
+    /**
+     * Sets the exclude flags for the filter.
+     *
+     * @param flags The new flags.
+     */
     public void setExcludeFlags(int flags) {
         RecastJNI.dtQueryFilter_setExcludeFlags(swigCPtr, this, flags);
     }

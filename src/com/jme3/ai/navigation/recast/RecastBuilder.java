@@ -2,6 +2,7 @@ package com.jme3.ai.navigation.recast;
 
 import com.jme3.ai.navigation.detour.DetourBuilder;
 import com.jme3.ai.navigation.utils.Converter;
+import com.jme3.ai.navigation.utils.GraphicHelper;
 import com.jme3.ai.navigation.utils.FloatArray;
 import com.jme3.ai.navigation.utils.IntArray;
 import com.jme3.ai.navigation.utils.RecastJNI;
@@ -10,7 +11,9 @@ import com.jme3.ai.navigation.utils.SWIGTYPE_p_int;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_p_rcPolyMesh;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_p_rcPolyMeshDetail;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_char;
+import com.jme3.ai.navigation.utils.UCharArray;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Mesh;
 
 /**
  * Class for all Recast builds.
@@ -134,6 +137,16 @@ public class RecastBuilder {
     }
 
     /**
+     * Calculates the bounding box of a mesh.
+     *
+     * @param mesh
+     * @return The minimum bounds of the AABB.
+     */
+    public static Vector3f calculateMinBounds(Mesh mesh) {
+        return calculateMinBounds(GraphicHelper.getVertices(mesh));
+    }
+
+    /**
      * Calculates the bounding box of an array of vertices.
      *
      * @param vertices An array of vertices.
@@ -148,6 +161,16 @@ public class RecastBuilder {
         SWIGTYPE_p_float verts = Converter.convertToSWIGTYPE_p_float(vertices);
         RecastJNI.rcCalcBounds(SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_float.getCPtr(bmin), SWIGTYPE_p_float.getCPtr(bmax));
         return Converter.convertToVector3f(SWIGTYPE_p_float.getCPtr(bmax));
+    }
+
+    /**
+     * Calculates the bounding box of a mesh.
+     *
+     * @param mesh
+     * @return The maximum bounds of the AABB.
+     */
+    public static Vector3f calculateMaxBounds(Mesh mesh) {
+        return calculateMaxBounds(GraphicHelper.getVertices(mesh));
     }
 
     /**
@@ -174,6 +197,16 @@ public class RecastBuilder {
 
     /**
      * Calculates the grid width based on the bounding box and grid cell size.
+     * It reads data from config and place height info into config.
+     *
+     * @param config
+     */
+    public static void calculatesGridHeight(Config config) {
+        config.setHeight(calculateGridHeight(config.getMinBounds(), config.getMaxBounds(), config.getCellSize()));
+    }
+
+    /**
+     * Calculates the grid width based on the bounding box and grid cell size.
      *
      * @param minBounds The minimum bounds of the AABB.
      * @param maxBounds The maximum bounds of the AABB.
@@ -191,6 +224,16 @@ public class RecastBuilder {
         SWIGTYPE_p_int h = tempH.cast();
         RecastJNI.rcCalcGridSize(SWIGTYPE_p_float.getCPtr(bmin), SWIGTYPE_p_float.getCPtr(bmax), cellSize, SWIGTYPE_p_int.getCPtr(w), SWIGTYPE_p_int.getCPtr(h));
         return tempW.getItem(0);
+    }
+
+    /**
+     * Calculates the grid width based on the bounding box and grid cell size.
+     * It reads data from config and place height info into config.
+     *
+     * @param config
+     */
+    public static void calculateGridWidth(Config config) {
+        config.setWidth(calculateGridWidth(config.getMinBounds(), config.getMaxBounds(), config.getCellSize()));
     }
 
     /**
@@ -253,10 +296,24 @@ public class RecastBuilder {
         SWIGTYPE_p_float verts = Converter.convertToSWIGTYPE_p_float(vertices);
         int nv = vertices.length;
         SWIGTYPE_p_int tris = Converter.convertToSWIGTYPE_p_int(triangles);
-        SWIGTYPE_p_unsigned_char area = new SWIGTYPE_p_unsigned_char();
         int nt = triangles.length / 3;
+        SWIGTYPE_p_unsigned_char area = new UCharArray(nt).cast();
         RecastJNI.rcMarkWalkableTriangles(Context.getCPtr(ctx), ctx, walkableSlopeAngle, SWIGTYPE_p_float.getCPtr(verts), nv, SWIGTYPE_p_int.getCPtr(tris), nt, SWIGTYPE_p_unsigned_char.getCPtr(area));
         return Converter.convertToChars(area, nt);
+    }
+
+    /**
+     * Sets the area id of all triangles with a slope below the specified value
+     * to RC_WALKABLE_AREA.
+     *
+     * @see RecastBuilder#RC_WALKABLE_AREA()
+     * @param ctx The build context to use during the operation.
+     * @param walkableSlopeAngle The maximum slope that is considered walkable.
+     * @param mesh
+     * @return
+     */
+    public static char[] markWalkableTriangles(Context ctx, float walkableSlopeAngle, Mesh mesh) {
+        return markWalkableTriangles(ctx, walkableSlopeAngle, GraphicHelper.getVertices(mesh), GraphicHelper.getIndices(mesh));
     }
 
     /**
@@ -356,6 +413,22 @@ public class RecastBuilder {
     }
 
     /**
+     * Rasterizes an indexed triangle mesh into the specified heightfield. Spans
+     * will only be added for triangles that overlap the heightfield grid.
+     *
+     * @param ctx The build context to use during the operation.
+     * @param mesh
+     * @param areas The area id's of the triangles. [Limit: smaller than
+     * RC_WALKABLE_AREA] Size must be the same as for triangles.
+     * @param solid An initialized heightfield.
+     * @param flagMergeThr The distance where the walkable flag is favored over
+     * the non-walkable flag. [Limit: >= 0] [Units: vx]
+     */
+    public static void rasterizeTriangles(Context ctx, Mesh mesh, char[] areas, Heightfield solid, int flagMergeThr) {
+        rasterizeTriangles(ctx, GraphicHelper.getVertices(mesh), GraphicHelper.getIndices(mesh), areas, solid, flagMergeThr);
+    }
+
+    /**
      * Marks non-walkable spans as walkable if their maximum is within
      * walkableClimp of a walkable neihbor. Allows the formation of walkable
      * regions that will flow over low lying objects such as curbs, and up
@@ -406,6 +479,32 @@ public class RecastBuilder {
     }
 
     /**
+     * Marks spans that are ledges as not-walkable.
+     *
+     * A ledge is a span with one or more neighbors whose maximum is further
+     * away than walkableClimb from the current span's maximum. This method
+     * removes the impact of the overestimation of conservative voxelization so
+     * the resulting mesh will not have regions hanging in the air over ledges.
+     * A span is a ledge if:
+     * <code>
+     *  FastMath.abs(currentSpan.getMaxSpan() - neighborSpan.getMaxSpan) > walkableClimb
+     * </code>
+     *
+     * @param ctx The build context to use during the operation.
+     * @param config Config must have defined walkableHeight and walkableClimb
+     * @param solid A fully built heightfield. (All spans have been added.)
+     * @see
+     * RecastBuilder#filterLedgeSpans(com.jme3.ai.navigation.recast.Context,
+     * int, int, com.jme3.ai.navigation.recast.Heightfield)
+     */
+    public static void filterLedgeSpans(Context ctx, Config config, Heightfield solid) {
+        if (config == null) {
+            throw new NullPointerException("Config must have defined walkableHeight and walkableClimb");
+        }
+        filterLedgeSpans(ctx, config.getWalkableHeight(), config.getWalkableClimb(), solid);
+    }
+
+    /**
      * Marks walkable spans as not walkable if the clearence above the span is
      * less than the specified height. For this filter, the clearance above the
      * span is the distance from the span's maximum to the next higher span's
@@ -446,6 +545,23 @@ public class RecastBuilder {
      */
     public static boolean buildCompactHeightfield(Context ctx, int walkableHeight, int walkableClimb, Heightfield hf, CompactHeightfield chf) {
         return RecastJNI.rcBuildCompactHeightfield(Context.getCPtr(ctx), ctx, walkableHeight, walkableClimb, Heightfield.getCPtr(hf), hf, CompactHeightfield.getCPtr(chf), chf);
+    }
+
+    /**
+     * Builds a compact heightfield representing open space, from a heightfield
+     * representing solid space.
+     *
+     * @param ctx The build context to use during the operation.
+     * @param config Config must have defined walkableHeight and walkableClimb
+     * @param hf The heightfield to be compacted
+     * @param chf The resulting compact heightfield. (Must be pre-allocated.)
+     * @return True if the operation completed successfully.
+     */
+    public static boolean buildCompactHeightfield(Context ctx, Config config, Heightfield hf, CompactHeightfield chf) {
+        if (config == null) {
+            throw new NullPointerException("Config must have defined walkableHeight and walkableClimb");
+        }
+        return buildCompactHeightfield(ctx, config.getWalkableHeight(), config.getWalkableClimb(), hf, chf);
     }
 
     /**
@@ -631,6 +747,42 @@ public class RecastBuilder {
     }
 
     /**
+     * Builds region data for the heightfield using watershed partitioning.
+     * Non-null regions will consist of connected, non-overlapping walkable
+     * spans that form a single contour. Contours will form simple polygons.
+     *
+     * If multiple regions form an area that is smaller than minRegionArea, then
+     * all spans will be re-assigned to the zero (null) region.
+     *
+     * Watershed partitioning can result in smaller than necessary regions,
+     * especially in diagonal corridors. mergeRegionArea helps reduce
+     * unecessarily small regions. The region data will be available via the
+     * CompactHeightfield.maxRegions and CompactSpan.regionID fields.
+     *
+     * @see CompactHeightfield#getMaxRegions()
+     * @see CompactSpan#getRegionID()
+     *
+     * The distance field must be created using buildDistanceField before
+     * attempting to build regions.
+     * @see
+     * RecastBuilder#buildDistanceField(com.jme3.ai.navigation.recast.Context,
+     * com.jme3.ai.navigation.recast.CompactHeightfield)
+     * @param ctx The build context to use during the operation.
+     * @param chf A populated compact heightfield.
+     * @param config Config must have defined borderSize, minRegionArea and
+     * mergeRegionArea.
+     * @return True if the operation completed successfully.
+     * @see RecastBuilder#buildRegions(com.jme3.ai.navigation.recast.Context,
+     * com.jme3.ai.navigation.recast.CompactHeightfield, int, int, int)
+     */
+    public static boolean buildRegions(Context ctx, CompactHeightfield chf, Config config) {
+        if (config == null) {
+            throw new NullPointerException("Config must have defined borderSize, minRegionArea and mergeRegionArea");
+        }
+        return buildRegions(ctx, chf, config.getBorderSize(), config.getMinRegionArea(), config.getMergeRegionArea());
+    }
+
+    /**
      * Builds region data for the heightfield using simple monotone
      * partitioning. Non-null regions will consist of connected, non-overlapping
      * walkable spans that form a single contour. Contours will form simple
@@ -667,6 +819,44 @@ public class RecastBuilder {
      */
     public static boolean buildRegionsMonotone(Context ctx, CompactHeightfield chf, int borderSize, int minRegionArea, int mergeRegionArea) {
         return RecastJNI.rcBuildRegionsMonotone(Context.getCPtr(ctx), ctx, CompactHeightfield.getCPtr(chf), chf, borderSize, minRegionArea, mergeRegionArea);
+    }
+
+    /**
+     * Builds region data for the heightfield using simple monotone
+     * partitioning. Non-null regions will consist of connected, non-overlapping
+     * walkable spans that form a single contour. Contours will form simple
+     * polygons.
+     *
+     * If multiple regions form an area that is smaller than minRegionArea, then
+     * all spans will be re-assigned to the zero (null) region.
+     *
+     * Partitioning can result in smaller than necessary regions.
+     * mergeRegionArea helps reduce unecessarily small regions.The region data
+     * will be available via the CompactHeightfield.maxRegions and
+     * CompactSpan.regionID fields.
+     *
+     * @see CompactHeightfield#getMaxRegions()
+     * @see CompactSpan#getRegionID()
+     *
+     * The distance field must be created using buildDistanceField before
+     * attempting to build regions.
+     * @see
+     * RecastBuilder#buildDistanceField(com.jme3.ai.navigation.recast.Context,
+     * com.jme3.ai.navigation.recast.CompactHeightfield)
+     * @param ctx The build context to use during the operation.
+     * @param chf A populated compact heightfield.
+     * @param config Config must have defined borderSize, minRegionArea and
+     * mergeRegionArea.
+     * @return True if the operation completed successfully.
+     * @see
+     * RecastBuilder#buildRegionsMonotone(com.jme3.ai.navigation.recast.Context,
+     * com.jme3.ai.navigation.recast.CompactHeightfield, int, int, int)
+     */
+    public static boolean buildRegionsMonotone(Context ctx, CompactHeightfield chf, Config config) {
+        if (config == null) {
+            throw new NullPointerException("Config must have defined borderSize, minRegionArea and mergeRegionArea");
+        }
+        return buildRegionsMonotone(ctx, chf, config.getBorderSize(), config.getMinRegionArea(), config.getMergeRegionArea());
     }
 
     /**
@@ -773,8 +963,8 @@ public class RecastBuilder {
 
     /**
      * Builds a polygon mesh from the provided contours. If the mesh data is to
-     * be used to construct a DetourBuilder navigation mesh, then the upper limit must
-     * be retricted to smaller than DT_VERTS_PER_POLYGON.
+     * be used to construct a DetourBuilder navigation mesh, then the upper
+     * limit must be retricted to smaller than DT_VERTS_PER_POLYGON.
      *
      * @see DetourBuilder#DT_VERTS_PER_POLYGON()
      *
@@ -819,6 +1009,24 @@ public class RecastBuilder {
      */
     public static boolean buildPolyMeshDetail(Context ctx, PolyMesh mesh, CompactHeightfield chf, float sampleDist, float sampleMaxError, PolyMeshDetail dmesh) {
         return RecastJNI.rcBuildPolyMeshDetail(Context.getCPtr(ctx), ctx, PolyMesh.getCPtr(mesh), mesh, CompactHeightfield.getCPtr(chf), chf, sampleDist, sampleMaxError, PolyMeshDetail.getCPtr(dmesh), dmesh);
+    }
+
+    /**
+     * Builds a detail mesh from the provided polygon mesh.
+     *
+     * @param ctx The build context to use during the operation.
+     * @param mesh A fully built polygon mesh.
+     * @param chf The compact heightfield used to build the polygon mesh.
+     * @param config Config must have defined detailSampleDistance and
+     * detailSampleMaxError
+     * @param dmesh The resulting detail mesh. (Must be pre-allocated.)
+     * @return True if the operation completed successfully.
+     */
+    public static boolean buildPolyMeshDetail(Context ctx, PolyMesh mesh, CompactHeightfield chf, Config config, PolyMeshDetail dmesh) {
+        if (config == null) {
+            throw new NullPointerException("Config must have defined detailSampleDistance and detailSampleMaxError");
+        }
+        return buildPolyMeshDetail(ctx, mesh, chf, config.getDetailSampleDistance(), config.getDetailSampleMaxError(), dmesh);
     }
 
     /**
