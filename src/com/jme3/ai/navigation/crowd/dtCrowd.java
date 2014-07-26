@@ -1,6 +1,5 @@
 package com.jme3.ai.navigation.crowd;
 
-
 import com.jme3.ai.navigation.detour.QueryFilter;
 import com.jme3.ai.navigation.detour.NavMeshQuery;
 import com.jme3.ai.navigation.detour.NavMesh;
@@ -15,130 +14,129 @@ import com.jme3.ai.navigation.utils.RecastJNI;
  * Do not make changes to this file unless you know what you are doing--modify
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
-
-
 public class dtCrowd {
-  private long swigCPtr;
-  protected boolean swigCMemOwn;
 
-  public dtCrowd(long cPtr, boolean cMemoryOwn) {
-    swigCMemOwn = cMemoryOwn;
-    swigCPtr = cPtr;
-  }
+    private long swigCPtr;
+    protected boolean swigCMemOwn;
 
-  public static long getCPtr(dtCrowd obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
-  }
-
-  protected void finalize() {
-    delete();
-  }
-
-  public synchronized void delete() {
-    if (swigCPtr != 0) {
-      if (swigCMemOwn) {
-        swigCMemOwn = false;
-        RecastJNI.delete_dtCrowd(swigCPtr);
-      }
-      swigCPtr = 0;
+    public dtCrowd() {
+        swigCPtr = RecastJNI.dtAllocCrowd();
+        swigCMemOwn = (swigCPtr == 0) ? false : true;
     }
-  }
+    
+    public dtCrowd(long cPtr, boolean cMemoryOwn) {
+        swigCMemOwn = cMemoryOwn;
+        swigCPtr = cPtr;
+    }
 
-  public dtCrowd() {
-    this(RecastJNI.new_dtCrowd(), true);
-  }
+    public static long getCPtr(dtCrowd obj) {
+        return (obj == null) ? 0 : obj.swigCPtr;
+    }
 
-  public boolean init(int maxAgents, float maxAgentRadius, NavMesh nav) {
-    return RecastJNI.dtCrowd_init(swigCPtr, this, maxAgents, maxAgentRadius, NavMesh.getCPtr(nav), nav);
-  }
+    protected void finalize() {
+        delete();
+    }
 
-  public void setObstacleAvoidanceParams(int idx, dtObstacleAvoidanceParams params) {
-    RecastJNI.dtCrowd_setObstacleAvoidanceParams(swigCPtr, this, idx, dtObstacleAvoidanceParams.getCPtr(params), params);
-  }
+    public synchronized void delete() {
+        if (swigCPtr != 0) {
+            if (swigCMemOwn) {
+                swigCMemOwn = false;
+                RecastJNI.dtFreeCrowd(swigCPtr, this);
+            }
+            swigCPtr = 0;
+        }
+    }
 
-  public dtObstacleAvoidanceParams getObstacleAvoidanceParams(int idx) {
-    long cPtr = RecastJNI.dtCrowd_getObstacleAvoidanceParams(swigCPtr, this, idx);
-    return (cPtr == 0) ? null : new dtObstacleAvoidanceParams(cPtr, false);
-  }
+    public boolean init(int maxAgents, float maxAgentRadius, NavMesh nav) {
+        return RecastJNI.dtCrowd_init(swigCPtr, this, maxAgents, maxAgentRadius, NavMesh.getCPtr(nav), nav);
+    }
 
-  public dtCrowdAgent getAgent(int idx) {
-    long cPtr = RecastJNI.dtCrowd_getAgent(swigCPtr, this, idx);
-    return (cPtr == 0) ? null : new dtCrowdAgent(cPtr, false);
-  }
+    public void setObstacleAvoidanceParams(int idx, dtObstacleAvoidanceParams params) {
+        RecastJNI.dtCrowd_setObstacleAvoidanceParams(swigCPtr, this, idx, dtObstacleAvoidanceParams.getCPtr(params), params);
+    }
 
-  public dtCrowdAgent getEditableAgent(int idx) {
-    long cPtr = RecastJNI.dtCrowd_getEditableAgent(swigCPtr, this, idx);
-    return (cPtr == 0) ? null : new dtCrowdAgent(cPtr, false);
-  }
+    public dtObstacleAvoidanceParams getObstacleAvoidanceParams(int idx) {
+        long cPtr = RecastJNI.dtCrowd_getObstacleAvoidanceParams(swigCPtr, this, idx);
+        return (cPtr == 0) ? null : new dtObstacleAvoidanceParams(cPtr, false);
+    }
 
-  public int getAgentCount() {
-    return RecastJNI.dtCrowd_getAgentCount(swigCPtr, this);
-  }
+    public dtCrowdAgent getAgent(int idx) {
+        long cPtr = RecastJNI.dtCrowd_getAgent(swigCPtr, this, idx);
+        return (cPtr == 0) ? null : new dtCrowdAgent(cPtr, false);
+    }
 
-  public int addAgent(SWIGTYPE_p_float pos, dtCrowdAgentParams params) {
-    return RecastJNI.dtCrowd_addAgent(swigCPtr, this, SWIGTYPE_p_float.getCPtr(pos), dtCrowdAgentParams.getCPtr(params), params);
-  }
+    public dtCrowdAgent getEditableAgent(int idx) {
+        long cPtr = RecastJNI.dtCrowd_getEditableAgent(swigCPtr, this, idx);
+        return (cPtr == 0) ? null : new dtCrowdAgent(cPtr, false);
+    }
 
-  public void updateAgentParameters(int idx, dtCrowdAgentParams params) {
-    RecastJNI.dtCrowd_updateAgentParameters(swigCPtr, this, idx, dtCrowdAgentParams.getCPtr(params), params);
-  }
+    public int getAgentCount() {
+        return RecastJNI.dtCrowd_getAgentCount(swigCPtr, this);
+    }
 
-  public void removeAgent(int idx) {
-    RecastJNI.dtCrowd_removeAgent(swigCPtr, this, idx);
-  }
+    public int addAgent(SWIGTYPE_p_float pos, dtCrowdAgentParams params) {
+        return RecastJNI.dtCrowd_addAgent(swigCPtr, this, SWIGTYPE_p_float.getCPtr(pos), dtCrowdAgentParams.getCPtr(params), params);
+    }
 
-  public boolean requestMoveTarget(int idx, long ref, SWIGTYPE_p_float pos) {
-    return RecastJNI.dtCrowd_requestMoveTarget(swigCPtr, this, idx, ref, SWIGTYPE_p_float.getCPtr(pos));
-  }
+    public void updateAgentParameters(int idx, dtCrowdAgentParams params) {
+        RecastJNI.dtCrowd_updateAgentParameters(swigCPtr, this, idx, dtCrowdAgentParams.getCPtr(params), params);
+    }
 
-  public boolean requestMoveVelocity(int idx, SWIGTYPE_p_float vel) {
-    return RecastJNI.dtCrowd_requestMoveVelocity(swigCPtr, this, idx, SWIGTYPE_p_float.getCPtr(vel));
-  }
+    public void removeAgent(int idx) {
+        RecastJNI.dtCrowd_removeAgent(swigCPtr, this, idx);
+    }
 
-  public boolean resetMoveTarget(int idx) {
-    return RecastJNI.dtCrowd_resetMoveTarget(swigCPtr, this, idx);
-  }
+    public boolean requestMoveTarget(int idx, long ref, SWIGTYPE_p_float pos) {
+        return RecastJNI.dtCrowd_requestMoveTarget(swigCPtr, this, idx, ref, SWIGTYPE_p_float.getCPtr(pos));
+    }
 
-  public int getActiveAgents(SWIGTYPE_p_p_dtCrowdAgent agents, int maxAgents) {
-    return RecastJNI.dtCrowd_getActiveAgents(swigCPtr, this, SWIGTYPE_p_p_dtCrowdAgent.getCPtr(agents), maxAgents);
-  }
+    public boolean requestMoveVelocity(int idx, SWIGTYPE_p_float vel) {
+        return RecastJNI.dtCrowd_requestMoveVelocity(swigCPtr, this, idx, SWIGTYPE_p_float.getCPtr(vel));
+    }
 
-  public void update(float dt, dtCrowdAgentDebugInfo debug) {
-    RecastJNI.dtCrowd_update(swigCPtr, this, dt, dtCrowdAgentDebugInfo.getCPtr(debug), debug);
-  }
+    public boolean resetMoveTarget(int idx) {
+        return RecastJNI.dtCrowd_resetMoveTarget(swigCPtr, this, idx);
+    }
 
-  public QueryFilter getFilter(int i) {
-    long cPtr = RecastJNI.dtCrowd_getFilter(swigCPtr, this, i);
-    return (cPtr == 0) ? null : new QueryFilter(cPtr, false);
-  }
+    public int getActiveAgents(SWIGTYPE_p_p_dtCrowdAgent agents, int maxAgents) {
+        return RecastJNI.dtCrowd_getActiveAgents(swigCPtr, this, SWIGTYPE_p_p_dtCrowdAgent.getCPtr(agents), maxAgents);
+    }
 
-  public QueryFilter getEditableFilter(int i) {
-    long cPtr = RecastJNI.dtCrowd_getEditableFilter(swigCPtr, this, i);
-    return (cPtr == 0) ? null : new QueryFilter(cPtr, false);
-  }
+    public void update(float dt, dtCrowdAgentDebugInfo debug) {
+        RecastJNI.dtCrowd_update(swigCPtr, this, dt, dtCrowdAgentDebugInfo.getCPtr(debug), debug);
+    }
 
-  public SWIGTYPE_p_float getQueryExtents() {
-    long cPtr = RecastJNI.dtCrowd_getQueryExtents(swigCPtr, this);
-    return (cPtr == 0) ? null : new SWIGTYPE_p_float(cPtr, false);
-  }
+    public QueryFilter getFilter(int i) {
+        long cPtr = RecastJNI.dtCrowd_getFilter(swigCPtr, this, i);
+        return (cPtr == 0) ? null : new QueryFilter(cPtr, false);
+    }
 
-  public int getVelocitySampleCount() {
-    return RecastJNI.dtCrowd_getVelocitySampleCount(swigCPtr, this);
-  }
+    public QueryFilter getEditableFilter(int i) {
+        long cPtr = RecastJNI.dtCrowd_getEditableFilter(swigCPtr, this, i);
+        return (cPtr == 0) ? null : new QueryFilter(cPtr, false);
+    }
 
-  public dtProximityGrid getGrid() {
-    long cPtr = RecastJNI.dtCrowd_getGrid(swigCPtr, this);
-    return (cPtr == 0) ? null : new dtProximityGrid(cPtr, false);
-  }
+    public SWIGTYPE_p_float getQueryExtents() {
+        long cPtr = RecastJNI.dtCrowd_getQueryExtents(swigCPtr, this);
+        return (cPtr == 0) ? null : new SWIGTYPE_p_float(cPtr, false);
+    }
 
-  public dtPathQueue getPathQueue() {
-    long cPtr = RecastJNI.dtCrowd_getPathQueue(swigCPtr, this);
-    return (cPtr == 0) ? null : new dtPathQueue(cPtr, false);
-  }
+    public int getVelocitySampleCount() {
+        return RecastJNI.dtCrowd_getVelocitySampleCount(swigCPtr, this);
+    }
 
-  public NavMeshQuery getNavMeshQuery() {
-    long cPtr = RecastJNI.dtCrowd_getNavMeshQuery(swigCPtr, this);
-    return (cPtr == 0) ? null : new NavMeshQuery(cPtr, false);
-  }
+    public dtProximityGrid getGrid() {
+        long cPtr = RecastJNI.dtCrowd_getGrid(swigCPtr, this);
+        return (cPtr == 0) ? null : new dtProximityGrid(cPtr, false);
+    }
 
+    public dtPathQueue getPathQueue() {
+        long cPtr = RecastJNI.dtCrowd_getPathQueue(swigCPtr, this);
+        return (cPtr == 0) ? null : new dtPathQueue(cPtr, false);
+    }
+
+    public NavMeshQuery getNavMeshQuery() {
+        long cPtr = RecastJNI.dtCrowd_getNavMeshQuery(swigCPtr, this);
+        return (cPtr == 0) ? null : new NavMeshQuery(cPtr, false);
+    }
 }

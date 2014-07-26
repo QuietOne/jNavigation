@@ -1,6 +1,5 @@
 package com.jme3.ai.navigation.crowd;
 
-
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_float;
 import com.jme3.ai.navigation.utils.RecastJNI;
 
@@ -11,86 +10,87 @@ import com.jme3.ai.navigation.utils.RecastJNI;
  * Do not make changes to this file unless you know what you are doing--modify
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
-
-
 public class dtObstacleAvoidanceDebugData {
-  private long swigCPtr;
-  protected boolean swigCMemOwn;
 
-  public dtObstacleAvoidanceDebugData(long cPtr, boolean cMemoryOwn) {
-    swigCMemOwn = cMemoryOwn;
-    swigCPtr = cPtr;
-  }
+    private long swigCPtr;
+    protected boolean swigCMemOwn;
 
-  public static long getCPtr(dtObstacleAvoidanceDebugData obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
-  }
-
-  protected void finalize() {
-    delete();
-  }
-
-  public synchronized void delete() {
-    if (swigCPtr != 0) {
-      if (swigCMemOwn) {
-        swigCMemOwn = false;
-        RecastJNI.delete_dtObstacleAvoidanceDebugData(swigCPtr);
-      }
-      swigCPtr = 0;
+    public dtObstacleAvoidanceDebugData() {
+        swigCPtr = RecastJNI.dtAllocObstacleAvoidanceDebugData();
+        swigCMemOwn = (swigCPtr == 0) ? false : true;
     }
-  }
+    
+    public dtObstacleAvoidanceDebugData(long cPtr, boolean cMemoryOwn) {
+        swigCMemOwn = cMemoryOwn;
+        swigCPtr = cPtr;
+    }
 
-  public dtObstacleAvoidanceDebugData() {
-    this(RecastJNI.new_dtObstacleAvoidanceDebugData(), true);
-  }
+    public static long getCPtr(dtObstacleAvoidanceDebugData obj) {
+        return (obj == null) ? 0 : obj.swigCPtr;
+    }
 
-  public boolean init(int maxSamples) {
-    return RecastJNI.dtObstacleAvoidanceDebugData_init(swigCPtr, this, maxSamples);
-  }
+    protected void finalize() {
+        delete();
+    }
 
-  public void reset() {
-    RecastJNI.dtObstacleAvoidanceDebugData_reset(swigCPtr, this);
-  }
+    public synchronized void delete() {
+        if (swigCPtr != 0) {
+            if (swigCMemOwn) {
+                swigCMemOwn = false;
+                RecastJNI.dtFreeObstacleAvoidanceDebugData(swigCPtr, this);
+            }
+            swigCPtr = 0;
+        }
+    }
 
-  public void addSample(SWIGTYPE_p_float vel, float ssize, float pen, float vpen, float vcpen, float spen, float tpen) {
-    RecastJNI.dtObstacleAvoidanceDebugData_addSample(swigCPtr, this, SWIGTYPE_p_float.getCPtr(vel), ssize, pen, vpen, vcpen, spen, tpen);
-  }
+    
 
-  public void normalizeSamples() {
-    RecastJNI.dtObstacleAvoidanceDebugData_normalizeSamples(swigCPtr, this);
-  }
+    public boolean init(int maxSamples) {
+        return RecastJNI.dtObstacleAvoidanceDebugData_init(swigCPtr, this, maxSamples);
+    }
 
-  public int getSampleCount() {
-    return RecastJNI.dtObstacleAvoidanceDebugData_getSampleCount(swigCPtr, this);
-  }
+    public void reset() {
+        RecastJNI.dtObstacleAvoidanceDebugData_reset(swigCPtr, this);
+    }
 
-  public SWIGTYPE_p_float getSampleVelocity(int i) {
-    long cPtr = RecastJNI.dtObstacleAvoidanceDebugData_getSampleVelocity(swigCPtr, this, i);
-    return (cPtr == 0) ? null : new SWIGTYPE_p_float(cPtr, false);
-  }
+    public void addSample(SWIGTYPE_p_float vel, float ssize, float pen, float vpen, float vcpen, float spen, float tpen) {
+        RecastJNI.dtObstacleAvoidanceDebugData_addSample(swigCPtr, this, SWIGTYPE_p_float.getCPtr(vel), ssize, pen, vpen, vcpen, spen, tpen);
+    }
 
-  public float getSampleSize(int i) {
-    return RecastJNI.dtObstacleAvoidanceDebugData_getSampleSize(swigCPtr, this, i);
-  }
+    public void normalizeSamples() {
+        RecastJNI.dtObstacleAvoidanceDebugData_normalizeSamples(swigCPtr, this);
+    }
 
-  public float getSamplePenalty(int i) {
-    return RecastJNI.dtObstacleAvoidanceDebugData_getSamplePenalty(swigCPtr, this, i);
-  }
+    public int getSampleCount() {
+        return RecastJNI.dtObstacleAvoidanceDebugData_getSampleCount(swigCPtr, this);
+    }
 
-  public float getSampleDesiredVelocityPenalty(int i) {
-    return RecastJNI.dtObstacleAvoidanceDebugData_getSampleDesiredVelocityPenalty(swigCPtr, this, i);
-  }
+    public SWIGTYPE_p_float getSampleVelocity(int i) {
+        long cPtr = RecastJNI.dtObstacleAvoidanceDebugData_getSampleVelocity(swigCPtr, this, i);
+        return (cPtr == 0) ? null : new SWIGTYPE_p_float(cPtr, false);
+    }
 
-  public float getSampleCurrentVelocityPenalty(int i) {
-    return RecastJNI.dtObstacleAvoidanceDebugData_getSampleCurrentVelocityPenalty(swigCPtr, this, i);
-  }
+    public float getSampleSize(int i) {
+        return RecastJNI.dtObstacleAvoidanceDebugData_getSampleSize(swigCPtr, this, i);
+    }
 
-  public float getSamplePreferredSidePenalty(int i) {
-    return RecastJNI.dtObstacleAvoidanceDebugData_getSamplePreferredSidePenalty(swigCPtr, this, i);
-  }
+    public float getSamplePenalty(int i) {
+        return RecastJNI.dtObstacleAvoidanceDebugData_getSamplePenalty(swigCPtr, this, i);
+    }
 
-  public float getSampleCollisionTimePenalty(int i) {
-    return RecastJNI.dtObstacleAvoidanceDebugData_getSampleCollisionTimePenalty(swigCPtr, this, i);
-  }
+    public float getSampleDesiredVelocityPenalty(int i) {
+        return RecastJNI.dtObstacleAvoidanceDebugData_getSampleDesiredVelocityPenalty(swigCPtr, this, i);
+    }
 
+    public float getSampleCurrentVelocityPenalty(int i) {
+        return RecastJNI.dtObstacleAvoidanceDebugData_getSampleCurrentVelocityPenalty(swigCPtr, this, i);
+    }
+
+    public float getSamplePreferredSidePenalty(int i) {
+        return RecastJNI.dtObstacleAvoidanceDebugData_getSamplePreferredSidePenalty(swigCPtr, this, i);
+    }
+
+    public float getSampleCollisionTimePenalty(int i) {
+        return RecastJNI.dtObstacleAvoidanceDebugData_getSampleCollisionTimePenalty(swigCPtr, this, i);
+    }
 }

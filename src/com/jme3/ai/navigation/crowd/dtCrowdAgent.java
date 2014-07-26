@@ -1,6 +1,7 @@
 package com.jme3.ai.navigation.crowd;
 
 
+import com.jme3.ai.navigation.detour.dtPathCorridor;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_float;
 import com.jme3.ai.navigation.utils.RecastJNI;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_char;
