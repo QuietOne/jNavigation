@@ -63,7 +63,7 @@ public class RecastBuilder {
         return RecastJNI.RC_NULL_AREA_get();
     }
 
-    public static short RC_WALKABLE_AREA() {
+    public static short WALKABLE_AREA() {
         return RecastJNI.RC_WALKABLE_AREA_get();
     }
 
@@ -282,9 +282,9 @@ public class RecastBuilder {
      * - not tested (not sure about area.length)
      *
      * Sets the area id of all triangles with a slope below the specified value
-     * to RC_WALKABLE_AREA.
+     * to WALKABLE_AREA.
      *
-     * @see RecastBuilder#RC_WALKABLE_AREA()
+     * @see RecastBuilder#WALKABLE_AREA()
      * @param ctx The build context to use during the operation.
      * @param walkableSlopeAngle The maximum slope that is considered walkable.
      * [Limits: 90> value >= 0] [Units: Degrees]
@@ -304,9 +304,9 @@ public class RecastBuilder {
 
     /**
      * Sets the area id of all triangles with a slope below the specified value
-     * to RC_WALKABLE_AREA.
+     * to WALKABLE_AREA.
      *
-     * @see RecastBuilder#RC_WALKABLE_AREA()
+     * @see RecastBuilder#WALKABLE_AREA()
      * @param ctx The build context to use during the operation.
      * @param walkableSlopeAngle The maximum slope that is considered walkable.
      * @param mesh
@@ -360,8 +360,8 @@ public class RecastBuilder {
      * RC_SPAN_MAX_HEIGHT] [Units: vx]
      * @see RecastBuilder#RC_SPAN_HEIGHT_BITS()
      * @param area The area id of th e span. [Limit: smaller than
-     * RC_WALKABLE_AREA)
-     * @see RecastBuilder#RC_WALKABLE_AREA()
+     * WALKABLE_AREA)
+     * @see RecastBuilder#WALKABLE_AREA()
      * @param flagMerge Thr The merge theshold. [Limit: >= 0] [Units: vx]
      */
     public static void addSpan(Context ctx, Heightfield hf, int x, int y, int minSpanLimit, int maxSpanLimit, short area, int flagMergeThr) {
@@ -377,7 +377,7 @@ public class RecastBuilder {
      * @param vertex1 Triangle vertex 1
      * @param vertex2 Triangle vertex 2
      * @param area The area id of the triangle. [Limit: smaller
-     * RC_WALKABLE_AREA]
+     * WALKABLE_AREA]
      * @param solid An initialized heightfield.
      * @param flagMergeThr The distance where the walkable flag is favored over
      * the non-walkable flag. [Limit: >= 0] [Units: vx]
@@ -397,7 +397,7 @@ public class RecastBuilder {
      * @param vertices The vertices.
      * @param triangles The triangle indices. [(vertA, vertB, vertC)]
      * @param areas The area id's of the triangles. [Limit: smaller than
-     * RC_WALKABLE_AREA] Size must be the same as for triangles.
+     * WALKABLE_AREA] Size must be the same as for triangles.
      * @param solid An initialized heightfield.
      * @param flagMergeThr The distance where the walkable flag is favored over
      * the non-walkable flag. [Limit: >= 0] [Units: vx]
@@ -419,7 +419,7 @@ public class RecastBuilder {
      * @param ctx The build context to use during the operation.
      * @param mesh
      * @param areas The area id's of the triangles. [Limit: smaller than
-     * RC_WALKABLE_AREA] Size must be the same as for triangles.
+     * WALKABLE_AREA] Size must be the same as for triangles.
      * @param solid An initialized heightfield.
      * @param flagMergeThr The distance where the walkable flag is favored over
      * the non-walkable flag. [Limit: >= 0] [Units: vx]
@@ -616,9 +616,9 @@ public class RecastBuilder {
      * @param minBounds The minimum of the bounding box.
      * @param maxBounds The maximum of the bounding box.
      * @param areaId The area id to apply. [Limit: smaller than
-     * RC_WALKABLE_AREA]
+     * WALKABLE_AREA]
      * @param chf A populated compact heightfield.
-     * @see RecastBuilder#RC_WALKABLE_AREA()
+     * @see RecastBuilder#WALKABLE_AREA()
      */
     public static void markBoxArea(Context ctx, Vector3f minBounds, Vector3f maxBounds, short areaId, CompactHeightfield chf) {
         SWIGTYPE_p_float bmin = Converter.convertToSWIGTYPE_p_float(minBounds);
@@ -638,7 +638,7 @@ public class RecastBuilder {
      * @param minHeight The height of the base of the polygon.
      * @param maxHeight The height of the top of the polygon.
      * @param areaId The area id to apply. [Limit: smaller than
-     * RC_WALKABLE_AREA]
+     * WALKABLE_AREA]
      * @param chf A populated compact heightfield.
      */
     public static void markConvexPolyArea(Context ctx, Vector3f[] vertices, float minHeight, float maxHeight, short areaId, CompactHeightfield chf) {
@@ -675,7 +675,7 @@ public class RecastBuilder {
      * @param radius The radius of the cylinder.
      * @param height The height of the cylinder.
      * @param areaId The area id to apply. [Limit: smaller than
-     * RC_WALKABLE_AREA]
+     * WALKABLE_AREA]
      * @param chf A populated compact heightfield.
      */
     public static void markCylinderArea(Context ctx, Vector3f position, float radius, float height, short areaId, CompactHeightfield chf) {

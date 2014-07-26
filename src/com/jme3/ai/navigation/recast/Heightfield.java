@@ -1,18 +1,9 @@
 package com.jme3.ai.navigation.recast;
 
 import com.jme3.ai.navigation.utils.Converter;
-import com.jme3.ai.navigation.utils.GraphicHelper;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_float;
 import com.jme3.ai.navigation.utils.RecastJNI;
 import com.jme3.math.Vector3f;
-import com.jme3.scene.Mesh;
-import com.jme3.scene.Node;
-import com.jme3.scene.VertexBuffer;
-import com.jme3.scene.shape.Box;
-import com.jme3.util.BufferUtils;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * A dynamic heightfield representing obstructed space.
@@ -199,49 +190,51 @@ public class Heightfield {
         }
         return spans;
     }
-
     /**
      * Visual representation of solid heightfield. Created for debugging
      * purposes.
      *
      * @return
      */
-    public Mesh drawHeightfieldSolid() {
-        Mesh mesh = new Mesh();
-        mesh.setMode(Mesh.Mode.Lines);
+    /*public Mesh drawHeightfieldSolid() {
+     Mesh mesh = new Mesh();
+     mesh.setMode(Mesh.Mode.Lines);
 
-        Vector3f origin = getMinBounds();
-        float cellSize = getCellSize();
-        float cellHeight = getCellHeight();
-        int width = getWidth();
-        int height = getHeight();
+     Vector3f origin = getMinBounds();
+     float cellSize = getCellSize();
+     float cellHeight = getCellHeight();
+     int width = getWidth();
+     int height = getHeight();
 
-        List<int[]> indices = new LinkedList<>();
-        List<Vector3f[]> vertices = new LinkedList<>();
-
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                float fx = origin.getX() + x * cellSize;
-                float fz = origin.getZ() + y * cellSize;
-                Span s = getSpans()[x + y * width];
-                while (s != null) {
-                    Vector3f min = new Vector3f(fx, origin.getY() + s.getMinSpanLimit() * cellHeight, fz);
-                    Vector3f max = new Vector3f(fx + cellSize, origin.getY() + s.getMaxSpanLimit() * cellHeight, fz + cellSize);
+     List<int[]> indices = new LinkedList<>();
+     List<Vector3f[]> vertices = new LinkedList<>();
+     System.out.println(height);
+     System.out.println(width);
+     for (int y = 0; y < height; y++) {
+     for (int x = 0; x < width; x++) {
+     float fx = origin.getX() + x * cellSize;
+     float fz = origin.getZ() + y * cellSize;
+     Span s = getSpans()[x + y * width];
+     int i = 0;
+     while (s != null) {
+     Vector3f min = new Vector3f(fx, origin.getY() + s.getMinSpanLimit() * cellHeight, fz);
+     Vector3f max = new Vector3f(fx + cellSize, origin.getY() + s.getMaxSpanLimit() * cellHeight, fz + cellSize);
                     Mesh mesh1 = GraphicHelper.lineBox(min, max);
-                    indices.add(GraphicHelper.getIndices(mesh1));
-                    vertices.add(GraphicHelper.getVertices(mesh1));
-                    s = s.getNext();
-                }
-            }
-        }
-        for (Vector3f[] vector3fs : vertices) {
-            mesh.setBuffer(VertexBuffer.Type.Position, 3, BufferUtils.createFloatBuffer(vector3fs));
-        }
-        for (int[] ints : indices) {
-            mesh.setBuffer(VertexBuffer.Type.Index, 2, BufferUtils.createIntBuffer(ints));
-        }
-        mesh.updateCounts();
-        mesh.updateBound();
-        return mesh;
-    }
+     indices.add(GraphicHelper.getIndices(mesh1));
+     vertices.add(GraphicHelper.getVertices(mesh1));
+     s = s.getNext();
+     i++;
+     }
+     }
+     }
+     for (Vector3f[] vector3fs : vertices) {
+     mesh.setBuffer(VertexBuffer.Type.Position, 3, BufferUtils.createFloatBuffer(vector3fs));
+     }
+     for (int[] ints : indices) {
+     mesh.setBuffer(VertexBuffer.Type.Index, 2, BufferUtils.createIntBuffer(ints));
+     }
+     mesh.updateCounts();
+     mesh.updateBound();
+     return mesh;
+     }*/
 }

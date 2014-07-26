@@ -435,7 +435,7 @@ public class Config {
      * during the contour to polygon conversion process. [Limit: >= 3]
      * @see DetourBuilder#DT_VERTS_PER_POLYGON()
      */
-    public int getMaxVerticesPerPoly() {
+    public int getMaxVertsPerPoly() {
         return RecastJNI.rcConfig_maxVertsPerPoly_get(swigCPtr, this);
     }
 
