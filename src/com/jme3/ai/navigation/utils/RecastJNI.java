@@ -16,7 +16,7 @@ import com.jme3.ai.navigation.crowd.dtObstacleAvoidanceQuery;
 import com.jme3.ai.navigation.crowd.dtObstacleCircle;
 import com.jme3.ai.navigation.crowd.dtObstacleSegment;
 import com.jme3.ai.navigation.detour.OffMeshConnection;
-import com.jme3.ai.navigation.crowd.dtPathCorridor;
+import com.jme3.ai.navigation.detour.dtPathCorridor;
 import com.jme3.ai.navigation.detour.PolyDetail;
 import com.jme3.ai.navigation.crowd.dtProximityGrid;
 import com.jme3.ai.navigation.tilecache.TileCache;

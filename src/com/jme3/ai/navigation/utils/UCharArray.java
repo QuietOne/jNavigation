@@ -51,6 +51,11 @@ public class UCharArray {
         long cPtr = RecastJNI.UCharArray_cast(swigCPtr, this);
         return (cPtr == 0) ? null : new SWIGTYPE_p_unsigned_char(cPtr, false);
     }
+    
+    public SWIGTYPE_p_p_unsigned_char castDoublePointer() {
+        long cPtr = RecastJNI.UCharArray_cast(swigCPtr, this);
+        return (cPtr == 0) ? null : new SWIGTYPE_p_p_unsigned_char(cPtr, false);
+    }
 
     public static UCharArray fromPointer(SWIGTYPE_p_unsigned_char t) {
         long cPtr = RecastJNI.UCharArray_frompointer(SWIGTYPE_p_unsigned_char.getCPtr(t));
