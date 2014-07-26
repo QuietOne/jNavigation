@@ -1,5 +1,6 @@
 package com.jme3.ai.navigation.detour;
 
+import com.jme3.ai.navigation.recast.Config;
 import com.jme3.ai.navigation.recast.PolyMesh;
 import com.jme3.ai.navigation.recast.PolyMeshDetail;
 import com.jme3.ai.navigation.utils.Converter;
@@ -45,7 +46,7 @@ public class NavMeshCreateParams {
         this(RecastJNI.new_dtNavMeshCreateParams(), true);
     }
 
-    public NavMeshCreateParams(long cPtr, boolean cMemoryOwn) {
+    protected NavMeshCreateParams(long cPtr, boolean cMemoryOwn) {
         swigCMemOwn = cMemoryOwn;
         swigCPtr = cPtr;
     }
@@ -70,6 +71,53 @@ public class NavMeshCreateParams {
     }
 
     /**
+     * Get data from poly mesh that are needed to create params for navigation
+     * mesh.
+     *
+     * @param polyMesh
+     */
+    public void getData(PolyMesh polyMesh) {
+        setVertices(polyMesh.getVertices());
+        setVerticesCount(polyMesh.getNumberOfVertices());
+        setPolygons(polyMesh.getPolygons());
+        setPolygonAreas(polyMesh.getAreas());
+        setPolygonFlags(polyMesh.getFlags());
+        setPolygonCount(polyMesh.getNumberOfPolygons());
+        setNumberOfVerticesPerPolygon(polyMesh.getNumberOfVerticesPerPolygon());
+        setMaxBounds(polyMesh.getMaxBounds());
+        setMinBounds(polyMesh.getMinBounds());
+    }
+
+    /**
+     * Get data from poly mesh detail that are needed to create params for
+     * navigation mesh.
+     *
+     * @param detailMesh
+     */
+    public void getData(PolyMeshDetail detailMesh) {
+        setDetailMeshes(detailMesh.getMeshes());
+        setDetailVertices(detailMesh.getVertices());
+        setDetailVerticesCount(detailMesh.getNumberOfVertices());
+        setDetailTriangles(detailMesh.getTriangles());
+        setDetailTriangleCount(detailMesh.getNumberOfTriangles());
+    }
+
+    /**
+     * Get data from config that are needed to create params for navigation
+     * mesh.
+     *
+     * @param config
+     */
+    public void getData(Config config) {
+        setWalkableHeight(config.getWalkableHeight() * config.getCellHeight());
+        setWalkableClimb(config.getWalkableClimb() * config.getCellHeight());
+        setWalkableRadius(config.getWalkableRadius() * config.getCellSize());
+        setCellHeight(config.getCellHeight());
+        setCellSize(config.getCellSize());
+    }
+
+    /**
+     * Updates the number of vertices and verticesCount.
      *
      * @param vertices The polygon mesh vertices.
      */

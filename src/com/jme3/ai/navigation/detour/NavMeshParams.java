@@ -25,7 +25,7 @@ public class NavMeshParams {
         this(RecastJNI.new_dtNavMeshParams(), true);
     }
 
-    public NavMeshParams(long cPtr, boolean cMemoryOwn) {
+    protected NavMeshParams(long cPtr, boolean cMemoryOwn) {
         swigCMemOwn = cMemoryOwn;
         swigCPtr = cPtr;
     }
@@ -48,7 +48,7 @@ public class NavMeshParams {
             swigCPtr = 0;
         }
     }
-
+    
     /**
      *
      * @param origin The world space origin of the navigation mesh's tile space.

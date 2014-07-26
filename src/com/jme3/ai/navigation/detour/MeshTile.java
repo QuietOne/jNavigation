@@ -163,7 +163,7 @@ public class MeshTile {
     }
 
     /**
-     * -not done yet
+     * -not tested yet
      *
      * @param value The tile's detail sub-meshes.
      */
@@ -172,7 +172,7 @@ public class MeshTile {
     }
 
     /**
-     * -not done yet
+     * -not tested yet
      *
      * @return The tile's detail sub-meshes.
      */
@@ -219,7 +219,7 @@ public class MeshTile {
     }
 
     /**
-     * - not done yet
+     * -not tested yet
      *
      * @param value The tile bounding volume nodes.
      */
@@ -228,7 +228,7 @@ public class MeshTile {
     }
 
     /**
-     * - not done yet
+     * -not tested yet
      *
      * @return The tile bounding volume nodes.
      */
@@ -320,5 +320,13 @@ public class MeshTile {
     public MeshTile getNext() {
         long cPtr = RecastJNI.dtMeshTile_next_get(swigCPtr, this);
         return (cPtr == 0) ? null : new MeshTile(cPtr, false);
+    }
+
+    protected void setSwigCPtr(long swigCPtr) {
+        if (this.swigCPtr==swigCPtr) {
+            return;
+        }
+        delete();
+        this.swigCPtr = swigCPtr;
     }
 }

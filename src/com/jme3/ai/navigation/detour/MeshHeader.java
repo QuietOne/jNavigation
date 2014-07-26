@@ -21,7 +21,7 @@ public class MeshHeader {
         this(RecastJNI.new_dtMeshHeader(), true);
     }
 
-    public MeshHeader(long cPtr, boolean cMemoryOwn) {
+    protected MeshHeader(long cPtr, boolean cMemoryOwn) {
         swigCMemOwn = cMemoryOwn;
         swigCPtr = cPtr;
     }

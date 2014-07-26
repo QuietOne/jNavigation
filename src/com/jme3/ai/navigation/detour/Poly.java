@@ -188,4 +188,14 @@ public class Poly {
     public short getType() {
         return RecastJNI.dtPoly_getType(swigCPtr, this);
     }
+
+    public void setSwigCPtr(long swigCPtr) {
+        if (this.swigCPtr==swigCPtr) {
+            return;
+        }
+        delete();
+        this.swigCPtr = swigCPtr;
+    }
+    
+    
 }
