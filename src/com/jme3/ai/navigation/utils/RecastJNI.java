@@ -1,46 +1,34 @@
 package com.jme3.ai.navigation.utils;
 
-import com.jme3.ai.navigation.detour.BVNode;
-import com.jme3.ai.navigation.tilecache.CompressedTile;
 import com.jme3.ai.navigation.crowd.dtCrowd;
 import com.jme3.ai.navigation.crowd.dtCrowdAgent;
 import com.jme3.ai.navigation.crowd.dtCrowdAgentAnimation;
 import com.jme3.ai.navigation.crowd.dtCrowdAgentDebugInfo;
 import com.jme3.ai.navigation.crowd.dtCrowdAgentParams;
 import com.jme3.ai.navigation.crowd.dtCrowdNeighbour;
-import com.jme3.ai.navigation.detour.Link;
 import com.jme3.ai.navigation.crowd.dtLocalBoundary;
 import com.jme3.ai.navigation.crowd.dtObstacleAvoidanceDebugData;
 import com.jme3.ai.navigation.crowd.dtObstacleAvoidanceParams;
 import com.jme3.ai.navigation.crowd.dtObstacleAvoidanceQuery;
 import com.jme3.ai.navigation.crowd.dtObstacleCircle;
 import com.jme3.ai.navigation.crowd.dtObstacleSegment;
-import com.jme3.ai.navigation.detour.OffMeshConnection;
-import com.jme3.ai.navigation.detour.dtPathCorridor;
-import com.jme3.ai.navigation.detour.PolyDetail;
+import com.jme3.ai.navigation.crowd.dtPathQueue;
 import com.jme3.ai.navigation.crowd.dtProximityGrid;
-import com.jme3.ai.navigation.tilecache.TileCache;
-import com.jme3.ai.navigation.tilecache.TileCacheAlloc;
-import com.jme3.ai.navigation.tilecache.TileCacheCompressor;
-import com.jme3.ai.navigation.tilecache.TileCacheContour;
-import com.jme3.ai.navigation.tilecache.TileCacheContourSet;
-import com.jme3.ai.navigation.tilecache.TileCacheLayer;
-import com.jme3.ai.navigation.tilecache.TileCacheLayerHeader;
-import com.jme3.ai.navigation.tilecache.TileCacheMeshProcess;
-import com.jme3.ai.navigation.tilecache.TileCacheObstacle;
-import com.jme3.ai.navigation.tilecache.TileCacheParams;
-import com.jme3.ai.navigation.tilecache.TileCachePolyMesh;
-import com.jme3.ai.navigation.detour.Node;
-import com.jme3.ai.navigation.detour.NodeQueue;
-import com.jme3.ai.navigation.detour.NodePool;
+import com.jme3.ai.navigation.detour.BVNode;
+import com.jme3.ai.navigation.detour.Link;
 import com.jme3.ai.navigation.detour.MeshHeader;
 import com.jme3.ai.navigation.detour.MeshTile;
 import com.jme3.ai.navigation.detour.NavMesh;
 import com.jme3.ai.navigation.detour.NavMeshCreateParams;
 import com.jme3.ai.navigation.detour.NavMeshParams;
 import com.jme3.ai.navigation.detour.NavMeshQuery;
-import com.jme3.ai.navigation.crowd.dtPathQueue;
+import com.jme3.ai.navigation.detour.Node;
+import com.jme3.ai.navigation.detour.NodePool;
+import com.jme3.ai.navigation.detour.NodeQueue;
+import com.jme3.ai.navigation.detour.OffMeshConnection;
+import com.jme3.ai.navigation.detour.PathCorridor;
 import com.jme3.ai.navigation.detour.Poly;
+import com.jme3.ai.navigation.detour.PolyDetail;
 import com.jme3.ai.navigation.detour.QueryFilter;
 import com.jme3.ai.navigation.recast.CompactCell;
 import com.jme3.ai.navigation.recast.CompactHeightfield;
@@ -55,13 +43,20 @@ import com.jme3.ai.navigation.recast.HeightfieldLayerSet;
 import com.jme3.ai.navigation.recast.PolyMesh;
 import com.jme3.ai.navigation.recast.PolyMeshDetail;
 import com.jme3.ai.navigation.recast.Span;
-
+import com.jme3.ai.navigation.tilecache.CompressedTile;
+import com.jme3.ai.navigation.tilecache.TileCache;
+import com.jme3.ai.navigation.tilecache.TileCacheAlloc;
+import com.jme3.ai.navigation.tilecache.TileCacheCompressor;
+import com.jme3.ai.navigation.tilecache.TileCacheContour;
+import com.jme3.ai.navigation.tilecache.TileCacheContourSet;
+import com.jme3.ai.navigation.tilecache.TileCacheLayer;
+import com.jme3.ai.navigation.tilecache.TileCacheLayerHeader;
+import com.jme3.ai.navigation.tilecache.TileCacheMeshProcess;
+import com.jme3.ai.navigation.tilecache.TileCacheObstacle;
+import com.jme3.ai.navigation.tilecache.TileCacheParams;
+import com.jme3.ai.navigation.tilecache.TileCachePolyMesh;
 
 public class RecastJNI {
-
-    static {
-        System.load("/home/tihomir/NetBeansProjects/jNavigationNative/dist/jNavigationNative.so");
-    }
 
     public static native long new_DoubleArray(int jarg1);
 
@@ -146,6 +141,18 @@ public class RecastJNI {
     public static native long LongArray_cast(long jarg1, LongArray jarg1_);
 
     public static native long LongArray_frompointer(long jarg1);
+
+    public static native long new_BooleanArray(int jarg1);
+
+    public static native void delete_BooleanArray(long jarg1);
+
+    public static native boolean BooleanArray_getitem(long jarg1, BooleanArray jarg1_, int jarg2);
+
+    public static native void BooleanArray_setitem(long jarg1, BooleanArray jarg1_, int jarg2, boolean jarg3);
+
+    public static native long BooleanArray_cast(long jarg1, BooleanArray jarg1_);
+
+    public static native long BooleanArray_frompointer(long jarg1);
 
     public static native void dtAllocSetCustom(long jarg1, long jarg2);
 
@@ -325,7 +332,7 @@ public class RecastJNI {
 
     public static native boolean dtCrowdAgent_partial_get(long jarg1, dtCrowdAgent jarg1_);
 
-    public static native void dtCrowdAgent_corridor_set(long jarg1, dtCrowdAgent jarg1_, long jarg2, dtPathCorridor jarg2_);
+    public static native void dtCrowdAgent_corridor_set(long jarg1, dtCrowdAgent jarg1_, long jarg2, PathCorridor jarg2_);
 
     public static native long dtCrowdAgent_corridor_get(long jarg1, dtCrowdAgent jarg1_);
 
@@ -1123,9 +1130,9 @@ public class RecastJNI {
 
     public static native long dtNavMeshQuery_updateSlicedFindPath(long jarg1, NavMeshQuery jarg1_, int jarg2, long jarg3);
 
-    public static native long dtNavMeshQuery_zeSlicedFindPath(long jarg1, NavMeshQuery jarg1_, long jarg2, long jarg3, int jarg4);
+    public static native long dtNavMeshQuery_finalizeSlicedFindPath(long jarg1, NavMeshQuery jarg1_, long jarg2, long jarg3, int jarg4);
 
-    public static native long dtNavMeshQuery_zeSlicedFindPathPartial(long jarg1, NavMeshQuery jarg1_, long jarg2, int jarg3, long jarg4, long jarg5, int jarg6);
+    public static native long dtNavMeshQuery_finalizeSlicedFindPathPartial(long jarg1, NavMeshQuery jarg1_, long jarg2, int jarg3, long jarg4, long jarg5, int jarg6);
 
     public static native long dtNavMeshQuery_findPolysAroundCircle(long jarg1, NavMeshQuery jarg1_, long jarg2, long jarg3, float jarg4, long jarg5, QueryFilter jarg5_, long jarg6, long jarg7, long jarg8, long jarg9, int jarg10);
 
@@ -1405,41 +1412,41 @@ public class RecastJNI {
 
     public static native void delete_dtPathCorridor(long jarg1);
 
-    public static native boolean dtPathCorridor_init(long jarg1, dtPathCorridor jarg1_, int jarg2);
+    public static native boolean dtPathCorridor_init(long jarg1, PathCorridor jarg1_, int jarg2);
 
-    public static native void dtPathCorridor_reset(long jarg1, dtPathCorridor jarg1_, long jarg2, long jarg3);
+    public static native void dtPathCorridor_reset(long jarg1, PathCorridor jarg1_, long jarg2, long jarg3);
 
-    public static native int dtPathCorridor_findCorners(long jarg1, dtPathCorridor jarg1_, long jarg2, long jarg3, long jarg4, int jarg5, long jarg6, NavMeshQuery jarg6_, long jarg7, QueryFilter jarg7_);
+    public static native int dtPathCorridor_findCorners(long jarg1, PathCorridor jarg1_, long jarg2, long jarg3, long jarg4, int jarg5, long jarg6, NavMeshQuery jarg6_, long jarg7, QueryFilter jarg7_);
 
-    public static native void dtPathCorridor_optimizePathVisibility(long jarg1, dtPathCorridor jarg1_, long jarg2, float jarg3, long jarg4, NavMeshQuery jarg4_, long jarg5, QueryFilter jarg5_);
+    public static native void dtPathCorridor_optimizePathVisibility(long jarg1, PathCorridor jarg1_, long jarg2, float jarg3, long jarg4, NavMeshQuery jarg4_, long jarg5, QueryFilter jarg5_);
 
-    public static native boolean dtPathCorridor_optimizePathTopology(long jarg1, dtPathCorridor jarg1_, long jarg2, NavMeshQuery jarg2_, long jarg3, QueryFilter jarg3_);
+    public static native boolean dtPathCorridor_optimizePathTopology(long jarg1, PathCorridor jarg1_, long jarg2, NavMeshQuery jarg2_, long jarg3, QueryFilter jarg3_);
 
-    public static native boolean dtPathCorridor_moveOverOffmeshConnection(long jarg1, dtPathCorridor jarg1_, long jarg2, long jarg3, long jarg4, long jarg5, long jarg6, NavMeshQuery jarg6_);
+    public static native boolean dtPathCorridor_moveOverOffmeshConnection(long jarg1, PathCorridor jarg1_, long jarg2, long jarg3, long jarg4, long jarg5, long jarg6, NavMeshQuery jarg6_);
 
-    public static native boolean dtPathCorridor_fixPathStart(long jarg1, dtPathCorridor jarg1_, long jarg2, long jarg3);
+    public static native boolean dtPathCorridor_fixPathStart(long jarg1, PathCorridor jarg1_, long jarg2, long jarg3);
 
-    public static native boolean dtPathCorridor_trimInvalidPath(long jarg1, dtPathCorridor jarg1_, long jarg2, long jarg3, long jarg4, NavMeshQuery jarg4_, long jarg5, QueryFilter jarg5_);
+    public static native boolean dtPathCorridor_trimInvalidPath(long jarg1, PathCorridor jarg1_, long jarg2, long jarg3, long jarg4, NavMeshQuery jarg4_, long jarg5, QueryFilter jarg5_);
 
-    public static native boolean dtPathCorridor_isValid(long jarg1, dtPathCorridor jarg1_, int jarg2, long jarg3, NavMeshQuery jarg3_, long jarg4, QueryFilter jarg4_);
+    public static native boolean dtPathCorridor_isValid(long jarg1, PathCorridor jarg1_, int jarg2, long jarg3, NavMeshQuery jarg3_, long jarg4, QueryFilter jarg4_);
 
-    public static native boolean dtPathCorridor_movePosition(long jarg1, dtPathCorridor jarg1_, long jarg2, long jarg3, NavMeshQuery jarg3_, long jarg4, QueryFilter jarg4_);
+    public static native boolean dtPathCorridor_movePosition(long jarg1, PathCorridor jarg1_, long jarg2, long jarg3, NavMeshQuery jarg3_, long jarg4, QueryFilter jarg4_);
 
-    public static native boolean dtPathCorridor_moveTargetPosition(long jarg1, dtPathCorridor jarg1_, long jarg2, long jarg3, NavMeshQuery jarg3_, long jarg4, QueryFilter jarg4_);
+    public static native boolean dtPathCorridor_moveTargetPosition(long jarg1, PathCorridor jarg1_, long jarg2, long jarg3, NavMeshQuery jarg3_, long jarg4, QueryFilter jarg4_);
 
-    public static native void dtPathCorridor_setCorridor(long jarg1, dtPathCorridor jarg1_, long jarg2, long jarg3, int jarg4);
+    public static native void dtPathCorridor_setCorridor(long jarg1, PathCorridor jarg1_, long jarg2, long jarg3, int jarg4);
 
-    public static native long dtPathCorridor_getPos(long jarg1, dtPathCorridor jarg1_);
+    public static native long dtPathCorridor_getPos(long jarg1, PathCorridor jarg1_);
 
-    public static native long dtPathCorridor_getTarget(long jarg1, dtPathCorridor jarg1_);
+    public static native long dtPathCorridor_getTarget(long jarg1, PathCorridor jarg1_);
 
-    public static native long dtPathCorridor_getFirstPoly(long jarg1, dtPathCorridor jarg1_);
+    public static native long dtPathCorridor_getFirstPoly(long jarg1, PathCorridor jarg1_);
 
-    public static native long dtPathCorridor_getLastPoly(long jarg1, dtPathCorridor jarg1_);
+    public static native long dtPathCorridor_getLastPoly(long jarg1, PathCorridor jarg1_);
 
-    public static native long dtPathCorridor_getPath(long jarg1, dtPathCorridor jarg1_);
+    public static native long dtPathCorridor_getPath(long jarg1, PathCorridor jarg1_);
 
-    public static native int dtPathCorridor_getPathCount(long jarg1, dtPathCorridor jarg1_);
+    public static native int dtPathCorridor_getPathCount(long jarg1, PathCorridor jarg1_);
 
     public static native int dtMergeCorridorStartMoved(long jarg1, int jarg2, int jarg3, long jarg4, int jarg5);
 
@@ -2594,4 +2601,8 @@ public class RecastJNI {
     public static native long new_rcIntArray__SWIG_1(int jarg1);
 
     public static native void delete_rcIntArray(long jarg1);
+
+    static {
+        System.load("/home/tihomir/NetBeansProjects/jNavigationNative/dist/jNavigationNative.so");
+    }
 }

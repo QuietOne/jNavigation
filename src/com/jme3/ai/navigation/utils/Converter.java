@@ -1,5 +1,6 @@
 package com.jme3.ai.navigation.utils;
 
+import com.jme3.ai.navigation.detour.Poly;
 import com.jme3.math.Vector3f;
 
 /**
@@ -23,8 +24,8 @@ public class Converter {
         array.setItem(2, v.z);
         return array.cast();
     }
-    
-    public static int[] convertToInts(short[] shorts){
+
+    public static int[] convertToInts(short[] shorts) {
         int[] ints = new int[shorts.length];
         for (int i = 0; i < shorts.length; i++) {
             ints[i] = shorts[i];
@@ -120,7 +121,7 @@ public class Converter {
     public static Vector3f[] convertToVector3f(long pointer, int count) {
         FloatArray array = new FloatArray(pointer, false);
         Vector3f[] vs = new Vector3f[count];
-        for (int i = 0; i < count / 3; i++) {
+        for (int i = 0; i < count; i++) {
             vs[i] = new Vector3f(array.getItem(i * 3), array.getItem(i * 3 + 1), array.getItem(i * 3 + 2));
         }
         return vs;
@@ -184,5 +185,25 @@ public class Converter {
             ia.setItem(i, ints[i]);
         }
         return ia.cast();
+    }
+
+    public static Poly[] convertToPolys(long pointer, int count) {
+        Poly[] polys = new Poly[count];
+        for (int i = 0; i < polys.length; i++) {
+            polys[i] = new Poly(pointer + i, false);
+        }
+        return polys;
+    }
+
+    public static Poly[] convertToPolys(SWIGTYPE_p_unsigned_int resultRef, SWIGTYPE_p_int resultCount) {
+        return convertToPolys(SWIGTYPE_p_unsigned_int.getCPtr(resultRef), convertToInt(SWIGTYPE_p_int.getCPtr(resultCount)));
+    }
+
+    public static Poly[] convertToPolys(SWIGTYPE_p_unsigned_int resultRef, int resultCount) {
+        return convertToPolys(SWIGTYPE_p_unsigned_int.getCPtr(resultRef), resultCount);
+    }
+    
+    public static SWIGTYPE_p_unsigned_int convertToSWIGTYPE_p_unsigned_int(Poly[] polys){
+        return new SWIGTYPE_p_unsigned_int(Poly.getCPtr(polys[0]), true);
     }
 }

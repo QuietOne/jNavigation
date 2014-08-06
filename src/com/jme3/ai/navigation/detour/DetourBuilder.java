@@ -1,8 +1,5 @@
 package com.jme3.ai.navigation.detour;
 
-import com.jme3.ai.navigation.crowd.dtCrowd;
-import com.jme3.ai.navigation.crowd.dtObstacleAvoidanceDebugData;
-import com.jme3.ai.navigation.crowd.dtObstacleAvoidanceQuery;
 import com.jme3.ai.navigation.crowd.dtProximityGrid;
 import com.jme3.ai.navigation.tilecache.TileCache;
 import com.jme3.ai.navigation.tilecache.TileCacheAlloc;
@@ -22,6 +19,7 @@ import com.jme3.ai.navigation.utils.RecastJNI;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_int;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_p_unsigned_char;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_int;
+import com.jme3.ai.navigation.utils.UCharArray;
 import com.jme3.math.Vector3f;
 
 /**
@@ -290,7 +288,7 @@ public class DetourBuilder {
     }
 
     /**
-     * Note: not sure if it works correctly.
+     * Note: not sure if it works correctly. Any help would be beneficial.
      *
      * Builds navigation mesh tile data from the provided tile creation data.
      * The output data array is allocated using the detour allocator (Alloc()).
@@ -301,7 +299,7 @@ public class DetourBuilder {
      * @return The resulting tile data.
      */
     public static char[] createNavMeshData(NavMeshCreateParams params) {
-        SWIGTYPE_p_p_unsigned_char outData = null;
+        SWIGTYPE_p_p_unsigned_char outData = new UCharArray(30).castDoublePointer();
         SWIGTYPE_p_int outDataSize = new IntArray(1).cast();
         if (RecastJNI.dtCreateNavMeshData(NavMeshCreateParams.getCPtr(params), params, SWIGTYPE_p_p_unsigned_char.getCPtr(outData), SWIGTYPE_p_int.getCPtr(outDataSize))) {
             return null;
