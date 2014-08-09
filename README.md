@@ -19,8 +19,8 @@ The are a large number of possible ways to building navigation mesh data. One of
 </ol>
 The general life-cycle of the main classes is as follows:
 <ol>
-<li>initializeStructure with appropriate Builder class</li>
-<li>build or create structure with Builder class</li>
+<li>initialize structure</li>
+<li>build or create structure</li>
 <li>Update the object as needed. (E.g. rasterizeTriangles)</li>
 <li>Use the object as part of the pipeline.</li>
 </ol>
