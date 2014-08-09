@@ -15,7 +15,7 @@ public final class CompressedTileFlags {
      */
     public final static CompressedTileFlags DT_COMPRESSEDTILE_FREE_DATA = new CompressedTileFlags("DT_COMPRESSEDTILE_FREE_DATA", RecastJNI.DT_COMPRESSEDTILE_FREE_DATA_get());
 
-    public final int swigValue() {
+    public final int value() {
         return swigValue;
     }
 

@@ -238,7 +238,7 @@ public final class TimerLabel {
      */
     public final static TimerLabel RC_MAX_TIMERS = new TimerLabel("RC_MAX_TIMERS");
 
-    public final int swigValue() {
+    public final int value() {
         return swigValue;
     }
 

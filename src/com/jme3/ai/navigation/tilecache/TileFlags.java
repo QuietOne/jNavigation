@@ -16,7 +16,7 @@ public final class TileFlags {
      */
     public final static TileFlags DT_TILE_FREE_DATA = new TileFlags("DT_TILE_FREE_DATA", RecastJNI.DT_TILE_FREE_DATA_get());
 
-    public final int swigValue() {
+    public final int value() {
         return swigValue;
     }
 

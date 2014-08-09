@@ -19,7 +19,7 @@ public final class BuildContoursFlags {
      */
     public final static BuildContoursFlags RC_CONTOUR_TESS_AREA_EDGES = new BuildContoursFlags("RC_CONTOUR_TESS_AREA_EDGES", RecastJNI.RC_CONTOUR_TESS_AREA_EDGES_get());
 
-    public final int swigValue() {
+    public final int value() {
         return swigValue;
     }
 

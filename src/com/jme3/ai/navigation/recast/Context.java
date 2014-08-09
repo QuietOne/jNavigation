@@ -109,7 +109,7 @@ public class Context {
      * @param label The category of timer.
      */
     public void startTimer(TimerLabel label) {
-        RecastJNI.rcContext_startTimer(swigCPtr, this, label.swigValue());
+        RecastJNI.rcContext_startTimer(swigCPtr, this, label.value());
     }
 
     /**
@@ -118,7 +118,7 @@ public class Context {
      * @param label The category of the timer.
      */
     public void stopTimer(TimerLabel label) {
-        RecastJNI.rcContext_stopTimer(swigCPtr, this, label.swigValue());
+        RecastJNI.rcContext_stopTimer(swigCPtr, this, label.value());
     }
 
     /**
@@ -129,6 +129,6 @@ public class Context {
      * or the timer has never been started.
      */
     public int getAccumulatedTime(TimerLabel label) {
-        return RecastJNI.rcContext_getAccumulatedTime(swigCPtr, this, label.swigValue());
+        return RecastJNI.rcContext_getAccumulatedTime(swigCPtr, this, label.value());
     }
 }
