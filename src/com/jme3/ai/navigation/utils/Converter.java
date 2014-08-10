@@ -1,6 +1,9 @@
 package com.jme3.ai.navigation.utils;
 
+import com.jme3.ai.navigation.detour.Link;
+import com.jme3.ai.navigation.detour.OffMeshConnection;
 import com.jme3.ai.navigation.detour.Poly;
+import com.jme3.ai.navigation.detour.PolyDetail;
 import com.jme3.math.Vector3f;
 
 /**
@@ -201,6 +204,30 @@ public class Converter {
 
     public static Poly[] convertToPolys(SWIGTYPE_p_unsigned_int resultRef, int resultCount) {
         return convertToPolys(SWIGTYPE_p_unsigned_int.getCPtr(resultRef), resultCount);
+    }
+    
+    public static PolyDetail[] convertToPolyDetails(long pointer, int count){
+        PolyDetail[] details = new PolyDetail[count];
+        for (int i = 0; i < details.length; i++) {
+            details[i] = new PolyDetail(pointer + i, false);
+        }
+        return details;
+    }
+    
+    public static OffMeshConnection[] convertToOffMeshConnections(long pointer, int count){
+        OffMeshConnection[] connections = new OffMeshConnection[count];
+        for (int i = 0; i < connections.length; i++) {
+            connections[i] = new OffMeshConnection(pointer + i, false);
+        }
+        return connections;
+    }
+    
+    public static Link[] convertToLinks(long pointer, int count){
+        Link[] links = new Link[count];
+        for (int i = 0; i < links.length; i++) {
+            links[i] = new Link(pointer + i, false);
+        }
+        return links;
     }
     
     public static SWIGTYPE_p_unsigned_int convertToSWIGTYPE_p_unsigned_int(Poly[] polys){

@@ -5,6 +5,7 @@ import com.jme3.ai.navigation.utils.SWIGTYPE_p_float;
 import com.jme3.ai.navigation.utils.RecastJNI;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_unsigned_char;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Mesh;
 
 /**
  * Defines a navigation mesh tile.
@@ -122,16 +123,16 @@ public class MeshTile {
      *
      * @return The tile polygons.
      */
-    public Poly getPolys() {
+    public Poly[] getPolys() {
         long cPtr = RecastJNI.dtMeshTile_polys_get(swigCPtr, this);
-        return (cPtr == 0) ? null : new Poly(cPtr, false);
+        return (cPtr == 0) ? null : Converter.convertToPolys(cPtr, getHeader().getPolyCount());
     }
 
     /**
      *
      * @param vertices The tile vertices.
      */
-    public void setVertices(float[] vertices) {
+    public void setVertices(Vector3f[] vertices) {
         SWIGTYPE_p_float value = Converter.convertToSWIGTYPE_p_float(vertices);
         RecastJNI.dtMeshTile_verts_set(swigCPtr, this, SWIGTYPE_p_float.getCPtr(value));
     }
@@ -140,45 +141,43 @@ public class MeshTile {
      *
      * @return The tile vertices.
      */
-    public float[] getVertices() {
+    public Vector3f[] getVertices() {
         long cPtr = RecastJNI.dtMeshTile_verts_get(swigCPtr, this);
-        return (cPtr == 0) ? null : Converter.convertToFloats(cPtr, getHeader().getVerticesCount());
+        return (cPtr == 0) ? null : Converter.convertToVector3f(cPtr, getHeader().getVerticesCount());
     }
 
     /**
      *
      * @param value The tile links.
      */
-    public void setLinks(Link value) {
-        RecastJNI.dtMeshTile_links_set(swigCPtr, this, Link.getCPtr(value), value);
+    public void setLinks(Link[] value) {
+        RecastJNI.dtMeshTile_links_set(swigCPtr, this, Link.getCPtr(value[0]), value[0]);
     }
 
     /**
      *
      * @return The tile links.
      */
-    public Link getLinks() {
+    public Link[] getLinks() {
         long cPtr = RecastJNI.dtMeshTile_links_get(swigCPtr, this);
-        return (cPtr == 0) ? null : new Link(cPtr, false);
+        return (cPtr == 0) ? null : Converter.convertToLinks(cPtr, getHeader().getMaxLinkCount());
     }
 
     /**
-     * -not tested yet
      *
      * @param value The tile's detail sub-meshes.
      */
-    public void setDetailMeshes(PolyDetail value) {
-        RecastJNI.dtMeshTile_detailMeshes_set(swigCPtr, this, PolyDetail.getCPtr(value), value);
+    public void setDetailMeshes(PolyDetail[] value) {
+        RecastJNI.dtMeshTile_detailMeshes_set(swigCPtr, this, PolyDetail.getCPtr(value[0]), value[0]);
     }
 
     /**
-     * -not tested yet
      *
      * @return The tile's detail sub-meshes.
      */
-    public PolyDetail getDetailMeshes() {
+    public PolyDetail[] getDetailMeshes() {
         long cPtr = RecastJNI.dtMeshTile_detailMeshes_get(swigCPtr, this);
-        return (cPtr == 0) ? null : new PolyDetail(cPtr, false);
+        return (cPtr == 0) ? null : Converter.convertToPolyDetails(cPtr, getHeader().getDetailMeshCount());
     }
 
     /**
@@ -249,9 +248,9 @@ public class MeshTile {
      *
      * @return The tile off-mesh connections.
      */
-    public OffMeshConnection getOffMeshConnections() {
+    public OffMeshConnection[] getOffMeshConnections() {
         long cPtr = RecastJNI.dtMeshTile_offMeshCons_get(swigCPtr, this);
-        return (cPtr == 0) ? null : new OffMeshConnection(cPtr, false);
+        return (cPtr == 0) ? null : Converter.convertToOffMeshConnections(cPtr, getHeader().getOffMeshConnectionsCount());
     }
 
     /**

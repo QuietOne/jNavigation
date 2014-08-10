@@ -39,7 +39,7 @@ public final class StraightPathFlags {
      */
     public final static StraightPathFlags DT_STRAIGHTPATH_OFFMESH_CONNECTION = new StraightPathFlags("DT_STRAIGHTPATH_OFFMESH_CONNECTION", RecastJNI.DT_STRAIGHTPATH_OFFMESH_CONNECTION_get());
 
-    public final int swigValue() {
+    public final int value() {
         return swigValue;
     }
 

@@ -14,6 +14,7 @@ import com.jme3.ai.navigation.utils.SWIGTYPE_p_int;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_p_dtPoly;
 import com.jme3.ai.navigation.utils.SWIGTYPE_p_p_dtMeshTile;
 import com.jme3.math.Vector3f;
+import com.jme3.scene.Mesh;
 
 /**
  * A navigation mesh based on tiles of convex polygons.

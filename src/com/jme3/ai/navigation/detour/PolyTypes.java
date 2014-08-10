@@ -20,7 +20,7 @@ public final class PolyTypes {
      */
     public final static PolyTypes DT_POLYTYPE_OFFMESH_CONNECTION = new PolyTypes("DT_POLYTYPE_OFFMESH_CONNECTION", RecastJNI.DT_POLYTYPE_OFFMESH_CONNECTION_get());
 
-    public final int swigValue() {
+    public final int value() {
         return swigValue;
     }
 
