@@ -55,6 +55,11 @@ import com.jme3.ai.navigation.tilecache.TileCacheMeshProcess;
 import com.jme3.ai.navigation.tilecache.TileCacheObstacle;
 import com.jme3.ai.navigation.tilecache.TileCacheParams;
 import com.jme3.ai.navigation.tilecache.TileCachePolyMesh;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class RecastJNI {
 
@@ -2603,6 +2608,14 @@ public class RecastJNI {
     public static native void delete_rcIntArray(long jarg1);
 
     static {
-        System.load("/home/tihomir/NetBeansProjects/jNavigationNative/dist/jNavigationNative.so");
+        try {
+            URI uri = new RecastJNI().getClass().getClassLoader().getResource(".").toURI();
+            uri = uri.resolve("../../native_build/jNavigationNative.so");
+            System.load(uri.getPath());
+        } catch (URISyntaxException ex) {
+            ex.printStackTrace();
+            Logger.getLogger(RecastJNI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 }
