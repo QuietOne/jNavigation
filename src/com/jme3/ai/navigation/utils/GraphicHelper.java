@@ -393,7 +393,7 @@ public class GraphicHelper {
                 mesh = vertex(mesh, conPostitions[1], new ColorRGBA(0, 48, 64, 196));
                 mesh = vertex(mesh, v2, new ColorRGBA(0, 48, 64, 196));
 
-                //Connection arc
+                //Connection arcmesh tile corrected
                 mesh = appendArc(mesh, conPostitions[0], conPostitions[1], 0.25f, ((con.getFlags() & 1) != 0) ? 0.6f : 0f, 0.6f, color1);
             }
         }
